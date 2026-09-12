@@ -1,0 +1,11 @@
+{
+  "name": "NAVI",
+  "slug": "navi",
+  "tier": "bot",
+  "summary": "A Telegram bridge to Claude Code: drive a terminal session from your phone, get responses streamed back, approve tool calls, schedule prework, and capture TODOs by voice or text.",
+  "source": "~/tools/navi + ~/.claude/skills/navi-mobile",
+  "entry": "README.md",
+  "order": 90,
+  "kind": "files",
+  "url": null
+}

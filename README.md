@@ -34,6 +34,12 @@ The agents handle information retrieval. You handle judgment.
 
 ---
 
+## Harnesses
+
+The `harnesses/` folder holds the Claude Code harnesses I actually run, scrubbed for reuse: design-interview and prototype skills, a strategy agent, a fenced unattended night lane with a morning judge, and a Telegram bridge. Browse them at **[productagent.dev](https://productagent.dev)** or start at [harnesses/README.md](harnesses/README.md).
+
+---
+
 ## What's in this repo
 
 ```
@@ -46,6 +52,8 @@ agents/
   when.md         # Timeline & Schedule agent
 mcps/
   setup.md        # how to connect your tools
+harnesses/        # the harnesses behind productagent.dev — see harnesses/README.md
+site/             # the productagent.dev site (Next.js, reads this repo at build time)
 ```
 
 ---

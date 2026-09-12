@@ -1,0 +1,11 @@
+{
+  "name": "rev-intel-harness",
+  "slug": "rev-intel-harness",
+  "tier": "link",
+  "summary": "A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT.",
+  "source": "github.com/harrisonhjohnson/rev-intel-harness",
+  "entry": null,
+  "order": 100,
+  "kind": "link",
+  "url": "https://github.com/harrisonhjohnson/rev-intel-harness"
+}

@@ -1,0 +1,13 @@
+# site
+site/node_modules
+site/.next
+site/.vercel
+site/next-env.d.ts
+site/tsconfig.tsbuildinfo
+
+# never publish
+.DS_Store
+**/.env
+**/*.log
+**/*.db
+**/__pycache__/
