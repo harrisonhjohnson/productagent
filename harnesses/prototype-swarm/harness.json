@@ -1,0 +1,11 @@
+{
+  "name": "prototype-swarm",
+  "slug": "prototype-swarm",
+  "tier": "global",
+  "summary": "Crawls a multi-screen HTML prototype for undefined click destinations and spawns one generator agent per missing screen, with a handoff packet written by the source screen, until the click graph is covered.",
+  "source": "~/.claude/skills/prototype-swarm",
+  "entry": "SKILL.md",
+  "order": 20,
+  "kind": "files",
+  "url": null
+}

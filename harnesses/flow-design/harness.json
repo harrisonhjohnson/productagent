@@ -1,0 +1,11 @@
+{
+  "name": "flow-design",
+  "slug": "flow-design",
+  "tier": "global",
+  "summary": "A progressive design interview: one question per screen, ending in a clickable HTML prototype of a linear user journey (onboarding, checkout, wizard).",
+  "source": "~/.claude/skills/flow-design",
+  "entry": "SKILL.md",
+  "order": 10,
+  "kind": "files",
+  "url": null
+}

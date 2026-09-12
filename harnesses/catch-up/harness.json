@@ -1,0 +1,11 @@
+{
+  "name": "catch-up",
+  "slug": "catch-up",
+  "tier": "global",
+  "summary": "A slash command that orients you in a repo: branch, recent commits, uncommitted work by intent, stashes, and a suggested next step.",
+  "source": "~/.claude/commands/catch-up.md",
+  "entry": "catch-up.md",
+  "order": 40,
+  "kind": "files",
+  "url": null
+}

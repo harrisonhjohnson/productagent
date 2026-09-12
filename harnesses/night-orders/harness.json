@@ -1,0 +1,11 @@
+{
+  "name": "Night Orders",
+  "slug": "night-orders",
+  "tier": "system",
+  "summary": "An unattended nightly Claude Code lane fenced by settings.json, driven by a captain's-night-orders charter and self-renewing loops, graded next morning by deterministic trajectory scorers and an LLM judge.",
+  "source": "~/ventures/.claude + ~/ventures/00-ops + ~/ventures/pm",
+  "entry": "README.md",
+  "order": 80,
+  "kind": "files",
+  "url": null
+}

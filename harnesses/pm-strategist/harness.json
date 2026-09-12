@@ -1,0 +1,11 @@
+{
+  "name": "pm-strategist",
+  "slug": "pm-strategist",
+  "tier": "global",
+  "summary": "A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading.",
+  "source": "~/.claude/agents/pm-strategist.md",
+  "entry": "pm-strategist.md",
+  "order": 30,
+  "kind": "files",
+  "url": null
+}

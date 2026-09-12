@@ -1,0 +1,11 @@
+{
+  "name": "todo",
+  "slug": "todo",
+  "tier": "global",
+  "summary": "Add, complete, and list TODOs in a ~/TODO.md whose ID format a Telegram bot can parse, optionally merged with Linear issues and Attio tasks.",
+  "source": "~/.claude/skills/todo",
+  "entry": "SKILL.md",
+  "order": 60,
+  "kind": "files",
+  "url": null
+}
