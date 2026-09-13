@@ -1,6 +1,6 @@
 ---
 name: todo
-description: Add, complete, or list TODOs. Listing aggregates ~/TODO.md (Navi format) plus Linear issues and Attio tasks assigned to you. Use when the user says "add a TODO", "mark done", "complete a task", "show my TODOs", "check my TODOs", or "add to my list". Ensures every ~/TODO.md item has a unique T+3 alphanumeric ID and the <!-- id:XXXX --> comment on the line after — the format Navi reads.
+description: Add, complete, or list TODOs. Listing aggregates ~/TODO.md (the format the Telegram bot reads) plus Linear issues and Attio tasks assigned to you. Use when the user says "add a TODO", "mark done", "complete a task", "show my TODOs", "check my TODOs", or "add to my list". Ensures every ~/TODO.md item has a unique T+3 alphanumeric ID and the <!-- id:XXXX --> comment on the line after — the format the Telegram bot reads.
 ---
 
 # todo

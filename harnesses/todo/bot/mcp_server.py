@@ -320,5 +320,10 @@ def morning_brief() -> str:
 
 
 if __name__ == "__main__":
-    # Run as SSE server for remote access
-    mcp.run(transport="sse")
+    # stdio is the safe default: only the local Claude Code process can reach it.
+    # SSE exposes the list over HTTP, so it is opt-in and must sit behind something
+    # that authenticates (a tunnel with access control), never on a bare URL.
+    if os.environ.get("NAVI_MCP_TRANSPORT", "stdio") == "sse":
+        mcp.run(transport="sse")
+    else:
+        mcp.run()

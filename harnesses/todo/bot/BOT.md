@@ -83,25 +83,27 @@ phone-side harness around Claude Code:
 Everything is gated to the Telegram user IDs in `config.AUTHORIZED_USERS`; set
 `NAVI_USER_NAME` so prompts speak in your name.
 
-## Security notes (read before running)
+## Security model
 
-This is a personal bot published as a reference, not a hardened product. Known tradeoffs you should
-decide on before running it on your own machine:
+Background runs never use `--dangerously-skip-permissions`. Each kind of run gets an explicit
+`--allowedTools` list from `.env` and everything outside it goes to the Telegram permission hook,
+or is denied if no hook is configured:
 
-- **Skipped permissions in background runs.** `agent_executor.py` and the inbox-fetch path in
-  `telegram_bot.py` launch `claude -p --dangerously-skip-permissions` so unattended runs can use
-  MCP tools without a human in the loop. That means untrusted content (an email body, a web page)
-  can drive tool calls unchecked. Safer options: drop the flag and let `claude_permission_hook.py`
-  gate the run over Telegram, or restrict those runs with `--allowedTools` to read-only tools.
-- **Prefix allowlist in the permission hook.** `SILENT_BASH_PREFIXES` in `claude_permission_hook.py`
-  auto-approves commands by prefix, so `git status; rm -rf ~` would pass. Reject any command
-  containing `;`, `&&`, `||`, `|`, backticks, or `$(` before prefix matching if you keep the hook.
-- **Local HTTP server has no auth.** `hyrule_server.py` binds to 127.0.0.1 but allows any origin
-  with credentials, so a page in your browser could add or complete TODOs. Restrict `allow_origins`
-  to the served origin and add a startup token if you expose it.
-- **MCP server over SSE.** `mcp_server.py` runs without authentication when started as an SSE
-  server. Only expose it behind something that authenticates (Cloudflare Access, a bearer token
-  check), never on a bare tunnel URL.
+- **TODO executor** (`agent_executor.py`): `NAVI_EXECUTOR_ALLOWED_TOOLS`, default read, search, edit, write.
+- **Inbox fetch / clean** (`telegram_bot.py`): `NAVI_INBOX_ALLOWED_TOOLS`, default Gmail tools plus one
+  file write for the summary. Email bodies are untrusted input, so no shell and no edits.
+
+The permission hook (`claude_permission_hook.py`) auto-approves a short allowlist of read-only and
+routine commands. A command is only silent if it *is* an allowlisted verb followed by whitespace,
+and it contains no `;`, `&&`, `||`, `|`, backticks, or `$(`. So `git status` passes and
+`git status; rm -rf ~` asks you on Telegram. Tests in `tests/test_permission_hook.py`.
+
+The local TODO page (`hyrule_server.py`) binds to 127.0.0.1 and only accepts requests from its own
+origin. The MCP server runs over stdio by default; SSE is opt-in via `NAVI_MCP_TRANSPORT=sse` and
+should only ever sit behind an authenticated tunnel.
+
+Inbox rules (protected senders, receipts label) are yours to set in `.env`; nothing personal ships
+in the code.
 
 ## Features
 

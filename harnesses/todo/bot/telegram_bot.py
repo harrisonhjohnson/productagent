@@ -1807,8 +1807,8 @@ Use /schedule list to see all jobs."""
 
 # --- Email classification helpers ---
 
-PROTECTED_SENDERS = {'apple.com', 'public.com', 'venmo.com', 'empower.com'}
-PROTECTED_PARTIAL = {'lenny', 'lennysewsletter', 'lennyrachitsky', 'demandcurve', 'growthnewsletter', 'growth newsletter'}
+PROTECTED_SENDERS = set(config.INBOX_PROTECTED_SENDERS)
+PROTECTED_PARTIAL = set(config.INBOX_PROTECTED_PARTIAL)
 
 JUNK_SENDERS = {
     # Political
@@ -1866,9 +1866,9 @@ def _is_junk_email(sender: str, subject: str, snippet: str = "", labels: list = 
     return False
 
 
-FINANCE_LABEL_ID = "Label_27"  # [Mailbox]/Receipts
+FINANCE_LABEL_ID = config.INBOX_RECEIPTS_LABEL
 FINANCE_KEYWORDS = {'receipt', 'invoice', 'order confirmation', 'payment', 'statement', 'transaction', 'refund', 'charge'}
-FINANCE_SENDERS = {'chase', 'venmo', 'paypal', 'public.com', 'empower', 'stripe', 'square', 'shopify', 'amazon', 'apple', 'turbotax', 'intuit'}
+FINANCE_SENDERS = set(config.INBOX_FINANCE_SENDERS)
 
 
 def _is_finance_email(subject: str, sender: str, snippet: str = "") -> bool:
@@ -1909,7 +1909,7 @@ def _launch_email_background_agent(agent_type: str, period: Optional[str], chat_
         prompt = (
             f"You are running inbox-fetch for {config.USER_NAME}. "
             f"Use the inbox-fetch skill instructions: scan Gmail for actionable emails from the last {period}, "
-            f"classify them, label any finance/receipt emails with Label_27 ([Mailbox]/Receipts), "
+            f"classify them, label any finance/receipt emails with the Gmail label {config.INBOX_RECEIPTS_LABEL}, "
             f"and create TODOs in ~/TODO.md with proper Navi-compatible format and email metadata. "
             f"Search query: in:inbox is:unread newer_than:{period}. "
             f"Max 25 emails. Skip junk/automated/newsletters. "
@@ -1924,9 +1924,8 @@ def _launch_email_background_agent(agent_type: str, period: Optional[str], chat_
             "newsletter noise, event listings, retail marketing) using category:promotions, category:social, "
             "and specific sender queries. Archive all matches. "
             "Before archiving, label any emails containing $ or receipt/invoice/payment keywords "
-            "with Label_27 ([Mailbox]/Receipts). "
-            "Protected senders (NEVER archive): apple.com, public.com, venmo.com, "
-            "empower.com, chase.com alerts, lenny/lennyrachitsky, demandcurve. "
+            f"with the Gmail label {config.INBOX_RECEIPTS_LABEL}. "
+            f"Protected senders (NEVER archive): {', '.join(config.INBOX_PROTECTED_SENDERS) or 'none configured'}. "
             f"When done, write a summary to {inbox_path}/clean-{timestamp}.md with: "
             f"how many archived by category, how many skipped (protected), how many labeled as Receipts."
         )
@@ -1935,9 +1934,10 @@ def _launch_email_background_agent(agent_type: str, period: Optional[str], chat_
         return f"Unknown agent type: {agent_type}"
 
     try:
-        # Launch Claude in background with --dangerously-skip-permissions for MCP access
+        # Email bodies are untrusted input, so this run gets Gmail tools plus a
+        # file write for its summary and nothing else. No shell, no edits.
         subprocess.Popen(
-            [CLAUDE_PATH, "-p", "--dangerously-skip-permissions", "--model", CLAUDE_MODEL, prompt],
+            [CLAUDE_PATH, "-p", "--allowedTools", config.INBOX_ALLOWED_TOOLS, "--model", CLAUDE_MODEL, prompt],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )

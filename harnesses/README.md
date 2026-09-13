@@ -11,7 +11,7 @@ Every folder carries a `harness.json` (name, tier, one-line summary, where it ca
 | [flow-design](flow-design/) | global | A progressive design interview: one question per screen, ending in a clickable HTML prototype of a linear user journey (onboarding, checkout, wizard). |
 | [prototype-swarm](prototype-swarm/) | global | Crawls a multi-screen HTML prototype for undefined click destinations and spawns one generator agent per missing screen, with a handoff packet written by the source screen, until the click graph is covered. |
 | [pm-strategist](pm-strategist/) | global | A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading. |
-| [TODO](todo/) | system | One markdown TODO list with two doors: a Claude Code skill in the terminal and a Telegram bot on your phone, both reading and writing the same file. |
+| [TODO](todo/) | system | A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts. |
 | [Night Orders](night-orders/) | system | An unattended nightly Claude Code lane fenced by settings.json, driven by a captain's-night-orders charter and self-renewing loops, graded next morning by deterministic trajectory scorers and an LLM judge. |
 | [rev-intel-harness](https://github.com/harrisonhjohnson/rev-intel-harness) | link | A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT. |
 
@@ -33,7 +33,7 @@ A product and strategy advisor agent that blends three lenses (build taste, busi
 
 ### TODO
 
-One markdown TODO list with two doors: a Claude Code skill in the terminal and a Telegram bot on your phone, both reading and writing the same file. Source: `~/.claude/skills/todo + ~/tools/navi`. Start with [README.md](todo/README.md).
+A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts. Source: `~/.claude/skills/todo + ~/tools/navi`. Start with [README.md](todo/README.md).
 
 ### Night Orders
 

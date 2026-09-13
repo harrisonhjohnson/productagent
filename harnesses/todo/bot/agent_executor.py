@@ -13,9 +13,10 @@ import logging
 from datetime import datetime
 from typing import Dict, Optional, Tuple, List
 try:
-    from config import USER_NAME
+    from config import USER_NAME, EXECUTOR_ALLOWED_TOOLS
 except ImportError:  # pragma: no cover
     USER_NAME = "you"
+    EXECUTOR_ALLOWED_TOOLS = "Read,Glob,Grep"
 
 logger = logging.getLogger(__name__)
 
@@ -196,12 +197,13 @@ Start your plan now:"""
 - For Slack messages, use the Slack MCP to send them
 - For file edits, make the changes directly
 
-You have full permissions. Execute the plan now and report results."""
+Tools outside the pre-approved set are routed to the operator for approval; if one is denied, note it and move on. Execute the plan now and report results."""
 
         try:
-            # Run Claude with full permissions
+            # Pre-approved tools run silently; anything else hits the PreToolUse
+            # permission hook (Telegram approve/deny) or is denied if no hook is set.
             result = subprocess.run(
-                [CLAUDE_PATH, "-p", "--dangerously-skip-permissions", "--model", CLAUDE_MODEL, prompt],
+                [CLAUDE_PATH, "-p", "--allowedTools", EXECUTOR_ALLOWED_TOOLS, "--model", CLAUDE_MODEL, prompt],
                 capture_output=True,
                 text=True,
                 timeout=600  # 10 min for execution

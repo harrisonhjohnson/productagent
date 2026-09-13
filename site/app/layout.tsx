@@ -17,11 +17,11 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'productagent — index of /harnesses',
+    default: 'productagent — tools for PMs who run their day with Claude Code',
     template: '%s — productagent',
   },
   description:
-    'Claude Code harnesses for product managers: skills, agents, a fenced unattended night lane, and a Telegram bridge. Browse the folders or go straight to the git.',
+    'A TODO list that follows you to your phone, a design interview that ends in a prototype, a strategy agent that argues back, and an agent that works overnight on a leash. Copy what you need.',
   openGraph: {
     siteName: 'productagent',
     type: 'website',

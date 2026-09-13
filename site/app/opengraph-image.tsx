@@ -28,15 +28,15 @@ export default function OpenGraphImage() {
           <span style={{ color: '#6e776d' }}>harrisonhjohnson/productagent</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div style={{ fontSize: 26, color: '#d85d34', letterSpacing: 8 }}>INDEX OF</div>
-          <div style={{ fontSize: 96, fontWeight: 700, letterSpacing: -4 }}>/harnesses</div>
+          <div style={{ fontSize: 26, color: '#d85d34', letterSpacing: 8 }}>PRODUCTAGENT</div>
+          <div style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.1 }}>What do you need to get done?</div>
           <div style={{ fontSize: 28, color: '#18382f', maxWidth: 980, lineHeight: 1.35 }}>
-            Claude Code harnesses for product managers: skills, agents, a fenced night lane, a Telegram bridge.
+            A TODO list on your phone, a design interview that ends in a prototype, an agent that works overnight on a leash.
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22, color: '#6e776d', letterSpacing: 3 }}>
           <span>productagent.dev</span>
-          <span>browse the folders · or go to the git</span>
+          <span>copy what you need · or go to the git</span>
         </div>
       </div>
     ),

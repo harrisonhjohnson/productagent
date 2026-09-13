@@ -1,44 +1,59 @@
 # TODO
 
-One list, two doors. A plain `~/TODO.md` that a Claude Code skill and a Telegram bot both read and
-write, so a task captured from your phone at the bus stop is the same task the terminal sees an hour
-later, and vice versa.
-
-The file is the product. Everything else is a way to reach it.
-
-## The file
+A TODO list for product managers that lives in one markdown file and answers from wherever you
+are: the terminal you're already working in, or the phone in your pocket. No app, no account,
+no sync. One file, two doors.
 
 ```
 - [ ] Draft the Canada launch checklist
 <!-- id:TK3M due:2026-09-20 -->
 ```
 
-Two lines per item: a checkbox line and an ID comment on the line directly after. IDs are `T` plus
-three characters. Items live under `## Decide`, `## Do`, and `## Waiting`. Completed items flip to
-`[x]` and keep their ID so history survives. That's the whole contract; both doors enforce it.
+That's an item. A checkbox line, then an ID on the next line. Everything below is built on it.
 
-## Door one: Claude Code (`skill/`)
+## What it's for
 
-`skill/SKILL.md` is a `/todo` skill. Add, complete, list, remove. Listing can also fold in Linear
-issues and Attio tasks assigned to you when those MCPs are connected, so one command shows the
-personal list next to the work tracker. The skill never writes to Linear or Attio unless asked by
-name.
+**Capture without switching context.** In Claude Code, say "add a TODO: chase legal on the DPA".
+On Telegram, text the bot "remind me to send the roadmap deck by Friday". Either way the item lands
+in `~/TODO.md` with an ID and a due date. Voice notes work too.
 
-Install: copy `skill/` to `~/.claude/skills/todo/`.
+**See what's due.** `/duetoday`, `/dueweek`, `/overdue` on the phone. `/todo` in the terminal
+shows the same list and, if Linear or Attio are connected, folds in the tickets and tasks assigned
+to you so one glance covers personal and team work.
 
-## Door two: Telegram (`bot/`)
+**Triage.** Items live under three headings: `Decide` (needs a call from you), `Do` (actionable),
+`Waiting` (blocked on someone). Move things between them in plain language. `/priorities` and
+`/quickwins` reorder by what will actually move.
 
-`bot/` is the Telegram bridge (called Navi in the code). Send "add review the Q1 budget to Do" or
-"what's on my list" and it edits the same file. It also runs `/todo` filters, voice notes, and can
-spawn a background Claude agent on a single item and draft the follow-up. `bot/mcp_server.py`
-exposes the list as MCP tools so any agent can use it.
+**Hand an item to an agent.** `/prework TK3M` has Claude draft a plan for the item; `/approve`
+runs it with a fixed set of tools and reports back; `/draft` writes the follow-up message so you
+only have to press send. Anything the agent wants to do outside its allowlist is sent to you as a
+Telegram approve/deny before it happens.
 
-Start with `bot/BOT.md`. Read its security notes before running it unattended; it ships with the
-tradeoffs of a personal bot, documented rather than hidden.
+**Start and end the day.** `/morning` and `/summary` on a schedule, a weekly review, and a
+"war room" that asks the hard question you're avoiding.
 
-## Why it's shaped like this
+## Quick start
+
+1. Copy `skill/` to `~/.claude/skills/todo/`. Open Claude Code and say "show my TODOs".
+2. Optional, for the phone: follow `bot/BOT.md`. It needs a Telegram bot token and a machine that
+   stays on. Ten minutes.
+3. Keep `~/TODO.md` in a synced folder if you use more than one machine.
+
+## Why it's built this way
 
 - **Markdown, not a database.** Greppable, diffable, editable in any editor, survives every tool
-  change.
-- **IDs in comments.** Invisible when rendered, stable when referenced from a phone.
-- **Two thin clients, zero sync.** Both doors open the same file, so there's nothing to reconcile.
+  change you'll make this decade.
+- **IDs in HTML comments.** Invisible when rendered, stable when referenced from a phone with
+  autocorrect on.
+- **Two thin clients, zero sync.** Both doors open the same file, so there is nothing to
+  reconcile and nothing to trust but the filesystem.
+- **Agents on a leash.** Background runs get an explicit tool allowlist and route everything else
+  to you. See the security model in `bot/BOT.md`.
+
+## Layout
+
+```
+skill/SKILL.md   the Claude Code door
+bot/             the Telegram door (called Navi in the code); start with bot/BOT.md
+```

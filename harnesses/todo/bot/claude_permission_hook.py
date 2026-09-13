@@ -66,6 +66,23 @@ HARD_BLOCK_PATTERNS = (
     ":(){ :|:& };:", "dd if=/dev/zero",
 )
 
+# A prefix match only proves what the FIRST command is. Anything that can chain,
+# pipe, or substitute a second command is never silent, no matter how it starts.
+COMPOSITION_TOKENS = (";", "&&", "||", "|", "`", "$(", "<(", ">(", "\n", "\r")
+
+
+def composes(cmd: str) -> bool:
+    return any(tok in cmd for tok in COMPOSITION_TOKENS)
+
+
+def has_silent_prefix(cmd: str) -> bool:
+    """True only if cmd IS an allowlisted verb or starts with one followed by whitespace."""
+    for p in SILENT_BASH_PREFIXES:
+        base = p.rstrip()
+        if cmd == base or cmd.startswith(base + " ") or cmd.startswith(base + "\t"):
+            return True
+    return False
+
 
 def init_perm_dir() -> None:
     """Create the IPC directory with owner-only permissions, tightening if it already existed."""
@@ -141,16 +158,17 @@ _CD_PREFIX = re.compile(r"""^cd\s+('[^']*'|"[^"]*"|[^\s&;|]+)[ \t]*(?:$|\n|&&|;|
 
 def bash_is_silent(cmd: str) -> bool:
     cmd = cmd.strip()
-    if any(cmd.startswith(p) for p in SILENT_BASH_PREFIXES):
-        return True
-    # `cd <trusted dir> && <anything>` — the user opted to trust runs anywhere
-    # under home, so the whole command passes once we confirm the cd target.
+    # `cd <trusted dir> && <single command>` — strip the cd, then judge the rest
+    # by the same rules. Only one `&&` is allowed, and only for this shape.
     m = _CD_PREFIX.match(cmd)
     if m:
         target = m.group(1).strip("'\"")
-        if under_trusted_root(target):
-            return True
-    return False
+        if not under_trusted_root(target):
+            return False
+        cmd = cmd[m.end():].strip()
+    if composes(cmd):
+        return False
+    return has_silent_prefix(cmd)
 
 
 def is_silent(tool_name: str, tool_input: dict) -> bool:

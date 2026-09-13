@@ -74,3 +74,21 @@ VENTURES_ENABLED = True
 VENTURES_ROOT = None  # None = default to ~/ventures
 VENTURES_MORNING_TIME = (8, 5)  # dawn read-back push (after the 8:00 briefing)
 VENTURES_ALERT_POLL_SECONDS = 30  # immediate ALERT.md relay check in the main loop
+
+
+def _csv(name: str, default: str) -> list:
+    return [x.strip() for x in os.environ.get(name, default).split(",") if x.strip()]
+
+
+# --- Permissions for background Claude runs ---------------------------------
+# Comma-separated Claude Code tool patterns passed as --allowedTools. Anything
+# not listed goes to the PreToolUse permission hook (Telegram approve/deny) or is
+# denied when no hook is configured. Never use --dangerously-skip-permissions.
+EXECUTOR_ALLOWED_TOOLS = os.environ.get("NAVI_EXECUTOR_ALLOWED_TOOLS", "Read,Glob,Grep,Edit,Write")
+INBOX_ALLOWED_TOOLS = os.environ.get("NAVI_INBOX_ALLOWED_TOOLS", "mcp__gmail__*,Write")
+
+# --- Inbox rules (personal; set in .env) --------------------------------------
+INBOX_RECEIPTS_LABEL = os.environ.get("NAVI_INBOX_RECEIPTS_LABEL", "Receipts")
+INBOX_PROTECTED_SENDERS = _csv("NAVI_INBOX_PROTECTED_SENDERS", "")      # exact domains, never archived
+INBOX_PROTECTED_PARTIAL = _csv("NAVI_INBOX_PROTECTED_PARTIAL", "")      # substrings, never archived
+INBOX_FINANCE_SENDERS = _csv("NAVI_INBOX_FINANCE_SENDERS", "paypal,stripe,square,shopify,amazon")

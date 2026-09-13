@@ -28,13 +28,14 @@ from todo_manager import TodoManager
 # Initialize FastAPI app
 app = FastAPI(title="HYRULE Server", description="TODO sync API for HYRULE")
 
-# Allow CORS for local development
+# The page is served from this same origin, so only it may call the API.
+# A stray browser tab on another site gets no cross-origin access to your list.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["http://127.0.0.1:8765", "http://localhost:8765"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 # Initialize TodoManager WITHOUT Slack notifications
