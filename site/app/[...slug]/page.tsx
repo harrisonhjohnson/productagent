@@ -37,8 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 function Crumbs({ slug }: { slug: string[] }) {
   return (
     <nav className="crumbs" aria-label="Breadcrumb">
-      <Link href="/">productagent</Link>
-      {slug.map((part, i) => {
+      <Link href="/">harnesses</Link>
+      {slug.slice(1).map((part, j) => {
+        const i = j + 1;
         const last = i === slug.length - 1;
         const href = '/' + slug.slice(0, i + 1).join('/');
         return (
@@ -55,7 +56,7 @@ function Crumbs({ slug }: { slug: string[] }) {
 export default async function Page({ params }: Props) {
   const { slug } = await params;
   const node = getNode(slug);
-  if (!node || node.kind === 'link') notFound();
+  if (!node || node.kind === 'link' || slug.length < 2) notFound();
 
   const tree = getTree();
   const pathLabel = '/' + slug.join('/');

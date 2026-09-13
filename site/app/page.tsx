@@ -6,7 +6,7 @@ import { GITHUB, countAll, getTree } from '@/lib/content';
 export default function Home() {
   const tree = getTree();
   const counts = countAll();
-  const marks = tree.map((n) => n.name.replace(/\.md$/, '').slice(0, 10));
+  const marks = tree.map((n) => n.name.slice(0, 12));
 
   return (
     <Shell path="/">
@@ -14,26 +14,20 @@ export default function Home() {
         <div className="tree-header">
           <div>
             <p>INDEX OF</p>
-            <h1 id="tree-heading">/productagent</h1>
+            <h1 id="tree-heading">/harnesses</h1>
           </div>
           <div className="tree-header-meta">
             <span>{counts.harnesses} harnesses · {counts.files} files</span>
-            <span>click a name to open · chevron to collapse</span>
           </div>
         </div>
 
         <div className="intro">
           <p>
-            An AI operating system for product managers, and the harnesses around it. Four agents answer the four
-            questions a PM's day runs on (who owns this, what's the status, where's the data, when is it due).
-            The <code>harnesses/</code> folder holds the Claude Code skills, agents, fences, and bots I actually run:
-            a design interview that ends in a clickable prototype, an unattended night lane with a budget fence and
-            a morning judge, and a Telegram bridge so the terminal follows me to my phone.
-          </p>
-          <p>
-            Browse here, or go straight to <a href={GITHUB} target="_blank" rel="noreferrer">the git</a>. Every
-            file page has a link to the same path on GitHub. Built by Harrison Johnson with Claude; the judgment is
-            mine, the legwork was the agents'.
+            The Claude Code harnesses I actually run, scrubbed so you can adopt them: a design interview that ends
+            in a clickable prototype, a strategy agent that argues back, an unattended night lane with a budget
+            fence and a morning judge, and a TODO list that follows me to my phone. They sit alongside{' '}
+            <a href={GITHUB} target="_blank" rel="noreferrer">productagent</a>, four agents for the four questions
+            a PM's day runs on.
           </p>
         </div>
 

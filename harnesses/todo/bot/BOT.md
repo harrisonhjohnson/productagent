@@ -1,6 +1,6 @@
-# Navi - Telegram Claude Bot
+# The Telegram door
 
-A Telegram bot that forwards messages to Claude CLI and returns responses.
+The bot half of the TODO harness (see `../README.md`). Called Navi in the code: a Telegram bot that forwards messages to Claude CLI, returns responses, and edits `~/TODO.md` on your behalf.
 
 ## Setup
 

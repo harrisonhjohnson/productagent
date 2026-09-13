@@ -3,8 +3,6 @@ import { TerminalSquare } from 'lucide-react';
 import { GITHUB } from '@/lib/content';
 import { TopbarReadout } from './topbar-readout';
 
-const SHA = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'local';
-
 export function Shell({ path, children }: { path: string; children: React.ReactNode }) {
   return (
     <main className="site-shell">
@@ -14,7 +12,7 @@ export function Shell({ path, children }: { path: string; children: React.ReactN
           <span>PRODUCTAGENT</span>
         </Link>
         <a className="topbar-path" href={GITHUB} target="_blank" rel="noreferrer" aria-label="Repository on GitHub" style={{ textDecoration: 'none' }}>
-          harrisonhjohnson/productagent @ {SHA} · {path}
+          harrisonhjohnson/productagent · {path}
         </a>
         <TopbarReadout />
       </header>

@@ -1,11 +1,11 @@
 {
-  "name": "todo",
+  "name": "TODO",
   "slug": "todo",
-  "tier": "global",
-  "summary": "Add, complete, and list TODOs in a ~/TODO.md whose ID format a Telegram bot can parse, optionally merged with Linear issues and Attio tasks.",
-  "source": "~/.claude/skills/todo",
-  "entry": "SKILL.md",
-  "order": 60,
+  "tier": "system",
+  "summary": "One markdown TODO list with two doors: a Claude Code skill in the terminal and a Telegram bot on your phone, both reading and writing the same file.",
+  "source": "~/.claude/skills/todo + ~/tools/navi",
+  "entry": "README.md",
+  "order": 40,
   "kind": "files",
   "url": null
 }

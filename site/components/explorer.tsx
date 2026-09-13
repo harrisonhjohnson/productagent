@@ -20,13 +20,14 @@ function idOf(n: TreeNode) {
   return n.slug.join('/');
 }
 
-function collectFolders(nodes: TreeNode[], result = new Set<string>()) {
+function initialExpanded(nodes: TreeNode[], activeSlug?: string[]) {
+  const result = new Set<string>();
   nodes.forEach((node) => {
-    if (node.kind === 'folder') {
-      result.add(idOf(node));
-      collectFolders(node.children ?? [], result);
-    }
+    if (node.kind === 'folder') result.add(idOf(node));
   });
+  if (activeSlug) {
+    for (let i = 1; i < activeSlug.length; i++) result.add(activeSlug.slice(0, i).join('/'));
+  }
   return result;
 }
 
@@ -56,7 +57,7 @@ type Props = {
 };
 
 export function Explorer({ tree, activeSlug, trackScroll = false, label }: Props) {
-  const [expanded, setExpanded] = useState<Set<string>>(() => collectFolders(tree));
+  const [expanded, setExpanded] = useState<Set<string>>(() => initialExpanded(tree, activeSlug));
   const progress = useScrollProgress();
   const visibleNodes = useMemo(() => flattenTree(tree, expanded), [tree, expanded]);
   const activeId = activeSlug?.join('/');
@@ -125,10 +126,6 @@ export function Explorer({ tree, activeSlug, trackScroll = false, label }: Props
         })}
       </div>
 
-      <footer className="tree-footer">
-        <span>END OF INDEX</span>
-        <span>{visibleNodes.length} objects · {expanded.size} directories open</span>
-      </footer>
     </>
   );
 }

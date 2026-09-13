@@ -11,15 +11,11 @@ Every folder carries a `harness.json` (name, tier, one-line summary, where it ca
 | [flow-design](flow-design/) | global | A progressive design interview: one question per screen, ending in a clickable HTML prototype of a linear user journey (onboarding, checkout, wizard). |
 | [prototype-swarm](prototype-swarm/) | global | Crawls a multi-screen HTML prototype for undefined click destinations and spawns one generator agent per missing screen, with a handoff packet written by the source screen, until the click graph is covered. |
 | [pm-strategist](pm-strategist/) | global | A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading. |
-| [catch-up](catch-up/) | global | A slash command that orients you in a repo: branch, recent commits, uncommitted work by intent, stashes, and a suggested next step. |
-| [global CLAUDE.md](global-claude-md/) | global | An example of a global ~/.claude/CLAUDE.md: working style, git rules, and stack notes that apply across every repo. |
-| [todo](todo/) | global | Add, complete, and list TODOs in a ~/TODO.md whose ID format a Telegram bot can parse, optionally merged with Linear issues and Attio tasks. |
-| [clean-desktop](clean-desktop/) | global | Sorts loose Desktop files into existing project folders and a few standing topical folders. Moves, never deletes; flags credentials instead of touching them. |
+| [TODO](todo/) | system | One markdown TODO list with two doors: a Claude Code skill in the terminal and a Telegram bot on your phone, both reading and writing the same file. |
 | [Night Orders](night-orders/) | system | An unattended nightly Claude Code lane fenced by settings.json, driven by a captain's-night-orders charter and self-renewing loops, graded next morning by deterministic trajectory scorers and an LLM judge. |
-| [NAVI](navi/) | bot | A Telegram bridge to Claude Code: drive a terminal session from your phone, get responses streamed back, approve tool calls, schedule prework, and capture TODOs by voice or text. |
 | [rev-intel-harness](https://github.com/harrisonhjohnson/rev-intel-harness) | link | A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT. |
 
-Tiers: **global** lives in `~/.claude` and applies everywhere; **system** is a multi-file machine with its own scripts and fence; **bot** runs as a service; **link** points at a separate public repo.
+Tiers: **global** lives in `~/.claude` and applies everywhere; **system** is a multi-file machine with more than one moving part; **link** points at a separate public repo.
 
 ## The harnesses
 
@@ -35,29 +31,13 @@ Crawls a multi-screen HTML prototype for undefined click destinations and spawns
 
 A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading. Source: `~/.claude/agents/pm-strategist.md`. Start with [pm-strategist.md](pm-strategist/pm-strategist.md).
 
-### catch-up
+### TODO
 
-A slash command that orients you in a repo: branch, recent commits, uncommitted work by intent, stashes, and a suggested next step. Source: `~/.claude/commands/catch-up.md`. Start with [catch-up.md](catch-up/catch-up.md).
-
-### global CLAUDE.md
-
-An example of a global ~/.claude/CLAUDE.md: working style, git rules, and stack notes that apply across every repo. Source: `~/.claude/CLAUDE.md`. Start with [CLAUDE.md](global-claude-md/CLAUDE.md).
-
-### todo
-
-Add, complete, and list TODOs in a ~/TODO.md whose ID format a Telegram bot can parse, optionally merged with Linear issues and Attio tasks. Source: `~/.claude/skills/todo`. Start with [SKILL.md](todo/SKILL.md).
-
-### clean-desktop
-
-Sorts loose Desktop files into existing project folders and a few standing topical folders. Moves, never deletes; flags credentials instead of touching them. Source: `~/.claude/skills/clean-desktop`. Start with [SKILL.md](clean-desktop/SKILL.md).
+One markdown TODO list with two doors: a Claude Code skill in the terminal and a Telegram bot on your phone, both reading and writing the same file. Source: `~/.claude/skills/todo + ~/tools/navi`. Start with [README.md](todo/README.md).
 
 ### Night Orders
 
 An unattended nightly Claude Code lane fenced by settings.json, driven by a captain's-night-orders charter and self-renewing loops, graded next morning by deterministic trajectory scorers and an LLM judge. Source: `~/ventures/.claude + ~/ventures/00-ops + ~/ventures/pm`. Start with [README.md](night-orders/README.md).
-
-### NAVI
-
-A Telegram bridge to Claude Code: drive a terminal session from your phone, get responses streamed back, approve tool calls, schedule prework, and capture TODOs by voice or text. Source: `~/tools/navi + ~/.claude/skills/navi-mobile`. Start with [README.md](navi/README.md).
 
 ### rev-intel-harness
 

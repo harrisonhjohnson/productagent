@@ -7,7 +7,6 @@ export const GITHUB = 'https://github.com/harrisonhjohnson/productagent';
 const REF = 'main';
 const REPO_ROOT = path.resolve(process.cwd(), '..');
 
-const ROOT_ALLOWLIST = ['README.md', 'CLAUDE.md', 'context.md', 'agents', 'mcps', 'harnesses'];
 const SKIP = new Set(['node_modules', '__pycache__', 'harness.json', '.DS_Store']);
 
 export type NodeKind = 'folder' | 'text' | 'code' | 'file' | 'link';
@@ -140,9 +139,7 @@ let cachedTree: TreeNode[] | null = null;
 
 export function getTree(): TreeNode[] {
   if (cachedTree) return cachedTree;
-  cachedTree = ROOT_ALLOWLIST.filter((n) => fs.existsSync(abs([n]))).map((n) =>
-    fs.statSync(abs([n])).isDirectory() ? folderNode([n]) : fileNode([n]),
-  );
+  cachedTree = folderNode(['harnesses']).children ?? [];
   return cachedTree;
 }
 
@@ -188,6 +185,6 @@ export function countAll() {
   return {
     files: all.filter((n) => n.kind !== 'folder' && n.kind !== 'link').length,
     folders: all.filter((n) => n.kind === 'folder').length,
-    harnesses: all.filter((n) => n.slug[0] === 'harnesses' && n.slug.length === 2).length,
+    harnesses: getTree().filter((n) => n.kind === 'folder' || n.kind === 'link').length,
   };
 }
