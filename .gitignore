@@ -11,3 +11,5 @@ site/tsconfig.tsbuildinfo
 **/*.log
 **/*.db
 **/__pycache__/
+.vercel
+.env*
