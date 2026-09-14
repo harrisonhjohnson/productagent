@@ -1,0 +1,11 @@
+{
+  "name": "Loops",
+  "slug": "loops",
+  "tier": "system",
+  "summary": "Give an agent a goal, a budget, a cadence and a model. It works one bounded run at a time while you sleep, inside a fence, and hands you four plain sentences in the morning.",
+  "source": "~/ventures/.claude + ~/ventures/00-ops + ~/ventures/pm",
+  "entry": "README.md",
+  "order": 10,
+  "kind": "files",
+  "url": null
+}

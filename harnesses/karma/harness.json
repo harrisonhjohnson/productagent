@@ -1,0 +1,11 @@
+{
+  "name": "karma",
+  "slug": "karma",
+  "tier": "link",
+  "summary": "A personal knowledge graph over everything the loops write: seeds in, relationships out, so a month of night reports stays searchable. Open source, MIT.",
+  "source": "github.com/harrisonhjohnson/karma",
+  "entry": null,
+  "order": 70,
+  "kind": "link",
+  "url": "https://github.com/harrisonhjohnson/karma"
+}

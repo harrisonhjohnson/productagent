@@ -1,100 +1,39 @@
 # productagent
 
-An AI operating system for product managers.
+Working tools for product managers who run their day with Claude Code, published as the
+folders they actually are. Browse them at **[productagent.dev](https://productagent.dev)**
+or start at [harnesses/README.md](harnesses/README.md).
 
-Your job runs on four questions: **who owns this, what's the status, where's the data, when is it due.** productagent gives you four agents — one per question — connected to the tools your team already uses.
+The centre of it is **[Loops](harnesses/loops/README.md)**: give an agent a goal, a budget,
+a cadence and a model. It works one bounded run at a time while you sleep, inside a fence
+it cannot climb, and hands you four plain sentences in the morning. Around it:
 
----
+- **[TODO](harnesses/todo/README.md)** — one markdown list shared between the terminal and a Telegram bot. The bot is also the phone-side write path for loops (`/loops`, `/loop L-03 budget 5`).
+- **[flow-design](harnesses/flow-design/SKILL.md)** and **[prototype-swarm](harnesses/prototype-swarm/SKILL.md)** — a screen-by-screen interview that ends in a clickable prototype, and a swarm that fills in the screens it links to.
+- **[pm-strategist](harnesses/pm-strategist/pm-strategist.md)** — an advisor agent that argues back.
+- **[karma](https://github.com/harrisonhjohnson/karma)** — a knowledge graph over everything the loops write, so a month of reports stays searchable.
+- **[rev-intel-harness](https://github.com/harrisonhjohnson/rev-intel-harness)** — companies in, people out.
 
-## How it works
-
-1. **Fill in `context.md`** — your people, initiatives, and projects in one file. This is what makes the agents useful; they read it on every query.
-2. **Connect your tools** — plug in MCPs for Asana, Slack, Google Drive, GitHub, Databricks, or whatever your stack is. Start with one.
-3. **Ask questions** — invoke an agent by name or just describe what you need.
-
-```
-@who  Who owns the Canada checkout project?
-@what What shipped last week on the iOS team?
-@where Where's the PRD for the onboarding redesign?
-@when When is the Q3 data migration due?
-```
-
----
-
-## The four agents
-
-| Agent | Question | Goes to |
-|-------|----------|---------|
-| `who` | Ownership, people, contacts | `context.md` → Slack |
-| `what` | Status, tasks, blockers | `context.md` → Asana / GitHub |
-| `where` | Documents, data, code | `context.md` → Google Drive / Databricks / GitHub |
-| `when` | Deadlines, timelines, roadmap | `context.md` → Asana / calendar |
-
-The agents handle information retrieval. You handle judgment.
-
----
-
-## Harnesses
-
-The `harnesses/` folder holds the Claude Code harnesses I actually run, scrubbed for reuse: design-interview and prototype skills, a strategy agent, a fenced unattended night lane with a morning judge, and a TODO list shared between the terminal and Telegram. Browse them at **[productagent.dev](https://productagent.dev)** or start at [harnesses/README.md](harnesses/README.md).
-
----
+Four words carry the whole system: a **Loop** is work with a goal that renews itself; a
+**Run** is one bounded pass at it; an **Order** is a one-off instruction for tonight; a
+**Decision** is anything the run could not settle and hands back to you.
 
 ## What's in this repo
 
 ```
-context.md        # your people, initiatives, and projects — fill this in first
-CLAUDE.md         # the OS layer — how the system works
-agents/
-  who.md          # People & Ownership agent
-  what.md         # Work & Status agent
-  where.md        # Data & Source agent
-  when.md         # Timeline & Schedule agent
-mcps/
-  setup.md        # how to connect your tools
-harnesses/        # the harnesses behind productagent.dev — see harnesses/README.md
-site/             # the productagent.dev site (Next.js, reads this repo at build time)
+harnesses/        # every harness as a folder with a harness.json manifest
+  loops/          # the flagship: fence, charter, runner, morning judge, spec
+  todo/           # the list + the Telegram bot
+  flow-design/  prototype-swarm/  pm-strategist/
+  karma/  rev-intel-harness/      # links to their own repos
+site/             # productagent.dev (Next.js, reads harnesses/ at build time)
 ```
-
----
 
 ## Getting started
 
-**1. Clone the repo**
-```bash
-git clone https://github.com/harrisonhjohnson/productagent
-cd productagent
-```
+Clone the repo, open the harness you want, and copy its folder into your own setup. Each
+README says what to copy and what to edit first. Nothing here phones home, and nothing is
+hosted: every harness runs on your machine, on your Claude Code subscription.
 
-**2. Fill in context.md**
-
-Replace the example data with your own people, initiatives, and projects. This is the only file you need to maintain.
-
-**3. Connect at least one MCP**
-
-See `mcps/setup.md`. Asana or Slack are good starting points.
-
-**4. Open Claude Code in this directory**
-
-```bash
-claude
-```
-
-The agents are available immediately.
-
----
-
-## Keeping it current
-
-The agents are only as good as your `context.md`. A recommended practice: run a quick sync before planning meetings or at the start of your week.
-
-> "Sync my context — check context.md against Asana and Slack and flag anything stale."
-
-This triangulates your written context against live tool data so answers stay accurate.
-
----
-
-## Requirements
-
-- [Claude Code](https://claude.ai/code)
-- One or more MCP integrations (see `mcps/setup.md`)
+Built by Harrison Johnson with Claude. The agents did the copying and the first pass of
+scrubbing; the judgment about what to publish is mine.

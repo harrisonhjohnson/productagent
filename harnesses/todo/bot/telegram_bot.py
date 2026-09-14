@@ -75,6 +75,14 @@ except ImportError as e:
     VENTURES_AVAILABLE = False
     print(f"Ventures signal not available: {e}")
 
+# Loops: the phone write path for pm/LOOPS.md knobs + the four-line standup
+try:
+    import loops as loops_mod
+    LOOPS_AVAILABLE = True
+except ImportError as e:
+    LOOPS_AVAILABLE = False
+    print(f"Loops module not available: {e}")
+
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 if not TOKEN:
     print("Error: TELEGRAM_BOT_TOKEN environment variable not set")
@@ -1209,6 +1217,11 @@ def handle_command(text: str, user_id: int, chat_id: int) -> Optional[str]:
             return "Ventures signal is not enabled."
         return ventures_signal.handle_ventures_command(text, chat_id, user_id)
 
+    elif command in ('/loops', '/loop'):
+        if not LOOPS_AVAILABLE or not getattr(config, 'VENTURES_ENABLED', False):
+            return "Loops are not enabled."
+        return loops_mod.handle_loops_command(text)
+
     elif command == '/help':
         help_text = """**Navi Commands**
 
@@ -1261,6 +1274,12 @@ done all / skip all"""
 
         if WARROOM_AVAILABLE and warroom_manager:
             help_text += """
+
+**Loops:**
+/loops - Every loop: state, cadence, model, budget, goal
+/loops standup - This morning's four lines per loop
+/loop L-NN goal <sentence> | budget <$> | total <$> | cadence <x> | model sonnet|opus|fable
+/loop L-NN pause | resume | promote
 
 **War Room:**
 /warroom - List active
@@ -2708,6 +2727,10 @@ def main():
                         v_lines = ventures_signal.render_section('morning')
                         if v_lines:
                             send_message(config.AUTHORIZED_USERS[0], "\n".join(v_lines))
+                        if LOOPS_AVAILABLE:
+                            s_lines = loops_mod.standup_lines(only_today=True)
+                            if s_lines:
+                                send_message(config.AUTHORIZED_USERS[0], "\n".join(s_lines))
                         if scheduler_state:
                             scheduler_state.mark_job_run('ventures_morning')
                     except Exception as e:

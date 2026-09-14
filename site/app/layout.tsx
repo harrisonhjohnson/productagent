@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s — productagent',
   },
   description:
-    'A TODO list that follows you to your phone, a design interview that ends in a prototype, a strategy agent that argues back, and an agent that works overnight on a leash. Copy what you need.',
+    'Loops: give an agent a goal, a budget, a cadence and a model, and read four plain sentences in the morning. Plus a TODO bot for your phone, a design interview that ends in a prototype, and a strategy agent that argues back. Copy what you need.',
   openGraph: {
     siteName: 'productagent',
     type: 'website',

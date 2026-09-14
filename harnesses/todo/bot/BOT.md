@@ -76,8 +76,12 @@ phone-side harness around Claude Code:
 - **Voice** — voice notes transcribed via Whisper (`voice_handler.py`, see
   `VOICE_SETUP.md`).
 - **Ventures signal** — `ventures_signal.py` relays alerts from an unattended
-  night-run machine (see the `night-orders` harness) and accepts a handful of
+  night-run machine (see the `loops` harness) and accepts a handful of
   bounded verbs (`/ventures ack|pause|resume|decide|standup`) from the phone.
+- **Loops** — `loops.py` is the phone-side write path for `pm/LOOPS.md`: `/loops`
+  lists every loop with its knobs, `/loop L-NN goal|budget|total|cadence|model …`
+  edits one, `pause|resume|promote` moves its state, `/loops standup` reads back
+  the morning's four lines. Every edit is dated and logged as yours.
 - **Knowledge graph hook** — optional `integrations/karma_client.py`.
 
 Everything is gated to the Telegram user IDs in `config.AUTHORIZED_USERS`; set

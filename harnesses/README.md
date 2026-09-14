@@ -12,8 +12,9 @@ Every folder carries a `harness.json` (name, tier, one-line summary, where it ca
 | [prototype-swarm](prototype-swarm/) | global | Crawls a multi-screen HTML prototype for undefined click destinations and spawns one generator agent per missing screen, with a handoff packet written by the source screen, until the click graph is covered. |
 | [pm-strategist](pm-strategist/) | global | A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading. |
 | [TODO](todo/) | system | A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts. |
-| [Night Orders](night-orders/) | system | An unattended nightly Claude Code lane fenced by settings.json, driven by a captain's-night-orders charter and self-renewing loops, graded next morning by deterministic trajectory scorers and an LLM judge. |
+| [Loops](loops/) | system | Give an agent a goal, a budget, a cadence and a model. It works one bounded run at a time while you sleep, inside a fence, and hands you four plain sentences in the morning. |
 | [rev-intel-harness](https://github.com/harrisonhjohnson/rev-intel-harness) | link | A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT. |
+| [karma](https://github.com/harrisonhjohnson/karma) | link | A personal knowledge graph over everything the loops write: seeds in, relationships out, so a month of night reports stays searchable. Open source, MIT. |
 
 Tiers: **global** lives in `~/.claude` and applies everywhere; **system** is a multi-file machine with more than one moving part; **link** points at a separate public repo.
 
@@ -35,13 +36,17 @@ A product and strategy advisor agent that blends three lenses (build taste, busi
 
 A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts. Source: `~/.claude/skills/todo + ~/tools/navi`. Start with [README.md](todo/README.md).
 
-### Night Orders
+### Loops
 
-An unattended nightly Claude Code lane fenced by settings.json, driven by a captain's-night-orders charter and self-renewing loops, graded next morning by deterministic trajectory scorers and an LLM judge. Source: `~/ventures/.claude + ~/ventures/00-ops + ~/ventures/pm`. Start with [README.md](night-orders/README.md).
+Give an agent a goal, a budget, a cadence and a model. It works one bounded run at a time while you sleep, inside a fence, and hands you four plain sentences in the morning. Source: `~/ventures/.claude + ~/ventures/00-ops + ~/ventures/pm`. Start with [README.md](loops/README.md); the runner, fence and morning judge are explained in [MACHINE.md](loops/MACHINE.md).
 
 ### rev-intel-harness
 
 A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT. Source: `github.com/harrisonhjohnson/rev-intel-harness`.
+
+### karma
+
+A personal knowledge graph over everything the loops write: seeds in, relationships out, so a month of night reports stays searchable. Open source, MIT. Source: `github.com/harrisonhjohnson/karma`.
 
 ## What was scrubbed
 

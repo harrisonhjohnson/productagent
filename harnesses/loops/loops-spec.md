@@ -10,6 +10,38 @@ attribution.
 
 ---
 
+## 0. v1.1 addendum — the four knobs and five states (September)
+
+Ratified after a month of runs. Two things changed: the loop section gained `goal` and
+`model` lines, and `status` became a closed set. Nothing else in this spec moved.
+
+**Knobs a person touches** (everything else in a section is scope and rails):
+
+| Line | Meaning |
+|---|---|
+| `goal` | One plain sentence a stranger understands. Rendered on every view and in every report. |
+| `budget_per_iteration_usd` / `budget_loop_total_usd` | Dollars per run, dollars for the loop. Runs allowed = total ÷ per-run. |
+| `cadence` | `nightly` · `every-2nd-night` · `every-3rd-night` · `weekly` |
+| `model` | Per-loop Claude id. Falls back to the charter's `model` dial when absent. A cost dial. |
+
+**States** (`status` line, first word; anything after it is a note):
+
+`draft` → `trial` → `active` → `parked` | `done`
+
+- `draft`: has a goal, never run. Not runnable.
+- `trial`: runnable; the first three runs, each reviewed before its output is acted on.
+- `active`: runnable, unattended.
+- `parked`: off the line until a person resumes it. Two consecutive `progress: no` runs park a loop automatically.
+- `done`: finished; kept for the record.
+
+The runner treats `trial` and `active` as runnable and everything else as not. Promotion
+from `trial` to `active` is a human act (from the desk or the phone), never automatic.
+
+**The four lines.** Every run ends its loop section, in the report and in the state file,
+with `- Trying to:` · `- Did:` · `- Decided:` · `- Need from you:` (plus `- Where to
+look:` for paths). Each ≤ 25 words, plain speech, no jargon. A run without the four lines
+is not done; the definition of done says so and the morning judge checks it.
+
 ## 1. Problem
 
 The night lane only runs when `ORDERS.md § Tonight` has fresh orders, and only the

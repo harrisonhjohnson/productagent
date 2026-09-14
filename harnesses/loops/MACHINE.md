@@ -1,5 +1,7 @@
-# Night Orders
+# The machine behind Loops
 
+
+_This is the engineering page. For what a loop is and how to use one, start at [README.md](README.md)._
 A captain's night order book, for a portfolio of small ventures run by one person and
 one coding agent: judgment written down at dusk, executed by the watch overnight, the
 captain woken only under named conditions.

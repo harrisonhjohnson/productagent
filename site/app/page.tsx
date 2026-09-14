@@ -14,16 +14,25 @@ type Job = {
 const JOBS: Job[] = [
   {
     n: '01',
-    job: 'Keep one TODO list that follows you from the terminal to your phone.',
-    how: 'One markdown file. A Claude Code skill and a Telegram bot both read and write it, so capture, triage, and "what\'s due" work from wherever you are. Hand an item to an agent that asks before it acts.',
+    job: 'Give an agent a goal and let it work overnight without letting it spend, push, or wander.',
+    how: 'A loop is work with a goal that renews itself. You set four knobs: goal, budget, cadence, model. It runs one bounded pass at a time inside a permissions fence, and every morning you read four plain sentences per loop: what it was trying to do, what it did, what it decided, what it needs from you.',
     links: [
-      { label: 'read the guide', href: '/harnesses/todo/README.md' },
-      { label: 'the skill', href: '/harnesses/todo/skill/SKILL.md' },
-      { label: 'the bot', href: '/harnesses/todo/bot/BOT.md' },
+      { label: 'what a loop is', href: '/harnesses/loops/README.md' },
+      { label: 'the machine', href: '/harnesses/loops/MACHINE.md' },
+      { label: 'the fence', href: '/harnesses/loops/settings.json' },
     ],
   },
   {
     n: '02',
+    job: 'Run it from your phone.',
+    how: 'One markdown TODO list shared between the terminal and a Telegram bot. The same bot lists your loops, changes a budget or a model with one message, pauses a loop, and reads back this morning\'s four lines.',
+    links: [
+      { label: 'read the guide', href: '/harnesses/todo/README.md' },
+      { label: 'the bot', href: '/harnesses/todo/bot/BOT.md' },
+    ],
+  },
+  {
+    n: '03',
     job: 'Turn a conversation about a flow into a clickable prototype.',
     how: 'A screen-by-screen interview: one question at a time, ending in an HTML prototype of the journey. Then let a swarm fill in every screen the prototype links to but doesn\'t have yet.',
     links: [
@@ -32,23 +41,19 @@ const JOBS: Job[] = [
     ],
   },
   {
-    n: '03',
+    n: '04',
     job: 'Pressure-test a strategy before you present it.',
     how: 'An advisor agent with three lenses: build taste and latent demand, business structure and moats, and PM execution. It argues back instead of cheering.',
     links: [{ label: 'pm-strategist', href: '/harnesses/pm-strategist/pm-strategist.md' }],
   },
   {
-    n: '04',
-    job: 'Let an agent work overnight without letting it spend, push, or wander.',
-    how: 'A permissions fence, a charter with budget dials, self-renewing standing orders, and a morning judge that grades the night against the diff rather than the report.',
-    links: [
-      { label: 'read the guide', href: '/harnesses/night-orders/README.md' },
-      { label: 'the fence', href: '/harnesses/night-orders/settings.json' },
-      { label: 'the runner', href: '/harnesses/night-orders/ops/night/run-night.sh' },
-    ],
+    n: '05',
+    job: 'Keep a month of agent reports searchable.',
+    how: 'A personal knowledge graph. Every report the loops write becomes a seed; the graph finds the relationships, so last month\'s mistake is one query away. Open source, MIT.',
+    links: [{ label: 'karma', href: 'https://github.com/harrisonhjohnson/karma', external: true }],
   },
   {
-    n: '05',
+    n: '06',
     job: 'Turn a list of companies into the people you should talk to.',
     how: 'Point the AI subscriptions you already pay for at a CSV of target accounts. Open source, MIT.',
     links: [{ label: 'rev-intel-harness', href: 'https://github.com/harrisonhjohnson/rev-intel-harness', external: true }],
@@ -66,7 +71,7 @@ export default function Home() {
         <div className="tree-header">
           <div>
             <p>PRODUCTAGENT</p>
-            <h1 id="page-heading">What do you need to get done?</h1>
+            <h1 id="page-heading">Let an agent run a loop while you sleep.</h1>
           </div>
           <div className="tree-header-meta">
             <span>{JOBS.length} jobs · {counts.harnesses} harnesses</span>
@@ -76,10 +81,11 @@ export default function Home() {
         <div className="intro">
           <p>
             Working tools for product managers who run their day with Claude Code, published as the folders they
-            actually are. Each job below is answered by a harness: a skill, an agent, a fence, or a bot you can copy
-            into your own setup. They sit alongside{' '}
-            <a href={GITHUB} target="_blank" rel="noreferrer">productagent</a>, four agents for the four questions
-            a PM's day runs on.
+            actually are. Four words carry the system: a <strong>Loop</strong> is work with a goal that renews
+            itself; a <strong>Run</strong> is one bounded pass at it; an <strong>Order</strong> is a one-off
+            instruction for tonight; a <strong>Decision</strong> is anything the run could not settle and hands
+            back to you. Everything below is a folder you can copy into your own setup. Nothing is hosted, and
+            nothing phones home.
           </p>
         </div>
 
