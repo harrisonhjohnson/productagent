@@ -286,11 +286,13 @@ def _latest_report(kind):
 
 
 def _four_lines(body):
+    """Reports wrap at ~90 columns, so a line's value continues on indented lines."""
     out = []
     for label in FOUR_LINES:
-        m = re.search(rf"^- {label}: *(.+?)$", body, re.M)
+        m = re.search(rf"^- {label}: *([^\n]*(?:\n[ \t]+\S[^\n]*)*)", body, re.M)
         if m:
-            out.append(f"   {label}: {m.group(1).strip()}")
+            val = re.sub(r"\s*\n\s*", " ", m.group(1)).replace("`", "").strip()
+            out.append(f"   {label}: {val}")
     return out
 
 
@@ -323,10 +325,12 @@ def standup_lines(only_today=True):
             lines.append("   nothing ran")
         dec = re.search(r"^## Decisions needed[^\n]*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
         if dec:
-            items = [x.strip() for x in dec.group(1).splitlines() if x.strip().startswith(("-", "*", "1", "2", "3"))]
+            items = re.findall(r"^(?:[-*]|\d+\.) +([^\n]*(?:\n[ \t]+\S[^\n]*)*)", dec.group(1), re.M)
             if items:
                 lines.append(" Decisions for you:")
-                lines.extend("   " + x.lstrip("-*0123456789. ")[:160] for x in items[:5])
+                for x in items[:5]:
+                    x = re.sub(r"\s*\n\s*", " ", x).replace("**", "").replace("`", "").strip()
+                    lines.append("   " + (x[:220] + ("…" if len(x) > 220 else "")))
     return lines or ["no reports found"]
 
 
