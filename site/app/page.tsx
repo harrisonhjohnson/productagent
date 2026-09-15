@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
+import { LoopUseCases } from '@/components/loop-usecases';
 import { Shell } from '@/components/shell';
 import { GITHUB, countAll, getTree } from '@/lib/content';
 
@@ -89,6 +90,9 @@ export default function Home() {
           </p>
         </div>
 
+        <LoopUseCases />
+
+        <p className="section-label">SIX JOBS IT DOES</p>
         <ol className="jobs" aria-label="Jobs to be done">
           {JOBS.map((j) => (
             <li className="job" key={j.n} id={`job-${j.n}`}>

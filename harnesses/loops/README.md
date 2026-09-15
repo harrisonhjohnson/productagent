@@ -69,6 +69,24 @@ loops: `/loops` lists every loop with its state, knobs and last run; `/loop L-03
 back this morning's four lines. Every edit lands in `pm/LOOPS.md`, dated and marked as
 yours.
 
+## Laptop open or shut?
+
+A Mac is built to nap the moment you close it. Getting it to do an hour of real work at
+2 a.m. with the lid shut takes a handful of fiddly settings most people never find. They
+are in this folder, already set.
+
+- **Works with the lid shut.** Close the laptop and walk away. The machine keeps the Mac
+  awake for exactly as long as the run takes, then lets it sleep again.
+- **Waits until it can finish.** Out of the box it holds off until the Mac is plugged in,
+  because a closed Mac on battery naps every half hour and would kill the run halfway. It
+  is a setting in `pm/CHARTER.md`. You can turn it off. We would not.
+- **Never hands back a dead laptop.** Nothing runs under thirty percent battery. Shorter
+  daytime runs are allowed on battery with the lid open. Both are knobs with sane defaults.
+
+There is no 2 a.m. alarm. A checker looks every ten minutes and takes the first window
+that works, so a laptop plugged in at midnight or at 6 a.m. still gets its run. To skip a
+night, tell the bot `pause`.
+
 ## What it will never do
 
 Spend beyond the budget dial, push code, merge, widen its own permissions, edit its own
