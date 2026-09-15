@@ -130,11 +130,29 @@ def _when(iso):
     return {0: "today", 1: "yesterday"}.get(d, f"{d}d ago")
 
 
+def quota_line():
+    """The CLI's cached weekly utilization — the real currency behind the dollar proxies."""
+    try:
+        import json
+        u = json.load(open(os.path.expanduser("~/.claude.json")))["cachedUsageUtilization"]
+        lim = {l["kind"]: l for l in u["utilization"].get("limits", [])}
+        wk, sc = lim.get("weekly_all", {}), lim.get("weekly_scoped", {})
+        age_h = (datetime.now().timestamp() - u["fetchedAtMs"] / 1000) / 3600
+        reset = datetime.fromisoformat(wk["resets_at"]).astimezone() if wk.get("resets_at") else None
+        left = f", {(reset - datetime.now(reset.tzinfo)).total_seconds() / 86400:.1f}d left" if reset else ""
+        return (f"quota: week {wk.get('percent')}% used"
+                + (f" ({sc.get('scope', {}).get('model', {}).get('display_name', 'scoped')} {sc.get('percent')}%)" if sc else "")
+                + (f", resets {reset.strftime('%a %H:%M')}{left}" if reset else "")
+                + f" · as of {age_h:.0f}h ago" + (" (stale)" if age_h > 36 else ""))
+    except Exception:
+        return "quota: not cached"
+
+
 def render_list():
     loops = parse_loops()
     if not loops:
         return ["🔁 LOOPS: LOOPS.md unreadable or empty"]
-    lines = ["🔁 LOOPS"]
+    lines = ["🔁 LOOPS", quota_line()]
     for l in loops:
         n, last, prog = runs(l["id"])
         per, tot = l["per"] or "?", l["total"] or "?"
