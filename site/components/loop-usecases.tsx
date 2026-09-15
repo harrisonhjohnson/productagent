@@ -165,35 +165,35 @@ export function LoopUseCases() {
       <p className="section-label">WHILE YOU SLEEP, LITERALLY</p>
       <div className="sleep">
         <p className="sleep-lede">
-          A Mac is built to nap the moment you close it. Getting it to do an hour of real work at 2 a.m. with the lid
-          shut takes a handful of fiddly settings most people never find. They are in the folder, already set.
+          Close the laptop at night. Open it in the morning to work that got done: the fix shipped and checked, the
+          tickets sorted, the update drafted. Same Mac, same Claude plan, no server to rent.
         </p>
-        <ul className="sleep-rules" aria-label="What the settings do for you">
+        <ul className="sleep-rules" aria-label="Why it matters">
+          <li>
+            <span className="sleep-glyph"><MoonZGlyph /></span>
+            <div>
+              <strong>Eight free hours a night.</strong>
+              <p>The hours you are asleep become the hours the agent works. A goal you would never get to by day gets a run every night.</p>
+            </div>
+          </li>
           <li>
             <span className="sleep-glyph"><LidGlyph open={false} /></span>
             <div>
-              <strong>Works with the lid shut.</strong>
-              <p>Close the laptop and walk away. The machine keeps the Mac awake for exactly as long as the run takes, then lets it sleep again.</p>
+              <strong>Lid shut, laptop in the bag.</strong>
+              <p>A Mac naps the second you close it. The folder carries the settings that keep it working under a closed lid, then let it sleep again.</p>
             </div>
           </li>
           <li>
             <span className="sleep-glyph"><PlugGlyph /></span>
             <div>
-              <strong>Waits until it can finish.</strong>
-              <p>Out of the box it holds off until the Mac is plugged in, because a closed Mac on battery naps every half hour and would kill the run halfway. It is a setting. You can turn it off. We would not.</p>
-            </div>
-          </li>
-          <li>
-            <span className="sleep-glyph"><MoonZGlyph /></span>
-            <div>
-              <strong>Never hands back a dead laptop.</strong>
-              <p>Nothing runs under thirty percent battery. Shorter daytime runs are allowed on battery with the lid open. Both are knobs, and both have sane defaults.</p>
+              <strong>Runs on what you already pay for.</strong>
+              <p>Your own laptop, your own Claude subscription. No cloud minutes, no second machine, nothing phones home.</p>
             </div>
           </li>
         </ul>
         <p className="sleep-foot">
-          There is no 2 a.m. alarm. It checks every ten minutes and takes the first window that works, so a laptop
-          you plug in at midnight or at 6 a.m. still gets its run. To skip a night, tell the bot: pause.
+          Fine print: by default it waits until the Mac is plugged in and never runs under thirty percent battery, so
+          you do not wake up to a dead laptop. Both are settings. To skip a night, tell the bot: pause.
         </p>
       </div>
 
