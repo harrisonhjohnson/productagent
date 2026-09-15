@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { BOOT_LINES, CADENCES, MODELS, NOUNS, STARTERS, formatKnobs, loopMarkdown } from './data';
 import { DecisionGlyph, GraphGlyph, LidGlyph, MoonZGlyph, NOUN_GLYPH, PhoneGlyph, PlugGlyph } from './glyphs';
 import { useReducedMotion, useTypedLines } from './hooks';
-import { Laptop } from './scenes';
+import { ClosedMac } from './scenes';
 import type { BeatId, Cadence, Draft, Model, Noun, StarterId } from './types';
 
 export function B0ColdBoot({
@@ -44,7 +44,7 @@ export function B0ColdBoot({
         </ol>
         {finished ? (
           <p className="boot-wait">
-            Installed. <span className="caret" />
+            press enter <span className="caret" />
           </p>
         ) : (
           <p className="boot-skip">Esc skips the boot</p>
@@ -67,7 +67,8 @@ export function B1LidPromise() {
         <p className="lede">Lid shut. Same Mac. Same Claude plan. No server to rent, and nothing phones home.</p>
       </div>
       <div className="promise-mac">
-        <Laptop open={0.14} screen="sky" />
+        <ClosedMac />
+        <p className="mac-caption">lid shut</p>
       </div>
       <ul className="facts">
         <li>
@@ -292,7 +293,6 @@ export function B4Timelapse({
   const p = complete ? 1 : t;
   const minutes = Math.floor(p * (7 * 60 + 40)); // 23:12 → 06:52
   const clock = formatNightClock(23, 12, minutes);
-  const open = p < 0.12 ? 1 - p / 0.12 : 0;
   const logs = nightLog(draft, p);
 
   return (
@@ -305,7 +305,10 @@ export function B4Timelapse({
         </p>
       </header>
       <div className="night-stage">
-        <Laptop open={open} clock={clock} screen="sky" />
+        <div className="night-mac">
+          <ClosedMac running={p > 0.12 && p < 0.94} />
+          <p className="mac-caption">{p >= 1 ? 'sleeping' : 'lid shut · running'}</p>
+        </div>
         <ol className="night-log" aria-live="polite">
           <li className="clock-line">{clock}</li>
           {logs.map((line) => (
@@ -488,7 +491,7 @@ const CHAT_LINES = [
 
 export function B7Phone({ active }: { active: boolean }) {
   const reduced = useReducedMotion();
-  const { visible, done } = useTypedLines(CHAT_LINES, reduced, active, 520);
+  const { visible, done } = useTypedLines(CHAT_LINES, reduced, active, 280);
 
   return (
     <section className="beat beat-phone">

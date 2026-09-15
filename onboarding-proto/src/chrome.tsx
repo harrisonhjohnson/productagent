@@ -63,7 +63,7 @@ export function Shell({
           <span className="hint-gap" />
           <kbd>?</kbd> keys
           <span className="hint-gap" />
-          <kbd>⌫</kbd> back
+          <kbd>Backspace</kbd> back
         </p>
         <p className="beat-name">
           {BEATS[beat].code} · {BEATS[beat].name}
@@ -85,7 +85,7 @@ export function HelpOverlay({ onClose }: { onClose: () => void }) {
             <kbd>Enter</kbd> <kbd>Space</kbd> continue / confirm
           </li>
           <li>
-            <kbd>⌫</kbd> <kbd>←</kbd> previous beat
+            <kbd>Backspace</kbd> <kbd>←</kbd> previous beat
           </li>
           <li>
             <kbd>1</kbd>–<kbd>4</kbd> arm Loop, Run, Order, Decision

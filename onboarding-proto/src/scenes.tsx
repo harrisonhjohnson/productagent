@@ -87,31 +87,18 @@ export function Grain() {
   return <div className="grain" aria-hidden="true" />;
 }
 
-export function Laptop({
-  open,
-  clock,
-  screen,
-}: {
-  open: number;
-  clock?: string;
-  screen?: 'sky' | 'report' | 'boot';
-}) {
-  const lid = 8 + (1 - open) * 82;
+export function ClosedMac({ running = false }: { running?: boolean }) {
   return (
-    <div className="laptop" aria-hidden="true">
-      <div className="laptop-stage">
-        <div className="lid" style={{ transform: `rotateX(${lid}deg)` }}>
-          <div className={`bezel screen-${screen ?? 'sky'}`}>
-            <div className="notch" />
-            {clock ? <span className="lid-clock">{clock}</span> : null}
-          </div>
-        </div>
-        <div className="hinge" />
-        <div className="base">
-          <div className="deck" />
-          <div className="chin" />
-        </div>
-      </div>
-    </div>
+    <svg className="closed-mac" viewBox="0 0 420 96" aria-hidden="true">
+      <rect x="24" y="10" width="372" height="58" rx="10" fill="#141c2c" stroke="rgba(232,212,168,0.38)" />
+      <rect x="36" y="20" width="348" height="38" rx="4" fill="#0c1424" />
+      <g transform="translate(210 39)">
+        <circle r="11" fill="#f6e7c6" />
+        <circle cx="5" cy="-3" r="9.5" fill="#0c1424" />
+      </g>
+      {running ? <circle className="mac-led" cx="360" cy="39" r="3.2" fill="#d4b483" /> : null}
+      <rect x="16" y="68" width="388" height="12" rx="3" fill="#2a3344" />
+      <rect x="16" y="78" width="388" height="7" rx="2" fill="#c9bda6" opacity="0.45" />
+    </svg>
   );
 }
