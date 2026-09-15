@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
@@ -70,13 +71,12 @@ export default function Home() {
   return (
     <Shell path="/">
       <section className="tree-panel" aria-labelledby="page-heading">
-        <div className="tree-header">
-          <div>
-            <p>PRODUCTAGENT</p>
-            <h1 id="page-heading">Let an agent run a loop while you sleep.</h1>
-          </div>
-          <div className="tree-header-meta">
-            <span>{JOBS.length} jobs · {counts.harnesses} harnesses</span>
+        <div className="hero">
+          <Image src="/loops-retro.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 78vw" className="hero-img" />
+          <div className="hero-copy">
+            <p className="hero-eyebrow">PRODUCTAGENT</p>
+            <h1 id="page-heading">Let an agent run a loop<br />while you sleep.</h1>
+            <p className="hero-meta">{JOBS.length} jobs · {counts.harnesses} harnesses · your mac · your claude plan</p>
           </div>
         </div>
 
