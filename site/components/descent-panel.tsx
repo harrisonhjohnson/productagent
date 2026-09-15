@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useCallback, useRef, useState } from 'react';
 import { useScrollProgress } from './use-scroll-progress';
 
 export type Readout =
@@ -14,9 +15,53 @@ type Props = {
   readout: Readout;
 };
 
+// The rappeller starts 30px below the panel top and travels (panel height - 209px); see .rappeller in globals.css.
+const TRACK_TOP = 30;
+const TRACK_INSET = 209;
+
 export function DescentPanel({ label, marks, readout }: Props) {
   const progress = useScrollProgress();
   const percent = Math.round(progress * 100);
+  const panelRef = useRef<HTMLElement>(null);
+  const [dragging, setDragging] = useState(false);
+
+  const scrollToPointer = useCallback((clientY: number) => {
+    const el = panelRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const travel = Math.max(1, rect.height - TRACK_INSET);
+    const p = Math.min(1, Math.max(0, (clientY - rect.top - TRACK_TOP) / travel));
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: p * max, behavior: 'auto' });
+  }, []);
+
+  const onPointerDown = useCallback((e: React.PointerEvent<HTMLElement>) => {
+    if (e.button !== 0 && e.pointerType === 'mouse') return;
+    e.preventDefault();
+    e.currentTarget.setPointerCapture(e.pointerId);
+    setDragging(true);
+    scrollToPointer(e.clientY);
+  }, [scrollToPointer]);
+
+  const onPointerMove = useCallback((e: React.PointerEvent<HTMLElement>) => {
+    if (!dragging) return;
+    e.preventDefault();
+    scrollToPointer(e.clientY);
+  }, [dragging, scrollToPointer]);
+
+  const endDrag = useCallback((e: React.PointerEvent<HTMLElement>) => {
+    if (!dragging) return;
+    setDragging(false);
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
+  }, [dragging]);
+
+  const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLElement>) => {
+    const step = window.innerHeight * 0.8;
+    const jump: Record<string, number> = { ArrowDown: step, PageDown: step, ArrowUp: -step, PageUp: -step };
+    if (e.key in jump) { e.preventDefault(); window.scrollBy({ top: jump[e.key], behavior: 'smooth' }); }
+    if (e.key === 'Home') { e.preventDefault(); window.scrollTo({ top: 0 }); }
+    if (e.key === 'End') { e.preventDefault(); window.scrollTo({ top: document.documentElement.scrollHeight }); }
+  }, []);
 
   let value: string;
   if (readout.kind === 'lines') {
@@ -28,7 +73,22 @@ export function DescentPanel({ label, marks, readout }: Props) {
   }
 
   return (
-    <aside className="descent-panel" aria-label="Scroll-controlled rappelling illustration">
+    <aside
+      ref={panelRef}
+      className={`descent-panel${dragging ? ' is-dragging' : ''}`}
+      role="slider"
+      tabIndex={0}
+      aria-label="Page position. Drag to scroll."
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={percent}
+      aria-orientation="vertical"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onKeyDown={onKeyDown}
+    >
       <div className="panel-grid" aria-hidden="true" />
       <div className="panel-heading">
         <span>{label}</span>
@@ -46,10 +106,11 @@ export function DescentPanel({ label, marks, readout }: Props) {
           width={512}
           height={768}
           priority
-          sizes="(max-width: 640px) 84px, 126px"
+          draggable={false}
+          sizes="(max-width: 640px) 56px, 100px"
         />
       </div>
-      <p className="descent-note">scroll depth / rope position</p>
+      <p className="descent-note">drag to scroll</p>
     </aside>
   );
 }
