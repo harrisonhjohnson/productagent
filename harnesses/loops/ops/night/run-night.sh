@@ -38,6 +38,7 @@ CAP_WEEK="${CAP_WEEK:-45}"
 CAP_MONTH="$(dial monthly_cost_cap_usd)";     CAP_MONTH="${CAP_MONTH:-120}"
 NPN="$(dial night_orders_per_night)";         NPN="${NPN:-2}"
 PAUSED="$(dial paused)"
+AGENT="$(dial agent)";                 AGENT="${AGENT:-claude}"
 
 note() { echo "[wrapper] $(date '+%F %T') $*" >>"$LOG"; }
 
@@ -71,6 +72,13 @@ run_with_timeout() { # secs outfile cmd...
   return "$rc"
 }
 
+# ---- agent adapter (claude | codex): agent_canary, agent_run, agent_relogin_hint ----
+if [ ! -f "$OPS/agents/$AGENT.sh" ]; then
+  echo "[wrapper] unknown agent '$AGENT' (no $OPS/agents/$AGENT.sh)" >>"$LOG"; exit 1
+fi
+# shellcheck source=/dev/null
+. "$OPS/agents/$AGENT.sh"
+
 # ---- guards -------------------------------------------------------------
 [ "$PAUSED" = "yes" ] && exit 0
 # terminal-for-the-day statuses never re-run or re-alert on repeat invocations;
@@ -99,7 +107,7 @@ try: text=open(loops_f).read()
 except FileNotFoundError:
     out([],[]); sys.exit()
 text=re.sub(r"<!--.*?-->","",text,flags=re.S)  # commented-out loops are not loops
-cadence_n={"nightly":1,"every-2nd-night":2,"every-3rd-night":3}
+cadence_n={"nightly":1,"every-2nd-night":2,"every-3rd-night":3,"weekly":7}
 runnable,skips=[],[]
 for m in re.finditer(r"^## (L-\d+)[^\n]*\n(.*?)(?=^## |\Z)",text,re.M|re.S):
     lid,body=m.group(1),m.group(2)
@@ -189,14 +197,12 @@ fi
 
 # ---- auth canary --------------------------------------------------------
 CANARY="$(mktemp)"
-run_with_timeout 180 "$CANARY" "$CLAUDE_BIN" -p 'Reply with exactly: READY' \
-  --model "$MODEL" --effort low --setting-sources project \
-  --strict-mcp-config --mcp-config "$OPS/night-mcp.json"
+agent_canary "$CANARY"
 if ! grep -q READY "$CANARY"; then
   note "auth canary FAILED: $(tail -2 "$CANARY" | tr '\n' ' ')"
   cat "$CANARY" >>"$LOG"; rm -f "$CANARY"
   write_state "auth-failed" 1 0 "canary failed"
-  alert "Auth preflight FAILED — night skipped" "Run 'claude' interactively to re-login."
+  alert "Auth preflight FAILED — night skipped" "$(agent_relogin_hint)"
   exit 1
 fi
 rm -f "$CANARY"
@@ -233,23 +239,19 @@ done
 
 # ---- the run ------------------------------------------------------------
 LAST_ATT="$(mktemp)"; START=$(date +%s)
-run_claude() {
-  run_with_timeout "$TIMEOUT_SECS" "$LAST_ATT" \
-    "$CLAUDE_BIN" -p "$(cat "$OPS/night-prompt.md")
-
-[wrapper] Today is $TODAY. Runnable loops tonight, cadence and budgets already enforced: ${RUNNABLE:-none}." \
-      --model "$MODEL" --effort "$EFFORT" \
-      --output-format json \
-      --setting-sources project \
-      --strict-mcp-config --mcp-config "$OPS/night-mcp.json"
+PROMPT_FILE="$(mktemp)"
+{ cat "$OPS/night-prompt.md"; echo; echo "[wrapper] Today is $TODAY. Runnable loops tonight, cadence and budgets already enforced: ${RUNNABLE:-none}."; } >"$PROMPT_FILE"
+run_agent() {
+  agent_run "$LAST_ATT" "$PROMPT_FILE" "$MODEL" "$EFFORT" "$TIMEOUT_SECS"
   local rc=$?; cat "$LAST_ATT" >>"$LOG"; return $rc
 }
 PRIOR_COST=0
-run_claude; rc=$?
+note "agent=$AGENT"
+run_agent; rc=$?
 if [ "$rc" -ne 0 ] && [ "$rc" -ne 124 ]; then
   PRIOR_COST="$(jq -r '.total_cost_usd // 0' "$LAST_ATT" 2>/dev/null || echo 0)"
   note "attempt 1 failed (rc=$rc, cost=\$$PRIOR_COST) — retrying once"
-  run_claude; rc=$?
+  run_agent; rc=$?
 fi
 ELAPSED=$(( $(date +%s) - START ))
 

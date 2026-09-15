@@ -32,6 +32,7 @@ never a miss." The charter is built for variable presence, not assumed absence.>
 ## Budget — permanent caps
 ## (set from your own first month's ledger; the pattern observed here was
 ## research/enrichment nights ~10 units, verification/housekeeping nights ~1–3 units)
+- agent: claude   # claude | codex — which CLI runs the night; see 00-ops/night/agents/
 - model: claude-fable-5
 - effort: medium
 - timeout_minutes: 75
@@ -39,6 +40,8 @@ never a miss." The charter is built for variable presence, not assumed absence.>
 - cost_cap_rolling_7day_usd: 45   # sized for ~2 heavy + 5 light nights on a 7-day lane
 - monthly_cost_cap_usd: 120
 - min_battery_percent: 30
+- codex_usd_per_m_input: 1.25   # only used when agent: codex — Codex reports tokens, not dollars
+- codex_usd_per_m_output: 10
 
 The real currency is **weekly rate-limit quota**, not dollars — on a subscription plan
 `cost_usd` is a notional API-equivalent figure and a quota-burn proxy. Every night report

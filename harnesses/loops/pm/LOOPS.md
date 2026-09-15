@@ -16,7 +16,7 @@ revives it. Every loop dies at its `review_by` unless re-ratified — no immorta
 To suspend all loops for a night without editing this file: put `loops: off` in the
 `## Tonight` section of ORDERS.md.
 
-Recognized `cadence` values: `nightly`, `every-2nd-night`, `every-3rd-night`. A loop whose
+Recognized `cadence` values: `nightly`, `every-2nd-night`, `every-3rd-night`, `weekly`. A loop whose
 `budget_per_iteration_usd` exceeds `cost_cap_per_night_usd`, or whose `review_by` is
 missing or past, is skipped with the reason logged.
 

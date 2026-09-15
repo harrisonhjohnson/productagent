@@ -10,16 +10,18 @@
 # Options / env:
 #   LOOPS_HOME=~/somewhere   where to install (default ~/loops)
 #   --no-arm                 lay files down but do not load the launchd jobs
+#   --no-init                skip the first-loop questions at the end
 #   --off                    unload the launchd jobs and exit (files stay)
 #   LOOPS_SOURCE=/path       install from a local checkout of harnesses/loops (dev only)
 set -euo pipefail
 
 LOOPS_HOME="${LOOPS_HOME:-$HOME/loops}"
 LAUNCH_AGENTS="${LAUNCH_AGENTS_DIR:-$HOME/Library/LaunchAgents}"
-ARM=1
+ARM=1; INIT=1
 for a in "$@"; do
   case "$a" in
     --no-arm) ARM=0 ;;
+    --no-init) INIT=0 ;;
     --off)
       for l in com.ventures.capture com.ventures.capture-watchdog; do
         launchctl bootout "gui/$(id -u)/$l" 2>/dev/null || true
@@ -57,7 +59,8 @@ cp -R "$SRC/ops/." "$LOOPS_HOME/00-ops/"                 # machine: always refre
 find "$LOOPS_HOME/00-ops" -name __pycache__ -type d -exec rm -rf {} + 2>/dev/null || true
 cp "$SRC"/{README.md,MACHINE.md,loops-spec.md} "$LOOPS_HOME/docs/"
 cp "$SRC/install.sh" "$LOOPS_HOME/00-ops/install.sh"
-chmod +x "$LOOPS_HOME"/00-ops/*/*.sh "$LOOPS_HOME/00-ops/install.sh"
+cp "$SRC/init.sh" "$LOOPS_HOME/00-ops/init.sh"
+chmod +x "$LOOPS_HOME"/00-ops/*/*.sh "$LOOPS_HOME/00-ops/install.sh" "$LOOPS_HOME/00-ops/init.sh"
 
 keep_or_copy() { # src dst  — never overwrite a file the operator may have edited
   if [ -e "$2" ]; then note "kept   ${2#"$LOOPS_HOME"/}"; else cp "$1" "$2"; note "wrote  ${2#"$LOOPS_HOME"/}"; fi
@@ -114,12 +117,16 @@ else
   say "Files are in place. Schedule not loaded (--no-arm)."
 fi
 
+# ---- first loop, if someone is at the keyboard ---------------------------
+if [ "$INIT" = 1 ] && { : </dev/tty; } 2>/dev/null; then
+  LOOPS_HOME="$LOOPS_HOME" bash "$LOOPS_HOME/00-ops/init.sh"
+  exit 0
+fi
 cat <<TXT
 
 Next, in this order:
-  1. Write one loop        $LOOPS_HOME/pm/LOOPS.md   (a goal, a budget, a cadence, a model, a review date)
-  2. Dry run, spends nothing   NIGHT_PROBE=1 LOOPS_HOME=$LOOPS_HOME bash $LOOPS_HOME/00-ops/night/run-night.sh
-  3. Plug the laptop in tonight. Read pm/nights/ in the morning.
+  1. Write your first loop     bash $LOOPS_HOME/00-ops/init.sh    (four questions; also trusts the folder for Claude Code)
+  2. Plug the laptop in tonight. Read pm/nights/ in the morning.
 
 Read the concept page:   $LOOPS_HOME/docs/README.md
 Stop the schedule:       bash $LOOPS_HOME/00-ops/install.sh --off

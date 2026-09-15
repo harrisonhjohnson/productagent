@@ -55,6 +55,27 @@ promoted from something that went wrong first.
 8. Anything but `ok` writes `ALERT.md` and fires a macOS notification. The morning
    standup reads the alert, then the health desk, then the report, then the diff.
 
+## Agent adapters
+
+`run-night.sh` never calls a CLI directly. It reads `agent:` from the charter (default
+`claude`), sources `00-ops/night/agents/<agent>.sh`, and calls three functions:
+`agent_canary <out>` (must leave READY in `out`), `agent_run <out> <promptfile> <model>
+<effort> <timeout>` (must leave a JSON envelope with `result` and `total_cost_usd` in
+`out`), and `agent_relogin_hint`. Everything downstream, the envelope persist, the ledger
+row, the NIGHT-BLOCKED check and the health desk, reads that envelope.
+
+- `claude.sh`: `claude -p … --output-format json --setting-sources project` with the empty
+  MCP config. The envelope is Claude Code's own.
+- `codex.sh`: `codex exec --json -o <last-message> --sandbox workspace-write` with
+  `sandbox_workspace_write.network_access=false` and `approval_policy="never"`. The
+  adapter folds the JSONL events into the envelope shape, takes `result` from the last
+  message, and prices `turn.completed` usage with the two `codex_usd_per_m_*` dials
+  (`cost_is_estimate: true`). A failed turn becomes a `NIGHT-BLOCKED` result so the
+  runner records `blocked`, not `ok`.
+
+Known gap: the health desk's transcript scorers read `~/.claude/projects`; Codex sessions
+live under `~/.codex/sessions` and are not scored yet.
+
 ## launchd wiring (plists not shipped)
 
 Two user LaunchAgents, both `RunAtLoad`:
@@ -72,8 +93,14 @@ after fixed times kept landing on a closed laptop.
 runs. It lays the folder out as `$LOOPS_HOME/{.claude/settings.json, 00-ops/{night,capture,health}, pm/}`
 (default `~/loops`), fills `/Users/YOU` and the ventures path into the fence, copies the
 templates in `pm/templates/` as an empty `LOOPS.md` and `ORDERS.md`, initialises a git
-repo for the runner to commit into, and writes and loads the two LaunchAgents below with
-`LOOPS_HOME` in their environment. Every script reads `LOOPS_HOME` and falls back to
+repo for the runner to commit into, writes and loads the two LaunchAgents below with
+`LOOPS_HOME` in their environment, and, when a terminal is present, hands off to
+`init.sh`. That script reads answers from `/dev/tty` (so it works through `curl | bash`),
+appends one `## L-NN` section to `pm/LOOPS.md`, sets `agent:` and `model:` in the charter,
+raises `cost_cap_per_night_usd` if the per-run budget exceeds it, sets
+`projects[<folder>].hasTrustDialogAccepted` in `~/.claude.json` for Claude Code, runs the
+runner with `NIGHT_PROBE=1`, and reports the probe's note. Without a terminal it prints the
+steps instead. Every script reads `LOOPS_HOME` and falls back to
 `~/ventures`. Re-running it refreshes the machine and never overwrites the charter, loops,
 orders or fence you have edited.
 

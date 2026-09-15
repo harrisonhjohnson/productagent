@@ -82,6 +82,20 @@ Fine print: by default the machine waits until the Mac is plugged in and never r
 thirty percent battery, so you do not wake up to a dead laptop. Both are settings in
 `pm/CHARTER.md`. To skip a night, tell the bot `pause`.
 
+## Which agent
+
+Claude Code by default. Codex works too: set `agent: codex` in `pm/CHARTER.md` and give
+`model:` a Codex model. The runner touches the agent in four places and each has an
+adapter in `00-ops/night/agents/`, so the knobs, the four lines and the morning judge are
+the same either way. Two honest differences with Codex:
+
+- **The fence is a sandbox, not a rules file.** Codex runs workspace-write inside the
+  folder with the network off. It cannot push, fetch, or reach the internet at all. That is
+  a stronger "never push" than Claude Code's rules, and it also means research loops that
+  read the web will not work on Codex.
+- **Cost is an estimate.** Codex reports tokens, not dollars. Two charter dials hold the
+  per-million prices; the ledger marks those rows as estimates.
+
 ## What it will never do
 
 Spend beyond the budget dial, push code, merge, widen its own permissions, edit its own
@@ -97,14 +111,19 @@ curl -fsSL https://productagent.dev/install.sh | bash
 ```
 
 That lays the machine down in `~/loops` (set `LOOPS_HOME` to choose another place), fills
-your paths into the fence, writes an empty loops file, and loads the ten-minute checker.
-It installs the machine, not my loops; the `L-01` and `L-02` sections above are examples.
-Nothing runs until you write a loop with a real `review_by` date. Then:
+your paths into the fence, writes an empty loops file, loads the ten-minute checker, and
+then asks you four questions: which agent, what to work on (six starters or your own
+sentence), how often and how much brain, and what it may spend, with the monthly math
+shown before you commit. It writes the loop, grants the folder trust Claude Code needs so
+the fence's allow rules apply, dry-runs every guard without spending anything, and tells
+you in plain words whether the loop would run tonight. Run it again any time with
+`bash ~/loops/00-ops/init.sh`, or skip it with `--no-init`.
 
-1. Write one loop in `pm/LOOPS.md` with a goal you would be happy to see done badly the first time.
-2. Dry-run it, which spends nothing: `NIGHT_PROBE=1 LOOPS_HOME=~/loops bash ~/loops/00-ops/night/run-night.sh`.
-3. Plug the laptop in tonight. Read the four lines in the morning. Promote the loop to
-   `active` for good after three runs you were happy with.
+It installs the machine, not my loops; the `L-01` and `L-02` sections above are examples.
+After that:
+
+1. Plug the laptop in tonight. Read the four lines in the morning.
+2. After three runs you were happy with, leave the loop `active`; park it or change a knob otherwise.
 
 Stop the schedule any time with `bash ~/loops/00-ops/install.sh --off`. To do it by hand
 instead, read [MACHINE.md](MACHINE.md).
