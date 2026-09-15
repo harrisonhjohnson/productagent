@@ -143,7 +143,7 @@ button { font: inherit; }
 @media (max-width: 780px) {
   .topbar { grid-template-columns: 1fr 1fr; padding: 0 12px; }
   .topbar-path { display: none; }
-  .page-grid { grid-template-columns: minmax(0, 1fr) 44px; }
+  .page-grid { grid-template-columns: minmax(0, 1fr); }
   .tree-panel { padding-right: 44px; border-right: 0; }
   .descent-panel { width: 44px; border-left: 1px solid var(--ink); }
   .tree-header { padding-left: 16px; padding-right: 14px; }
