@@ -7,7 +7,7 @@
 # Appends {"date","judge":{choice,score,...}} to 00-ops/health/scores.jsonl.
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
-VENT="$HOME/ventures"; H="$VENT/00-ops/health"
+VENT="${LOOPS_HOME:-$HOME/ventures}"; H="$VENT/00-ops/health"
 CLAUDE_BIN="${CLAUDE_BIN:-$(command -v claude || echo "$HOME/.local/bin/claude")}"
 DATE="${1:-$(date +%F)}"
 MODEL="${JUDGE_MODEL:-claude-sonnet-5}"     # pinned on purpose: never inherit /model
@@ -22,7 +22,7 @@ cd "$VENT" || exit 1
 WRITESET="$(python3 - "$DATE" <<'PY'
 import json,sys,glob,os,datetime
 date=sys.argv[1]; home=os.path.expanduser("~")
-vent=f"{home}/ventures"
+vent=os.environ.get("LOOPS_HOME",f"{home}/ventures")
 tdir=f"{home}/.claude/projects/-"+vent.strip("/").replace("/","-")
 day=datetime.date.fromisoformat(date)
 writes=set()
@@ -48,7 +48,7 @@ for f in glob.glob(f"{tdir}/*.jsonl"):
                     tools+=1
                     if b.get("name") in ("Write","Edit","NotebookEdit") and ts.startswith(date):
                         fp=(b.get("input") or {}).get("file_path","")
-                        if fp.startswith(f"{home}/ventures/"): ws.add(fp[len(home)+10:])
+                        if fp.startswith(vent+"/"): ws.add(fp[len(vent)+1:])
     if headless and night and tools>=5: writes|=ws
 print("\n".join(sorted(writes)))
 PY

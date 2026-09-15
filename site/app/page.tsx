@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
 import { LoopUseCases } from '@/components/loop-usecases';
+import { InstallLine } from '@/components/install-line';
 import { Shell } from '@/components/shell';
 import { GITHUB, countAll, getTree } from '@/lib/content';
 
@@ -78,6 +79,8 @@ export default function Home() {
             <span>{JOBS.length} jobs · {counts.harnesses} harnesses</span>
           </div>
         </div>
+
+        <InstallLine />
 
         <div className="intro">
           <p>

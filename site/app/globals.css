@@ -322,3 +322,16 @@ button { font: inherit; }
 @media (max-width: 900px) { .sleep-rules { grid-template-columns: 1fr; } }
 @media (max-width: 780px) { .sleep { padding-left: 16px; padding-right: 14px; } }
 @media (max-width: 500px) { .sleep { padding-left: 10px; padding-right: 10px; } }
+
+/* --- install one-liner --- */
+.install { padding: 18px 26px 18px; border-bottom: 1px solid var(--ink); background: var(--paper); }
+.install-label { margin: 0 0 8px; color: var(--orange); font-size: 9px; font-weight: 800; letter-spacing: .18em; }
+.install-row { display: flex; align-items: stretch; gap: 0; max-width: 640px; border: 1px solid var(--ink); background: var(--paper-deep); }
+.install-cmd { flex: 1 1 auto; min-width: 0; padding: 11px 14px; font-family: var(--font-mono-local); font-size: 13px; line-height: 1.4; overflow-x: auto; white-space: nowrap; user-select: all; }
+.install-copy { flex: 0 0 auto; padding: 0 14px; border: 0; border-left: 1px solid var(--ink); background: var(--ink); color: var(--paper); font-family: var(--font-mono-local); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.install-copy:hover { background: var(--orange); }
+.install-copy:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.install-note { margin: 8px 0 0; max-width: 64ch; font-family: var(--font-sans-local); font-size: 12.5px; line-height: 1.5; color: var(--ink-muted); }
+.install-note code { font-family: var(--font-mono-local); font-size: .9em; padding: .05em .3em; background: rgba(24,56,47,.07); }
+@media (max-width: 780px) { .install { padding-left: 16px; padding-right: 14px; } }
+@media (max-width: 500px) { .install { padding-left: 10px; padding-right: 10px; } .install-cmd { font-size: 11.5px; padding: 9px 10px; } }

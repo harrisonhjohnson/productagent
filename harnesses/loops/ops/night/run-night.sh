@@ -10,7 +10,7 @@
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-VENT="$HOME/ventures"
+VENT="${LOOPS_HOME:-$HOME/ventures}"
 OPS="$VENT/00-ops/night"
 # NIGHT_*_OVERRIDE vars exist for forced-test probes only (same pattern as CAPTURE_*)
 STATE="${NIGHT_STATE_OVERRIDE:-$OPS/run-state.json}"
@@ -98,6 +98,7 @@ if tonight and re.search(r"^loops: *off",tonight.group(0),re.M):
 try: text=open(loops_f).read()
 except FileNotFoundError:
     out([],[]); sys.exit()
+text=re.sub(r"<!--.*?-->","",text,flags=re.S)  # commented-out loops are not loops
 cadence_n={"nightly":1,"every-2nd-night":2,"every-3rd-night":3}
 runnable,skips=[],[]
 for m in re.finditer(r"^## (L-\d+)[^\n]*\n(.*?)(?=^## |\Z)",text,re.M|re.S):

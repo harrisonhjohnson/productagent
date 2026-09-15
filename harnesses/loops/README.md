@@ -90,11 +90,24 @@ envelope is the only authority on those). See the fence in [settings.json](setti
 
 ## Adopting it
 
-1. Copy `settings.json` into your project's `.claude/` and read every allow and deny line.
-2. Copy `pm/CHARTER.md` and set the dials: model, caps, orders per night.
-3. Write one loop in `pm/LOOPS.md` with a goal you would be happy to see done badly the first time.
-4. Wire `ops/capture/poller.sh` to launchd (see [MACHINE.md](MACHINE.md)) or run `ops/night/run-night.sh` by hand for a week first.
-5. Read the four lines each morning. Promote the loop to `active` after three runs you were happy with.
+One line, on a Mac:
+
+```
+curl -fsSL https://productagent.dev/install.sh | bash
+```
+
+That lays the machine down in `~/loops` (set `LOOPS_HOME` to choose another place), fills
+your paths into the fence, writes an empty loops file, and loads the ten-minute checker.
+It installs the machine, not my loops; the `L-01` and `L-02` sections above are examples.
+Nothing runs until you write a loop with a real `review_by` date. Then:
+
+1. Write one loop in `pm/LOOPS.md` with a goal you would be happy to see done badly the first time.
+2. Dry-run it, which spends nothing: `NIGHT_PROBE=1 LOOPS_HOME=~/loops bash ~/loops/00-ops/night/run-night.sh`.
+3. Plug the laptop in tonight. Read the four lines in the morning. Promote the loop to
+   `active` for good after three runs you were happy with.
+
+Stop the schedule any time with `bash ~/loops/00-ops/install.sh --off`. To do it by hand
+instead, read [MACHINE.md](MACHINE.md).
 
 The spec that ratified all this, with the reasoning and the failure modes, is in
 [loops-spec.md](loops-spec.md).

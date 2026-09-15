@@ -14,7 +14,7 @@
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-VENT="$HOME/ventures"
+VENT="${LOOPS_HOME:-$HOME/ventures}"
 CAP="${CAPTURE_DIR:-$VENT/00-ops/capture}"
 TODAY="$(date +%F)"
 mkdir -p "$CAP"

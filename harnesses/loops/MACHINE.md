@@ -68,12 +68,21 @@ after fixed times kept landing on a closed laptop.
 
 ## Adopting it
 
-1. Copy this folder's contents into `~/ventures/` so the layout is
-   `~/ventures/.claude/settings.json`, `~/ventures/.claude/skills/*`,
-   `~/ventures/00-ops/{night,capture,health}`, `~/ventures/pm/`.
+`install.sh` in this folder is what `curl -fsSL https://productagent.dev/install.sh | bash`
+runs. It lays the folder out as `$LOOPS_HOME/{.claude/settings.json, 00-ops/{night,capture,health}, pm/}`
+(default `~/loops`), fills `/Users/YOU` and the ventures path into the fence, copies the
+templates in `pm/templates/` as an empty `LOOPS.md` and `ORDERS.md`, initialises a git
+repo for the runner to commit into, and writes and loads the two LaunchAgents below with
+`LOOPS_HOME` in their environment. Every script reads `LOOPS_HOME` and falls back to
+`~/ventures`. Re-running it refreshes the machine and never overwrites the charter, loops,
+orders or fence you have edited.
+
+By hand, the same steps are:
+
+1. Copy this folder's contents so the layout above holds.
 2. Replace `/Users/YOU` in `settings.json` with your home directory. Claude Code
    permission paths are absolute.
-3. Edit `pm/CHARTER.md`: presence mode, shadow rate, budget caps. Write an `ORDERS.md`
+3. Edit `pm/CHARTER.md`: presence mode, shadow rate, budget caps. Write `pm/ORDERS.md`
    with a `## Tonight` section of `- [ ]` orders, each with Definition of done, Out of
    scope, and If blocked.
 4. Optional env: `NIGHT_GIT_NAME` / `NIGHT_GIT_EMAIL` for snapshot commits,

@@ -17,10 +17,11 @@ import json
 import re
 import subprocess
 import sys
+import os
 from pathlib import Path
 
 HOME = Path.home()
-VENT = HOME / "ventures"
+VENT = Path(os.environ.get("LOOPS_HOME", HOME / "ventures"))
 OPS = VENT / "00-ops"
 TRANSCRIPTS = HOME / ".claude/projects"
 # Claude Code keys transcripts by the session cwd with "/" -> "-"

@@ -12,7 +12,7 @@
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-VENT="$HOME/ventures"
+VENT="${LOOPS_HOME:-$HOME/ventures}"
 CAP="${CAPTURE_DIR:-$VENT/00-ops/capture}"
 NIGHT_WRAPPER="${CAPTURE_NIGHT_WRAPPER:-$VENT/00-ops/night/run-night.sh}"
 NIGHT_STATE="${CAPTURE_NIGHT_STATE:-$VENT/00-ops/night/run-state.json}"
@@ -73,6 +73,7 @@ attempts_today() { # lane -> echoes N
 
 run_lane() { # lane wrapper-path state-file terminal-regex
   local lane="$1" wrapper="$2" state="$3" tregex="$4" n
+  [ -f "$wrapper" ] || return 0   # a lane without a wrapper is not installed; skip silently
   terminal_today "$state" "$tregex" && return 0
   n="$(attempts_today "$lane")"
   [ "$n" -ge "$MAX_ATTEMPTS" ] && return 0
