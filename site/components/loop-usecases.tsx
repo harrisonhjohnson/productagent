@@ -69,10 +69,10 @@ export function MoonZGlyph() {
 
 
 /** One picture of the whole thing: you write a goal by day, the agent runs at night, you read four lines and decide. */
-function LoopCycle() {
+export function CycleDiagram() {
   return (
     <svg className="cycle" viewBox="0 0 640 300" role="img" aria-labelledby="cycle-title">
-      <title id="cycle-title">The loop: you set a goal, the agent runs at night under a budget, you read four lines in the morning, you decide, and the goal renews.</title>
+      <title id="cycle-title">The cycle: you decide, you delegate a goal with four knobs, the agent runs at night under a budget, you read four lines in the morning, and decide again.</title>
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path d="M0 0L10 5L0 10z" fill="currentColor" />
@@ -84,7 +84,7 @@ function LoopCycle() {
       <text x="320" y="292" textAnchor="middle" className="cycle-band">NIGHT · THE AGENT</text>
       <line x1="40" y1="150" x2="600" y2="150" className="cycle-horizon" />
 
-      {/* arrows: goal → run → four lines → decide → goal */}
+      {/* arrows: delegate → run → read → decide → delegate */}
       <g className="cycle-arrows" markerEnd="url(#arrow)">
         <path d="M112 108 V 192" markerEnd="url(#arrow)" />
         <path d="M206 232 H 434" markerEnd="url(#arrow)" />
@@ -95,23 +95,23 @@ function LoopCycle() {
       {/* four stations */}
       <g className="station" transform="translate(112 68)">
         <rect x="-94" y="-34" width="188" height="68" rx="3" />
-        <text y="-8" textAnchor="middle" className="station-title">1 · Write a goal</text>
-        <text y="12" textAnchor="middle" className="station-sub">one sentence + four knobs</text>
+        <text y="-8" textAnchor="middle" className="station-title">2 · Delegate</text>
+        <text y="12" textAnchor="middle" className="station-sub">a goal, four knobs, an order</text>
       </g>
       <g className="station" transform="translate(528 68)">
         <rect x="-94" y="-34" width="188" height="68" rx="3" />
-        <text y="-8" textAnchor="middle" className="station-title">4 · Decide</text>
-        <text y="12" textAnchor="middle" className="station-sub">merge, park, or change a knob</text>
+        <text y="-8" textAnchor="middle" className="station-title">1 · Decide</text>
+        <text y="12" textAnchor="middle" className="station-sub">what only you can settle</text>
       </g>
       <g className="station station-night" transform="translate(112 232)">
         <rect x="-94" y="-34" width="188" height="68" rx="3" />
-        <text y="-8" textAnchor="middle" className="station-title">2 · One run</text>
+        <text y="-8" textAnchor="middle" className="station-title">3 · Run</text>
         <text y="12" textAnchor="middle" className="station-sub">inside the fence, under budget</text>
       </g>
       <g className="station station-night" transform="translate(528 232)">
         <rect x="-94" y="-34" width="188" height="68" rx="3" />
-        <text y="-8" textAnchor="middle" className="station-title">3 · Four lines</text>
-        <text y="12" textAnchor="middle" className="station-sub">trying · did · decided · need</text>
+        <text y="-8" textAnchor="middle" className="station-title">4 · Read</text>
+        <text y="12" textAnchor="middle" className="station-sub">four lines · trying · did · decided · need</text>
       </g>
 
       {/* sun and moon */}
@@ -137,52 +137,47 @@ const NOTES: Note[] = [
   { goal: 'Find ten companies that look like our best customer. Say why, with links.', knobs: 'every 3rd night · sonnet · $3 a run', tilt: 0.9 },
 ];
 
-export function LoopUseCases() {
+export function SleepBlock() {
   return (
-    <section className="usecases" aria-labelledby="usecases-heading">
-      <p className="section-label">THE WHOLE THING IN ONE PICTURE</p>
-      <div className="cycle-wrap">
-        <LoopCycle />
-      </div>
+    <div className="sleep">
+      <p className="sleep-lede">
+        Close the laptop at night. Open it in the morning to work that got done: the fix shipped and checked, the
+        tickets sorted, the update drafted. Same Mac, same Claude plan, no server to rent.
+      </p>
+      <ul className="sleep-rules" aria-label="Why it matters">
+        <li>
+          <span className="sleep-glyph"><MoonZGlyph /></span>
+          <div>
+            <strong>Eight free hours a night.</strong>
+            <p>The hours you are asleep become the hours the agent works. A goal you would never get to by day gets a run every night.</p>
+          </div>
+        </li>
+        <li>
+          <span className="sleep-glyph"><LidGlyph open={false} /></span>
+          <div>
+            <strong>Lid shut, laptop in the bag.</strong>
+            <p>A Mac naps the second you close it. The folder carries the settings that keep it working under a closed lid, then let it sleep again.</p>
+          </div>
+        </li>
+        <li>
+          <span className="sleep-glyph"><PlugGlyph /></span>
+          <div>
+            <strong>Runs on what you already pay for.</strong>
+            <p>Your own laptop, your own Claude subscription. Never past the share of your week you keep for yourself. Nothing phones home.</p>
+          </div>
+        </li>
+      </ul>
+      <p className="sleep-foot">
+        Fine print: by default it waits until the Mac is plugged in, never runs under thirty percent battery, and stops
+        before it eats the last fifth of your Claude week. All three are settings. To skip a night, tell the bot: pause.
+      </p>
+    </div>
+  );
+}
 
-
-
-      <p className="section-label">WHILE YOU SLEEP, LITERALLY</p>
-      <div className="sleep">
-        <p className="sleep-lede">
-          Close the laptop at night. Open it in the morning to work that got done: the fix shipped and checked, the
-          tickets sorted, the update drafted. Same Mac, same Claude plan, no server to rent.
-        </p>
-        <ul className="sleep-rules" aria-label="Why it matters">
-          <li>
-            <span className="sleep-glyph"><MoonZGlyph /></span>
-            <div>
-              <strong>Eight free hours a night.</strong>
-              <p>The hours you are asleep become the hours the agent works. A goal you would never get to by day gets a run every night.</p>
-            </div>
-          </li>
-          <li>
-            <span className="sleep-glyph"><LidGlyph open={false} /></span>
-            <div>
-              <strong>Lid shut, laptop in the bag.</strong>
-              <p>A Mac naps the second you close it. The folder carries the settings that keep it working under a closed lid, then let it sleep again.</p>
-            </div>
-          </li>
-          <li>
-            <span className="sleep-glyph"><PlugGlyph /></span>
-            <div>
-              <strong>Runs on what you already pay for.</strong>
-              <p>Your own laptop, your own Claude subscription. No cloud minutes, no second machine, nothing phones home.</p>
-            </div>
-          </li>
-        </ul>
-        <p className="sleep-foot">
-          Fine print: by default it waits until the Mac is plugged in and never runs under thirty percent battery, so
-          you do not wake up to a dead laptop. Both are settings. To skip a night, tell the bot: pause.
-        </p>
-      </div>
-
-      <p className="section-label" id="usecases-heading">WHAT WOULD YOU LOOP?</p>
+export function StickyNotes() {
+  return (
+    <>
       <p className="usecases-lede">
         A loop is a sticky note with a budget. Write the goal the way you would say it to a new hire on their first
         day, then pick a cadence, a model and a price. These are examples, not live loops.
@@ -196,6 +191,6 @@ export function LoopUseCases() {
           </li>
         ))}
       </ul>
-    </section>
+    </>
   );
 }
