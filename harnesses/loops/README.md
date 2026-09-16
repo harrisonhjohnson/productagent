@@ -82,6 +82,27 @@ Fine print: by default the machine waits until the Mac is plugged in and never r
 thirty percent battery, so you do not wake up to a dead laptop. Both are settings in
 `pm/CHARTER.md`. To skip a night, tell the bot `pause`.
 
+## Your plan, not just dollars
+
+A run reports dollars. Your Claude plan is metered in percent of a week. The machine
+bridges the two, and never guesses.
+
+- **A floor.** `plan_floor_percent` in the charter (default 20) is the part of your week
+  the machine will not touch. Before a night it reads the plan utilization Claude Code
+  caches locally; if less than the floor is left, or the five-hour window is nearly full,
+  it skips the night and says so in the morning. No cache, no gate.
+- **An estimate.** The ten-minute checker snapshots that cache whenever it changes, and
+  the runner logs dollars per run with a timestamp. After five nights with both, the
+  machine knows how many points of your week a dollar costs on your plan, and every
+  morning line reads like `spent $3.80 · ≈ 2.6% of the week (calibrated on 9 pairs) ·
+  week now 62% used, resets Thu 11:00`. Until then it says "calibrating", or uses
+  `plan_weekly_usd_equivalent` if you set one. It ships blank.
+- **At setup.** The four questions show the same estimate under the money math, so you
+  see "≈ 4% of your Claude week per run" before you commit to a cadence.
+
+Codex reports tokens and its plan limits are not readable headlessly yet, so on Codex the
+morning line carries dollars only.
+
 ## Which agent
 
 Claude Code by default. Codex works too: set `agent: codex` in `pm/CHARTER.md` and give

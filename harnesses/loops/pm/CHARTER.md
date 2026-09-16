@@ -40,6 +40,9 @@ never a miss." The charter is built for variable presence, not assumed absence.>
 - cost_cap_rolling_7day_usd: 45   # sized for ~2 heavy + 5 light nights on a 7-day lane
 - monthly_cost_cap_usd: 120
 - min_battery_percent: 30
+- plan_floor_percent: 20   # never start a night if less than this much of the Claude week is left
+- five_hour_max_percent: 90   # nor if the five-hour window is this full
+- plan_weekly_usd_equivalent:   # optional seed for the dollars→percent estimate; blank until calibrated from your own runs
 - codex_usd_per_m_input: 1.25   # only used when agent: codex — Codex reports tokens, not dollars
 - codex_usd_per_m_output: 10
 

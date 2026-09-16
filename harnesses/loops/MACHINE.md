@@ -76,6 +76,25 @@ row, the NIGHT-BLOCKED check and the health desk, reads that envelope.
 Known gap: the health desk's transcript scorers read `~/.claude/projects`; Codex sessions
 live under `~/.codex/sessions` and are not scored yet.
 
+## Plan quota
+
+`00-ops/night/quota.py` has four commands. `snapshot` (called by the poller every tick)
+appends a row to `quota-ledger.jsonl` when `cachedUsageUtilization` in `~/.claude.json`
+changes; it accepts both cache shapes the CLI has used (a `limits[]` list keyed by kind,
+or per-window objects) and normalises them to `seven_day`, `five_hour` and per-model
+`seven_day_<model>` windows. `status` returns the freshest snapshot with its age.
+`estimate --usd X --model M` returns the share of the week X dollars is worth, calibrated
+as the median points-per-dollar over consecutive snapshot pairs (same reset period, percent
+rose, at least one run finished between them) once five pairs exist, else seeded from
+`plan_weekly_usd_equivalent`, else "calibrating". `line` renders the morning sentence.
+
+The runner gates on `status` before the auth canary when `agent: claude`: a cache under
+12 hours old with less than `plan_floor_percent` of the week left, or a five-hour window
+over `five_hour_max_percent`, writes `skipped-quota` (terminal for the day; the poller and
+the health desk treat it as a clean night). Ledger rows now carry `finished` and `model`
+so calibration can pair them with snapshots. After a run the quota line is appended in
+italics to `pm/nights/<date>.md` if the report exists, and always to the log.
+
 ## launchd wiring (plists not shipped)
 
 Two user LaunchAgents, both `RunAtLoad`:

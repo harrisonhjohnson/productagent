@@ -38,6 +38,9 @@ CAP_WEEK="${CAP_WEEK:-45}"
 CAP_MONTH="$(dial monthly_cost_cap_usd)";     CAP_MONTH="${CAP_MONTH:-120}"
 NPN="$(dial night_orders_per_night)";         NPN="${NPN:-2}"
 PAUSED="$(dial paused)"
+PLAN_FLOOR="$(dial plan_floor_percent)";       PLAN_FLOOR="${PLAN_FLOOR:-20}"
+FIVE_HOUR_MAX="$(dial five_hour_max_percent)"; FIVE_HOUR_MAX="${FIVE_HOUR_MAX:-90}"
+QUOTA="$OPS/quota.py"
 AGENT="$(dial agent)";                 AGENT="${AGENT:-claude}"
 
 note() { echo "[wrapper] $(date '+%F %T') $*" >>"$LOG"; }
@@ -83,7 +86,7 @@ fi
 [ "$PAUSED" = "yes" ] && exit 0
 # terminal-for-the-day statuses never re-run or re-alert on repeat invocations;
 # failed/auth-failed stay retryable (a later same-day capture window may succeed)
-if [ -f "$STATE" ] && grep -q "\"$TODAY\"" "$STATE" && grep -qE '"status":"(ok|no-orders|budget-stop)"' "$STATE"; then
+if [ -f "$STATE" ] && grep -q "\"$TODAY\"" "$STATE" && grep -qE '"status":"(ok|no-orders|budget-stop|skipped-quota)"' "$STATE"; then
   exit 0
 fi
 # orders + runnable loops (Loops v1). The wrapper is the sole
@@ -179,6 +182,25 @@ if [ "${BUDGET%% *}" = "stop" ]; then
   alert "Night run SKIPPED — budget" "$BUDGET. Adjust caps in pm/CHARTER.md to resume."
   exit 0
 fi
+# plan floor: never eat the part of the week the operator wants for themselves.
+# Uses the CLI's cached utilization if it is under 12h old; if there is no cache, no gate.
+if [ -f "$QUOTA" ] && [ "$AGENT" = claude ]; then
+  QGATE="$(LOOPS_HOME="$VENT" python3 "$QUOTA" status 2>/dev/null)"
+  QREASON="$(python3 - "$QGATE" "$PLAN_FLOOR" "$FIVE_HOUR_MAX" <<'PYEOF'
+import json,sys
+s=json.loads(sys.argv[1] or "{}"); floor=float(sys.argv[2]); fmax=float(sys.argv[3])
+if not s.get("available") or s.get("age_h") is None or s["age_h"]>12: sys.exit()
+w=s.get("week_pct"); f=s.get("five_hour_pct")
+if w is not None and 100-w < floor: print(f"week {w:g}% used, under the {floor:g}% floor you keep for yourself; resets {s.get('week_resets_at')}")
+elif f is not None and f > fmax: print(f"five-hour window {f:g}% used (max {fmax:g}%); resets {s.get('five_hour_resets_at')}")
+PYEOF
+)"
+  if [ -n "$QREASON" ]; then
+    note "skipped: $QREASON"
+    write_state "skipped-quota" 0 0 "$QREASON"
+    exit 0
+  fi
+fi
 # silent AC backstop: the poller only invokes on AC; this catches the unplug race.
 # No alert — the next capture window retries, and the absence watchdog owns silence.
 POWER=battery; pmset -g batt | grep -q "AC Power" && POWER=ac
@@ -269,7 +291,12 @@ rm -f "$LAST_ATT"
 for d in $NESTED; do commit_repo "$d" ""; done
 commit_repo "$VENT" "pm state + reports"
 
-printf '{"date":"%s","cost_usd":%s,"secs":%d,"status":"%s"}\n' "$TODAY" "$COST" "$ELAPSED" "$status" >>"$LEDGER"
+printf '{"date":"%s","cost_usd":%s,"secs":%d,"status":"%s","finished":"%s","model":"%s"}\n' "$TODAY" "$COST" "$ELAPSED" "$status" "$(date '+%F %T')" "$MODEL" >>"$LEDGER"
+# the morning line: dollars, the share of the week they are worth, and where the week stands
+if [ -f "$QUOTA" ]; then
+  QLINE="$(LOOPS_HOME="$VENT" python3 "$QUOTA" line --usd "$COST" --model "$MODEL" 2>/dev/null)"
+  [ -n "$QLINE" ] && { note "quota: $QLINE"; [ -f "$VENT/pm/nights/$TODAY.md" ] && printf '\n_%s_\n' "$QLINE" >>"$VENT/pm/nights/$TODAY.md"; }
+fi
 write_state "$status" "$rc" "$COST" "elapsed=${ELAPSED}s"
 note "finished status=$status rc=$rc cost=\$$COST elapsed=${ELAPSED}s"
 OVER=""

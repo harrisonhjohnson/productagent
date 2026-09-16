@@ -28,6 +28,9 @@ mkdir -p "$CAP/logs"
 
 log() { echo "[poller] $(date '+%F %T') $*" >>"$CAP/logs/poller.log"; }
 
+# plan quota: record the CLI's cached utilization whenever it changes (free, local, no network)
+[ -f "$VENT/00-ops/night/quota.py" ] && LOOPS_HOME="$VENT" python3 "$VENT/00-ops/night/quota.py" snapshot >/dev/null 2>&1
+
 # ---- lock (guards manual runs; launchd never double-starts one label) ----
 if ! mkdir "$CAP/lock" 2>/dev/null; then
   pid="$(cat "$CAP/lock/pid" 2>/dev/null || true)"
@@ -85,6 +88,6 @@ run_lane() { # lane wrapper-path state-file terminal-regex
 
 # night first, then day — serialized by construction; re-check windows between
 # lanes (an unplug mid-night-run must not start a day run the window can't hold)
-night_window && run_lane night "$NIGHT_WRAPPER" "$NIGHT_STATE" '"status":"(ok|no-orders|budget-stop)"'
+night_window && run_lane night "$NIGHT_WRAPPER" "$NIGHT_STATE" '"status":"(ok|no-orders|budget-stop|skipped-quota)"'
 day_window && run_lane day "$DAY_WRAPPER" "$DAY_STATE" '"status":"(ok|budget-stop)"'
 exit 0

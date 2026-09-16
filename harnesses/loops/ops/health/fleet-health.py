@@ -163,7 +163,7 @@ def ledger_sums(ledger_path):
 def check_ventures():
     info = {}
     # night lane: 7 days/week
-    night_ok = ("ok", "no-orders", "budget-stop", "skipped-power")
+    night_ok = ("ok", "no-orders", "budget-stop", "skipped-power", "skipped-quota")
     info["night_state"] = lane_state("night", OPS / "night/run-state.json", 1, night_ok)
     # day lane: weekdays; allow the weekend gap
     slack = 1 + max(0, dt.date.today().weekday() - 4) + (2 if dt.date.today().weekday() == 0 else 0)

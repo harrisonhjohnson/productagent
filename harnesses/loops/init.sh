@@ -99,6 +99,14 @@ case "$CAD" in nightly) PM=30 ;; every-2nd-night) PM=15 ;; every-3rd-night) PM=1
 NIGHT_CAP="$(sed -n 's/^- cost_cap_per_night_usd: *\([0-9.]*\).*/\1/p' "$CHARTER" | head -1)"; NIGHT_CAP="${NIGHT_CAP:-15}"
 RUNS="$(python3 -c "import math; print(int(float('$TOT')//float('$PER')))")"
 say "   ${D}at most \$$(python3 -c "v=float('$PER')*$PM; print(int(v) if v==int(v) else round(v,2))") a month at this cadence; this loop ends after $RUNS runs (\$$TOT); the night cap in the charter is \$$NIGHT_CAP${R}"
+if [ "$AGENT" = claude ] && [ -f "$LOOPS_HOME/00-ops/night/quota.py" ]; then
+  EST="$(LOOPS_HOME="$LOOPS_HOME" python3 "$LOOPS_HOME/00-ops/night/quota.py" estimate --usd "$PER" --model "$MODEL" 2>/dev/null)"
+  say "   ${D}$(python3 -c "
+import json,sys; e=json.loads(sys.argv[1] or '{}'); pm=$PM
+if e.get('pct') is not None: print(f\"≈ {e['pct']:g}% of your Claude week per run, ≈ {min(100,round(e['pct']*pm/4.3,1)):g}% a week at this cadence ({e['basis']})\")
+else: print(f\"share of your Claude week per run: {e.get('basis','unknown')}. The machine learns it from your own runs.\")
+" "$EST")${R}"
+fi
 if python3 -c "import sys; sys.exit(0 if float('$PER')>float('$NIGHT_CAP') else 1)"; then
   say "   ${D}per-run is above the night cap, so the runner would skip it. Raising the night cap to \$$PER.${R}"; setdial cost_cap_per_night_usd "$PER"
 fi
