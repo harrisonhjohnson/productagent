@@ -4,8 +4,11 @@ import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
 import { LoopUseCases } from '@/components/loop-usecases';
 import { InstallLine } from '@/components/install-line';
+import { Morning } from '@/components/morning';
 import { Onboarding } from '@/components/onboarding';
-import { Agents } from '@/components/agents';
+import { Where } from '@/components/where';
+import { Closing } from '@/components/closing';
+import { Lid } from '@/components/lid';
 import { Shell } from '@/components/shell';
 import { GITHUB, countAll, getTree } from '@/lib/content';
 
@@ -74,7 +77,8 @@ export default function Home() {
     <Shell path="/">
       <section className="tree-panel" aria-labelledby="page-heading">
         <div className="hero">
-          <Image src="/loops-retro.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 78vw" className="hero-img" />
+          <Image src="/nighttime.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 94vw" className="hero-img" />
+          <Lid hero />
           <div className="hero-copy">
             <p className="hero-eyebrow">PRODUCTAGENT</p>
             <h1 id="page-heading">Let an agent run a loop<br />while you sleep.</h1>
@@ -84,21 +88,21 @@ export default function Home() {
 
         <InstallLine />
         <Onboarding />
+        <Morning />
 
         <div className="intro">
           <p>
-            Working tools for product managers who run their day with Claude Code, published as the folders they
-            actually are. Four words carry the system: a <strong>Loop</strong> is work with a goal that renews
-            itself; a <strong>Run</strong> is one bounded pass at it; an <strong>Order</strong> is a one-off
-            instruction for tonight; a <strong>Decision</strong> is anything the run could not settle and hands
-            back to you. Everything below is a folder you can copy into your own setup. Nothing is hosted, and
-            nothing phones home.
+            Tools for product managers who run their day with Claude Code, published as the folders they actually
+            are. Four words carry the system: a <strong>Loop</strong> is work with a goal that renews itself; a{' '}
+            <strong>Run</strong> is one bounded pass at it; an <strong>Order</strong> is a one-off instruction for
+            tonight; a <strong>Decision</strong> is anything the run could not settle and hands back to you. Copy
+            what you need. Nothing is hosted, and nothing phones home.
           </p>
         </div>
 
         <LoopUseCases />
 
-        <Agents />
+        <Where />
 
         <p className="section-label">SIX JOBS IT DOES</p>
         <ol className="jobs" aria-label="Jobs to be done">
@@ -121,6 +125,8 @@ export default function Home() {
             </li>
           ))}
         </ol>
+
+        <Closing />
 
         <p className="section-label">OR BROWSE THE FOLDERS</p>
         <Explorer tree={tree} label="harnesses" />

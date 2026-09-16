@@ -67,12 +67,6 @@ export function MoonZGlyph() {
   );
 }
 
-const WORDS = [
-  { word: 'Loop', glyph: <LoopGlyph />, gloss: 'a goal that keeps renewing' },
-  { word: 'Run', glyph: <RunGlyph />, gloss: 'one pass at it, tonight' },
-  { word: 'Order', glyph: <OrderGlyph />, gloss: 'a one-off note for tonight' },
-  { word: 'Decision', glyph: <DecisionGlyph />, gloss: 'what only you can settle' },
-];
 
 /** One picture of the whole thing: you write a goal by day, the agent runs at night, you read four lines and decide. */
 function LoopCycle() {
@@ -151,15 +145,6 @@ export function LoopUseCases() {
         <LoopCycle />
       </div>
 
-      <ul className="words" aria-label="The four words">
-        {WORDS.map((w) => (
-          <li key={w.word}>
-            <span className="word-glyph">{w.glyph}</span>
-            <span className="word-name">{w.word}</span>
-            <span className="word-gloss">{w.gloss}</span>
-          </li>
-        ))}
-      </ul>
 
 
       <p className="section-label">WHILE YOU SLEEP, LITERALLY</p>
