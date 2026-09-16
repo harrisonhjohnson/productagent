@@ -4,6 +4,8 @@ import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
 import { LoopUseCases } from '@/components/loop-usecases';
 import { InstallLine } from '@/components/install-line';
+import { Onboarding } from '@/components/onboarding';
+import { Agents } from '@/components/agents';
 import { Shell } from '@/components/shell';
 import { GITHUB, countAll, getTree } from '@/lib/content';
 
@@ -76,11 +78,12 @@ export default function Home() {
           <div className="hero-copy">
             <p className="hero-eyebrow">PRODUCTAGENT</p>
             <h1 id="page-heading">Let an agent run a loop<br />while you sleep.</h1>
-            <p className="hero-meta">{JOBS.length} jobs · {counts.harnesses} harnesses · your mac · your claude plan</p>
+            <p className="hero-meta">claude code · codex · your mac · your plan · {counts.harnesses} harnesses</p>
           </div>
         </div>
 
         <InstallLine />
+        <Onboarding />
 
         <div className="intro">
           <p>
@@ -94,6 +97,8 @@ export default function Home() {
         </div>
 
         <LoopUseCases />
+
+        <Agents />
 
         <p className="section-label">SIX JOBS IT DOES</p>
         <ol className="jobs" aria-label="Jobs to be done">

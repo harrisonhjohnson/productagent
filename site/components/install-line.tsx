@@ -27,8 +27,9 @@ export function InstallLine() {
         </button>
       </div>
       <p className="install-note">
-        Installs the machine into <code>~/loops</code> with an empty loops file. Nothing runs until you write a loop.
-        Stop it any time with <code>--off</code>.
+        Installs the machine into <code>~/loops</code>, then asks four questions and writes your first loop. Claude
+        Code or Codex. Nothing runs until tonight, and only if the laptop is plugged in. Stop it any time with{' '}
+        <code>--off</code>.
       </p>
     </div>
   );
