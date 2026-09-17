@@ -103,6 +103,22 @@ bridges the two, and never guesses.
 Codex reports tokens and its plan limits are not readable headlessly yet, so on Codex the
 morning line carries dollars only.
 
+## Decisions, and the planner
+
+A Decision is anything a run could not settle. Every "Need from you" line in a night
+report becomes a pending entry in `pm/DECISIONS.md`, with a date and a pointer to the
+report. You settle it by filling `chosen:` and setting `status: settled`. Put an action
+key in `blocks:` and the planner stays off that work until you do.
+
+With `planner: on` in the charter, `00-ops/night/plan.py` runs before each night. It
+builds a small graph of the corpus from files that already exist, ranks the next points
+of leverage with explicit rules (value, readiness, cost; minus repeats in the last three
+nights; minus anything a pending Decision blocks; parked after two no-progress nights),
+writes the ranked list to `pm/nights/plan-<date>.md`, and hands the pick to the prompt.
+The run records `action: <key>` in its dated section so tomorrow’s plan knows what was
+tried. The candidate rules are the domain-specific part; the loader, scoring, Decisions
+and repeat rules are not.
+
 ## Which agent
 
 Claude Code by default. Codex works too: set `agent: codex` in `pm/CHARTER.md` and give

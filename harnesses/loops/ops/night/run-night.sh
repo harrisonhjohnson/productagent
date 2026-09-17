@@ -41,6 +41,8 @@ PAUSED="$(dial paused)"
 PLAN_FLOOR="$(dial plan_floor_percent)";       PLAN_FLOOR="${PLAN_FLOOR:-20}"
 FIVE_HOUR_MAX="$(dial five_hour_max_percent)"; FIVE_HOUR_MAX="${FIVE_HOUR_MAX:-90}"
 QUOTA="$OPS/quota.py"
+PLANNER="$(dial planner)";               PLANNER="${PLANNER:-off}"
+PLAN="$OPS/plan.py"
 AGENT="$(dial agent)";                 AGENT="${AGENT:-claude}"
 
 note() { echo "[wrapper] $(date '+%F %T') $*" >>"$LOG"; }
@@ -209,11 +211,18 @@ if [ "$POWER" = battery ]; then
   write_state "skipped-power" 0 0 "raced off AC"
   exit 0
 fi
+# the planner: rank tonight's points of leverage from the corpus graph and pending Decisions;
+# the pick goes into the prompt below, the ranked list into pm/nights/plan-<date>.md
+PICK_LINE=""
+if [ "$PLANNER" = on ] && [ -f "$PLAN" ]; then
+  PICK_LINE="$(LOOPS_HOME="$VENT" python3 "$PLAN" plan --date "$TODAY" 2>>"$LOG" | grep '^\[planner\]' | head -1)"
+  note "planner: ${PICK_LINE:-no pick}"
+fi
 note "starting (model=$MODEL effort=$EFFORT timeout=${TIMEOUT_SECS}s orders=$PENDING loops=${RUNNABLE:-none} $BUDGET power=$POWER)"
 # probe hook: forced tests stop here — guards exercised, no claude invocation, no spend.
 # "probe-ok" is NOT a terminal status, so a probe never blocks the real run that day.
 if [ "${NIGHT_PROBE:-0}" = "1" ]; then
-  write_state "probe-ok" 0 0 "probe: would run orders=$PENDING loops=${RUNNABLE:-none}"
+  write_state "probe-ok" 0 0 "probe: would run orders=$PENDING loops=${RUNNABLE:-none}${PICK_LINE:+ focus=${PICK_LINE#*focus: }}"
   exit 0
 fi
 
@@ -263,6 +272,7 @@ done
 LAST_ATT="$(mktemp)"; START=$(date +%s)
 PROMPT_FILE="$(mktemp)"
 { cat "$OPS/night-prompt.md"; echo; echo "[wrapper] Today is $TODAY. Runnable loops tonight, cadence and budgets already enforced: ${RUNNABLE:-none}."; } >"$PROMPT_FILE"
+[ -n "${PICK_LINE:-}" ] && { echo; echo "$PICK_LINE"; } >>"$PROMPT_FILE"
 run_agent() {
   agent_run "$LAST_ATT" "$PROMPT_FILE" "$MODEL" "$EFFORT" "$TIMEOUT_SECS"
   local rc=$?; cat "$LAST_ATT" >>"$LOG"; return $rc
@@ -281,6 +291,8 @@ COST="$(jq -r '.total_cost_usd // 0' "$LAST_ATT" 2>/dev/null || echo 0)"
 # attempt 1's spend is real quota burn even though attempt 2 overwrote its envelope
 COST="$(python3 -c "print(round(${PRIOR_COST:-0}+${COST:-0},6))" 2>/dev/null || echo "$COST")"
 jq -r '.result // empty' "$LAST_ATT" >"$VENT/pm/nights/$TODAY-envelope.md" 2>/dev/null   # rule 2
+# every "Need from you:" line becomes a pending Decision the planner and the morning can see
+[ -f "$PLAN" ] && LOOPS_HOME="$VENT" python3 "$PLAN" decisions --from "$VENT/pm/nights/$TODAY-envelope.md" >/dev/null 2>&1
 
 if [ "$rc" -eq 0 ] && grep -q "NIGHT-BLOCKED" "$LAST_ATT"; then status=blocked; rc=2
 elif [ "$rc" -eq 0 ]; then status=ok

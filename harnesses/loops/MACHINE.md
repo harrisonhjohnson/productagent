@@ -95,6 +95,19 @@ the health desk treat it as a clean night). Ledger rows now carry `finished` and
 so calibration can pair them with snapshots. After a run the quota line is appended in
 italics to `pm/nights/<date>.md` if the report exists, and always to the log.
 
+## Planner and Decisions
+
+`plan.py` (opt-in with `planner: on`) loads a structural graph: state × permit-type cells,
+feeds and queue from the corpus (`PLAN_CORPUS`, default `$LOOPS_HOME/009-grid`), pending
+Decisions from `pm/DECISIONS.md`, and history from every dated loop section (`action:`
+lines) and prior `plan-*.md` files. `candidates()` is the only domain-specific function; it
+emits actions with a value, a readiness and a cost and a plain-English why. `score()` applies
+the general rules. `plan` writes `pm/nights/plan-<date>.md` and prints the one line the
+runner appends to the prompt. `simulate --nights N` applies each pick’s expected effect in
+memory and re-plans, which is how the planner is tested without spending a night.
+`decisions --from <envelope>` appends pending `D-NN` entries for new "Need from you" lines;
+the runner calls it after every run.
+
 ## launchd wiring (plists not shipped)
 
 Two user LaunchAgents, both `RunAtLoad`:
