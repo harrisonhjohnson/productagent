@@ -38,7 +38,18 @@ die()  { printf 'Loops: %s\n' "$*" >&2; exit 1; }
 [ "$(uname -s)" = Darwin ] || die "this machine is built for macOS (launchd, pmset, caffeinate)."
 command -v python3 >/dev/null || die "python3 is required."
 command -v jq >/dev/null || note "jq not found (brew install jq). The runner needs it before the first real run."
-command -v claude >/dev/null || note "claude not found on PATH. Install Claude Code before the first real run."
+if ! command -v claude >/dev/null && ! command -v codex >/dev/null; then
+  cat >&2 <<'MSG'
+
+Loops runs Claude Code or Codex for you overnight, and neither is on this Mac yet.
+Install one first, sign in once with the account you already pay for, then run this again.
+
+  Claude Code:  curl -fsSL https://claude.ai/install.sh | bash     then:  claude
+  Codex:        npm install -g @openai/codex                       then:  codex login
+
+MSG
+  exit 1
+fi
 
 # ---- fetch ---------------------------------------------------------------
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
