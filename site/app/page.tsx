@@ -5,7 +5,6 @@ import { DescentPanel } from '@/components/descent-panel';
 import { LoopUseCases } from '@/components/loop-usecases';
 import { InstallLine } from '@/components/install-line';
 import { Onboarding } from '@/components/onboarding';
-import { InTheirWords } from '@/components/in-their-words';
 import { Agents } from '@/components/agents';
 import { Shell } from '@/components/shell';
 import { GITHUB, countAll, getTree } from '@/lib/content';
@@ -84,7 +83,6 @@ export default function Home() {
         </div>
 
         <InstallLine />
-        <InTheirWords />
         <Onboarding />
 
         <div className="intro">

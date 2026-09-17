@@ -43,13 +43,6 @@ Dry run   every guard, no model call, no spend
 Tonight   plug the laptop in. Lid open or shut.
 Morning   read pm/nights/<date>.md`}</pre>
         </div>
-        <ul className="onboard-points">
-          <li><strong>Four questions, one file.</strong> Agent, goal, cadence and brain, budget. It writes a real loop, not a demo.</li>
-          <li><strong>Claude Code or Codex.</strong> It detects what is on your path and asks only if both are. Switch later with one line in the charter.</li>
-          <li><strong>The money is shown before you commit.</strong> Per run, per month at that cadence, and where the loop stops itself.</li>
-          <li><strong>It dry-runs before it promises.</strong> Every guard, no model call, no spend, then a plain sentence about tonight.</li>
-          <li><strong>Run it again any time.</strong> <code>bash ~/loops/00-ops/init.sh</code> adds another loop. <code>--off</code> stops the schedule.</li>
-        </ul>
       </div>
     </section>
   );

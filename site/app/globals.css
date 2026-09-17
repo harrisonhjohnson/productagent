@@ -376,8 +376,8 @@ button { font: inherit; }
 /* --- onboarding tease --- */
 .onboard { padding: 0 26px 26px; border-bottom: 1px solid var(--ink); }
 .onboard .section-label { padding-left: 0; padding-right: 0; }
-.onboard-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px 28px; align-items: start; }
-.term-onboard { max-width: none; }
+.onboard-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+.term-onboard { max-width: 900px; }
 .term-onboard pre { font-size: 12px; }
 .term-onboard b { color: #f2d48a; font-weight: 700; }
 .onboard-points { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
