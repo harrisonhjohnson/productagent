@@ -119,6 +119,15 @@ The run records `action: <key>` in its dated section so tomorrow’s plan knows 
 tried. The candidate rules are the domain-specific part; the loader, scoring, Decisions
 and repeat rules are not.
 
+Two scorers, side by side in every plan file. `planner: rules` is the deterministic one.
+`planner: model` asks a small model (`planner_model`, Haiku by default, about 15 cents a
+night) to order the same candidates given the goals, the facts, recent history, pending
+Decisions and the five nearest past notes from karma, used as memory and never as the
+score. The hard rules still apply on top of whatever the model says. Every night appends
+one row to `pm/nights/outcomes.jsonl`: the pick, what the loops actually acted on, whether
+they moved, the cost, and the verified fraction, so after a few weeks you can see which
+scorer’s picks paid off instead of guessing.
+
 ## Which agent
 
 Claude Code by default. Codex works too: set `agent: codex` in `pm/CHARTER.md` and give

@@ -214,7 +214,7 @@ fi
 # the planner: rank tonight's points of leverage from the corpus graph and pending Decisions;
 # the pick goes into the prompt below, the ranked list into pm/nights/plan-<date>.md
 PICK_LINE=""
-if [ "$PLANNER" = on ] && [ -f "$PLAN" ]; then
+if [ "$PLANNER" != off ] && [ -f "$PLAN" ]; then
   PICK_LINE="$(LOOPS_HOME="$VENT" python3 "$PLAN" plan --date "$TODAY" 2>>"$LOG" | grep '^\[planner\]' | head -1)"
   note "planner: ${PICK_LINE:-no pick}"
 fi
@@ -293,6 +293,8 @@ COST="$(python3 -c "print(round(${PRIOR_COST:-0}+${COST:-0},6))" 2>/dev/null || 
 jq -r '.result // empty' "$LAST_ATT" >"$VENT/pm/nights/$TODAY-envelope.md" 2>/dev/null   # rule 2
 # every "Need from you:" line becomes a pending Decision the planner and the morning can see
 [ -f "$PLAN" ] && LOOPS_HOME="$VENT" python3 "$PLAN" decisions --from "$VENT/pm/nights/$TODAY-envelope.md" >/dev/null 2>&1
+# and the night's outcome (pick, what was acted on, progress, cost, verified fraction) for judging the two scorers
+[ -f "$PLAN" ] && [ "$PLANNER" != off ] && LOOPS_HOME="$VENT" python3 "$PLAN" outcome --date "$TODAY" --cost "$COST" >>"$LOG" 2>&1
 
 if [ "$rc" -eq 0 ] && grep -q "NIGHT-BLOCKED" "$LAST_ATT"; then status=blocked; rc=2
 elif [ "$rc" -eq 0 ]; then status=ok

@@ -106,7 +106,12 @@ the general rules. `plan` writes `pm/nights/plan-<date>.md` and prints the one l
 runner appends to the prompt. `simulate --nights N` applies each pick’s expected effect in
 memory and re-plans, which is how the planner is tested without spending a night.
 `decisions --from <envelope>` appends pending `D-NN` entries for new "Need from you" lines;
-the runner calls it after every run.
+the runner calls it after every run. `rank_model()` calls `claude -p` with a JSON schema on
+`planner_model`, tools off, and folds the result under the rules (a zeroed candidate stays
+zeroed). `retrieve()` runs karma’s `retrieve_top_seeds` inside karma’s own venv against
+`~/.karma`, read-only, and returns [] on any failure so the planner never depends on it.
+`outcome --date --cost` appends to `pm/nights/outcomes.jsonl`; `--both` on `plan` runs
+both scorers regardless of the dial, for comparison.
 
 ## launchd wiring (plists not shipped)
 
