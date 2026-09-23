@@ -13,6 +13,7 @@ Every folder carries a `harness.json` (name, tier, one-line summary, where it ca
 | [pm-strategist](pm-strategist/) | global | A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading. |
 | [TODO](todo/) | system | A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts. |
 | [Loops](loops/) | system | Give an agent a goal, a budget, a cadence and a model. It works one bounded run at a time while you sleep, inside a fence, and hands you four plain sentences in the morning. |
+| [Self-maintenance lane](self-maintenance/) | system | The one way an unattended run may touch its own loop registry (park, finish, slow), and the one place a "need from you" becomes a decision you settle with one command instead of a paste. |
 | [rev-intel-harness](https://github.com/harrisonhjohnson/rev-intel-harness) | link | A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT. |
 | [karma](https://github.com/harrisonhjohnson/karma) | link | A personal knowledge graph over everything the loops write: seeds in, relationships out, so a month of night reports stays searchable. Open source, MIT. |
 
@@ -40,6 +41,9 @@ A TODO list for PMs in one markdown file, reachable from Claude Code and from Te
 
 Give an agent a goal, a budget, a cadence and a model. It works one bounded run at a time while you sleep, inside a fence, and hands you four plain sentences in the morning. Source: `~/ventures/.claude + ~/ventures/00-ops + ~/ventures/pm`. Start with [README.md](loops/README.md); the runner, fence and morning judge are explained in [MACHINE.md](loops/MACHINE.md).
 
+### Self-maintenance lane
+
+The one way an unattended run may touch its own loop registry (park, finish, slow), and the one place a "need from you" becomes a decision you settle with one command instead of a paste. Source: `~/ventures/00-ops/night/loopctl.py + ~/ventures/pm/nights`. Start with [README.md](self-maintenance/README.md); the decisions file and the pod issues file have examples beside it.
 ### rev-intel-harness
 
 A CSV of companies in, the people out: point your existing AI subscriptions at target accounts. Open source, MIT. Source: `github.com/harrisonhjohnson/rev-intel-harness`.

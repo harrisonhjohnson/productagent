@@ -1,0 +1,11 @@
+{
+  "name": "Self-maintenance lane",
+  "slug": "self-maintenance",
+  "tier": "system",
+  "summary": "The one way an unattended run may touch its own loop registry, and the one place a \"need from you\" becomes a decision you settle with a single command instead of a paste.",
+  "source": "~/ventures/00-ops/night/loopctl.py + ~/ventures/pm/nights",
+  "entry": "README.md",
+  "order": 20,
+  "kind": "files",
+  "url": null
+}

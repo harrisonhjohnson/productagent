@@ -97,8 +97,10 @@ italics to `pm/nights/<date>.md` if the report exists, and always to the log.
 
 ## Planner and Decisions
 
+_On my machine the planner's decisions file has since been superseded by the [self-maintenance lane](../self-maintenance/): the run queues rows it cannot settle, carrying the command or patch, and the morning applies them one by one. The planner below is the earlier design._
+
 `plan.py` (opt-in with `planner: on`) loads a structural graph: state × permit-type cells,
-feeds and queue from the corpus (`PLAN_CORPUS`, default `$LOOPS_HOME/009-grid`), pending
+feeds and queue from the corpus (`PLAN_CORPUS`, default `$LOOPS_HOME/<NNN>-venture`), pending
 Decisions from `pm/DECISIONS.md`, and history from every dated loop section (`action:`
 lines) and prior `plan-*.md` files. `candidates()` is the only domain-specific function; it
 emits actions with a value, a readiness and a cost and a plain-English why. `score()` applies
