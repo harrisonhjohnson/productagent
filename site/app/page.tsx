@@ -2,25 +2,22 @@ import Image from 'next/image';
 import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
 import { InstallLine } from '@/components/install-line';
-import { Stations } from '@/components/stations';
 import { Onboarding } from '@/components/onboarding';
-import { Where } from '@/components/where';
-import { Closing } from '@/components/closing';
-import { Lid } from '@/components/lid';
+import { StickyNotes } from '@/components/loop-usecases';
+import { Morning } from '@/components/morning';
 import { Shell } from '@/components/shell';
-import { GITHUB, countAll, getTree } from '@/lib/content';
+import { countAll, getTree } from '@/lib/content';
 
 export default function Home() {
   const tree = getTree();
   const counts = countAll();
-  const marks = ['1', '2', '3', '4'];
+  const marks = ['I', 'II', 'III'];
 
   return (
     <Shell path="/">
       <section className="tree-panel" aria-labelledby="page-heading">
         <div className="hero">
-          <Image src="/nighttime.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 94vw" className="hero-img" />
-          <Lid hero />
+          <Image src="/loops-retro.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 94vw" className="hero-img" />
           <div className="hero-copy">
             <p className="hero-eyebrow">PRODUCTAGENT</p>
             <h1 id="page-heading">Let an agent run a loop<br />while you sleep.</h1>
@@ -31,17 +28,18 @@ export default function Home() {
         <InstallLine />
         <Onboarding />
 
-        <Stations />
+        <section className="usecases" aria-labelledby="usecases-heading">
+          <p className="section-label" id="usecases-heading">WHAT A LOOP LOOKS LIKE</p>
+          <StickyNotes />
+        </section>
 
-        <Where />
-
-        <Closing />
+        <Morning />
 
         <p className="section-label">OR BROWSE THE FOLDERS</p>
         <Explorer tree={tree} label="harnesses" />
       </section>
 
-      <DescentPanel label="STATION" marks={marks} readout={{ kind: 'items', total: 4 }} />
+      <DescentPanel label="HOME" marks={marks} readout={{ kind: 'items', total: 3 }} />
     </Shell>
   );
 }
