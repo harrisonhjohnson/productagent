@@ -113,13 +113,21 @@ export function Explorer({ tree, activeSlug, trackScroll = false, label }: Props
                   <span className="node-icon"><NodeIcon node={node} open={false} /></span>
                 </>
               )}
-              {external ? (
-                <a className="node-name" href={node.href} target="_blank" rel="noreferrer">
-                  {node.name} ↗
-                </a>
-              ) : (
-                <Link className="node-name" href={node.href}>{node.name}</Link>
-              )}
+              <span className="tip-host">
+                {external ? (
+                  <a className="node-name" href={node.href} target="_blank" rel="noreferrer" aria-describedby={node.summary ? `tip-${node.id}` : undefined}>
+                    {node.name} ↗
+                  </a>
+                ) : (
+                  <Link className="node-name" href={node.href} aria-describedby={node.summary ? `tip-${node.id}` : undefined}>{node.name}</Link>
+                )}
+                {node.summary && (
+                  <span className="tip" role="tooltip" id={`tip-${node.id}`}>
+                    <span className="tip-bar"><span>{node.name}</span><span aria-hidden="true">×</span></span>
+                    <span className="tip-body"><b>what this folder does</b>{node.summary}</span>
+                  </span>
+                )}
+              </span>
               <span className="node-meta">{node.meta}</span>
             </div>
           );

@@ -1,0 +1,121 @@
+/* GeoCities home (2026-09-23). Everything is scoped under .geo so the boring pages keep their look. */
+.geo {
+  min-height: 100vh;
+  padding: 10px 8px 40px;
+  color: #fff6c2;
+  font-family: "Comic Sans MS", "Comic Sans", Chalkboard, cursive;
+  font-size: 15px;
+  line-height: 1.5;
+  cursor: crosshair;
+  background-color: #000033;
+  background-image:
+    radial-gradient(2px 2px at 10px 14px, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 47px 60px, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 80px 22px, #ffff99 50%, transparent 51%),
+    radial-gradient(2px 2px at 30px 88px, #99ffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70px 95px, #ff99ff 50%, transparent 51%);
+  background-size: 100px 100px;
+}
+.geo a { color: #00ffff; }
+.geo a:hover { color: #ff0000; background: #ffff00; }
+.geo .times { font-family: "Times New Roman", Times, serif; }
+
+.geo .boring-tab { position: fixed; z-index: 50; top: 0; right: 14px; padding: 5px 12px 6px; background: #c0c0c0; color: #000; border: 2px outset #ffffff; border-top: 0; font-family: Tahoma, Arial, sans-serif; font-size: 12px; font-weight: bold; text-decoration: none; box-shadow: 2px 2px 0 #000; }
+.geo .boring-tab:hover { background: #ffffe1; color: #000; }
+
+.geo .marquee { overflow: hidden; margin: 22px auto 0; max-width: 800px; padding: 3px 0; background: #ff0000; border: 2px solid #ffff00; color: #ffff00; font-family: "Courier New", monospace; font-weight: bold; white-space: nowrap; }
+.geo .marquee span { display: inline-block; padding-left: 100%; animation: geo-marquee 26s linear infinite; }
+@keyframes geo-marquee { to { transform: translateX(-100%); } }
+
+.geo .frame { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; max-width: 800px; margin: 0 auto; }
+.geo .masthead, .geo .footer { max-width: 800px; margin: 0 auto; text-align: center; }
+.geo .masthead { padding: 8px 0 12px; }
+.geo .welcome { color: #ffffff; font-size: 18px; }
+.geo h1.rainbow { margin: 6px 0; font-family: Impact, "Arial Black", sans-serif; font-size: clamp(30px, 7vw, 54px); font-weight: 400; letter-spacing: 1px; line-height: 1.05;
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #ff00ff, #ff0000); background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: geo-rainbow 3s linear infinite; filter: drop-shadow(3px 3px 0 #000080); }
+@keyframes geo-rainbow { to { background-position: 200% 0; } }
+.geo .tagline { margin: 0; color: #66ff66; font-size: 18px; }
+.geo .sub { margin: 6px auto 0; max-width: 56ch; color: #ffffff; font-size: 15px; }
+.geo .blink { animation: geo-blink 1.2s steps(1) infinite; }
+@keyframes geo-blink { 50% { visibility: hidden; } }
+.geo hr.rainbow { height: 6px; border: 0; margin: 14px 0; background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+.geo hr.dots { border: 0; border-top: 3px dotted #ff00ff; margin: 14px 0; }
+
+.geo .box { margin: 0 0 12px; padding: 12px; border: 4px ridge #c0c0c0; background: #000; }
+.geo .box.teal { background: #002b2b; }
+.geo .box.purple { background: #2b002b; }
+.geo .box h2 { margin: 0 0 8px; font-family: "Times New Roman", Times, serif; font-size: 23px; font-weight: 700; color: #66ff66; text-decoration: underline; }
+.geo .box p { margin: 0 0 8px; }
+.geo .box p:last-child { margin-bottom: 0; }
+.geo .body-text { color: #ffffff; font-family: "Times New Roman", Times, serif; font-size: 17px; }
+.geo .hi { color: #ffff66; font-weight: bold; }
+
+.geo .nav .box { padding: 8px; }
+.geo .nav-title { color: #fff; font-weight: bold; text-decoration: underline; }
+.geo .nav a { display: block; margin: 5px 0; font-weight: bold; }
+.geo .nav a::before { content: "➤ "; color: #ffff00; }
+.geo .side { text-align: center; }
+.geo .tiny { color: #d0d0d0; font-family: Arial, sans-serif; font-size: 11px; line-height: 1.4; }
+
+.geo .construction { display: inline-block; margin: 10px 0 4px; padding: 4px 10px; background: repeating-linear-gradient(-45deg, #000 0 10px, #ffcc00 10px 20px); border: 2px solid #ffcc00; }
+.geo .construction span { background: #ffcc00; color: #000; font-family: Impact, sans-serif; font-size: 15px; padding: 0 5px; letter-spacing: 1px; }
+.geo .construction .dig { display: inline-block; background: transparent; animation: geo-dig .6s ease-in-out infinite alternate; }
+@keyframes geo-dig { from { transform: rotate(-12deg); } to { transform: rotate(12deg); } }
+
+.geo .counter { display: inline-block; padding: 3px; background: #000; border: 3px inset #808080; vertical-align: middle; }
+.geo .counter b { display: inline-block; width: 18px; margin: 0 1px; background: #1a1a1a; color: #ff3333; font-family: "Courier New", monospace; font-size: 20px; text-align: center; text-shadow: 0 0 6px #ff0000; }
+
+.geo table.pod { width: 100%; border-collapse: collapse; border: 2px solid #00ffff; background: #000; color: #fff; font-family: "Courier New", monospace; font-size: 13px; }
+.geo table.pod th { background: #000080; color: #ffff00; text-align: left; }
+.geo table.pod th, .geo table.pod td { padding: 6px; border: 1px solid #00a0a0; vertical-align: top; }
+
+.geo pre.report { margin: 6px 0; padding: 10px; background: #000; border: 2px inset #808080; color: #33ff33; font-family: "Courier New", Courier, monospace; font-size: 12.5px; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
+.geo pre.report .r { color: #ff6666; }
+.geo pre.report .y { color: #ffff66; }
+
+.geo table.gb { width: 100%; border-collapse: collapse; border: 3px outset #c0c0c0; background: #ffffcc; color: #000; font-family: "Times New Roman", Times, serif; }
+.geo table.gb th { padding: 4px 6px; background: #000080; color: #fff; font-size: 13px; text-align: left; }
+.geo table.gb td { padding: 6px; border: 1px solid #999; font-size: 15px; vertical-align: middle; }
+.geo table.gb button { padding: 2px 8px; margin: 1px 2px; background: #c0c0c0; border: 2px outset #fff; color: #000; font-family: Arial, sans-serif; font-size: 12px; cursor: pointer; }
+.geo table.gb button:active { border-style: inset; }
+.geo table.gb tr.done td { background: #ddffdd; color: #555; }
+.geo table.gb tr.done .msg { text-decoration: line-through; }
+.geo table.gb .stamp { color: #007000; font-weight: bold; }
+
+.geo ul.stuff { margin: 0; padding-left: 20px; line-height: 2; }
+.geo .gtip { position: relative; }
+.geo .gtip .pop { position: absolute; left: 0; top: 130%; z-index: 9; width: 240px; padding: 0; background: #ffffe1; color: #000; border: 1px solid #000; font-family: Tahoma, Arial, sans-serif; font-size: 11px; font-weight: normal; line-height: 1.4; box-shadow: 2px 2px 0 #000; display: none; }
+.geo .gtip .pop .bar { display: block; padding: 2px 6px; background: #000080; color: #fff; font-weight: bold; }
+.geo .gtip .pop .txt { display: block; padding: 5px 7px 6px; }
+.geo .gtip:hover .pop, .geo .gtip:focus-visible .pop { display: block; }
+.geo .gtip:hover { background: transparent; }
+.geo .hot { color: #ff5555; font-size: 11px; font-weight: bold; }
+.geo .new { color: #66ff66; font-size: 11px; font-weight: bold; }
+
+.geo .webring { padding: 8px; border: 4px double #ff00ff; background: #000066; text-align: center; font-family: Arial, sans-serif; }
+.geo .webring-title { color: #fff; font-weight: bold; }
+.geo .webring button { margin: 0 6px; padding: 0; background: none; border: 0; color: #00ffff; font: inherit; font-weight: bold; text-decoration: underline; cursor: pointer; }
+
+.geo .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 10px 0; }
+.geo .badge { width: 88px; height: 31px; display: grid; place-items: center; border: 1px solid #fff; font-family: Arial, sans-serif; font-size: 9px; font-weight: bold; line-height: 1.05; text-align: center; text-transform: uppercase; }
+.geo .b1 { background: #000; color: #0f0; } .geo .b2 { background: linear-gradient(#003, #00c); color: #ff0; } .geo .b3 { background: #c00; color: #fff; }
+.geo .b4 { background: #ff0; color: #000; } .geo .b5 { background: linear-gradient(#060, #0a0); color: #fff; } .geo .b6 { background: #808080; color: #fff; }
+
+.geo-sparkle { position: fixed; z-index: 99; pointer-events: none; font-size: 14px; animation: geo-fall .9s linear forwards; }
+@keyframes geo-fall { to { transform: translateY(40px); opacity: 0; } }
+
+/* the way back, on the boring page */
+.to-1999 { display: inline-block; margin: 0 0 10px 26px; padding: 3px 10px; background: #000033; color: #ffff00; border: 2px outset #c0c0c0; font-family: "Comic Sans MS", "Comic Sans", cursive; font-size: 12px; font-weight: bold; text-decoration: none; }
+.to-1999:hover { background: #ffff00; color: #000033; }
+
+@media (max-width: 640px) {
+  .geo .frame { grid-template-columns: 1fr; }
+  .geo .nav a { display: inline-block; margin: 3px 10px 3px 0; }
+  .geo .side-extra { display: none; }
+  .geo table.gb td, .geo table.gb th { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .geo .blink, .geo h1.rainbow, .geo .construction .dig, .geo .marquee span { animation: none; }
+  .geo .marquee span { padding-left: 0; white-space: normal; }
+}
