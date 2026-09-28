@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-export const INSTALL_COMMAND = 'curl -fsSL https://productagent.dev/install.sh | bash';
+import { INSTALL_COMMAND } from '@/lib/install';
 
 type AgentKey = 'claude' | 'chatgpt';
 

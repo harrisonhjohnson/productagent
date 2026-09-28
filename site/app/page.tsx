@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { Guestbook, Sparkles, Webring } from '@/components/geo-client';
 import { GITHUB, getTree } from '@/lib/content';
+import { INSTALL_COMMAND as INSTALL } from '@/lib/install';
 import './geo.css';
 
-const INSTALL = 'curl -fsSL https://productagent.dev/harnesses/loops/install.sh | sh';
 const TAGS: Record<string, [string, string]> = { loops: ['hot', 'HOT!'], 'self-maintenance': ['new', 'NEW!'] };
 
 export default function Home() {
@@ -46,6 +46,7 @@ export default function Home() {
             <a href="#stuff">Cool Stuff</a>
             <a href="#install">Get It!!</a>
             <Link href="/why">Why Loops?</Link>
+            <Link href="/about">About This Site</Link>
           </div>
           <div className="box side side-extra">
             <div style={{ fontSize: 30 }} aria-hidden="true">🌙</div>
@@ -174,7 +175,7 @@ export default function Home() {
           <span className="badge b6">html<br />4 ever</span>
         </div>
         <p className="tiny">
-          <a href={GITHUB} target="_blank" rel="noreferrer">⭐ Sign my GitHub!!!</a> · © 2026 productagent · last updated 9/23/26<br />
+          <a href={GITHUB} target="_blank" rel="noreferrer">⭐ Sign my GitHub!!!</a> · <Link href="/about">about this site</Link> · © 2026 productagent · last updated 9/23/26<br />
           this page is NOT affiliated w/ any robot uprising
         </p>
       </footer>

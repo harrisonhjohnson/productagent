@@ -7,10 +7,13 @@ export function Shell({ path, children }: { path: string; children: React.ReactN
   return (
     <main className="site-shell">
       <header className="topbar">
-        <Link className="brand-lockup" href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
-          <TerminalSquare aria-hidden="true" size={17} strokeWidth={1.5} />
-          <span>PRODUCTAGENT</span>
-        </Link>
+        <nav className="brand-lockup" aria-label="Site">
+          <Link className="brand-lockup" href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+            <TerminalSquare aria-hidden="true" size={17} strokeWidth={1.5} />
+            <span>PRODUCTAGENT</span>
+          </Link>
+          <Link className="topbar-link" href="/about">ABOUT</Link>
+        </nav>
         <a className="topbar-path" href={GITHUB} target="_blank" rel="noreferrer" aria-label="Repository on GitHub" style={{ textDecoration: 'none' }}>
           harrisonhjohnson/productagent · {path}
         </a>
