@@ -40,6 +40,9 @@
 .geo .masthead .hello .body-text { font-size: 19px; }
 .geo .plain { margin: 0 auto 4px; max-width: 58ch; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; }
 .geo .plain-label { color: #ffff66; font-weight: bold; }
+.geo .tv { max-width: 620px; margin: 14px auto 4px; padding: 6px; border: 4px ridge #c0c0c0; background: #000; }
+.geo .tv-title { margin-bottom: 6px; color: #ffff00; font-weight: bold; }
+.geo .tv video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000033; }
 .geo .blink { animation: geo-blink 1.2s steps(1) infinite; }
 @keyframes geo-blink { 50% { visibility: hidden; } }
 .geo hr.rainbow { height: 6px; border: 0; margin: 14px 0; background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }

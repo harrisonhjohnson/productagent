@@ -39,6 +39,13 @@ export default function Home() {
         </p>
         <p className="tiny">plugged in · your Mac · your Claude plan · nothing phones home</p>
 
+        <figure className="tv">
+          <div className="tv-title">★ WATCH MY 90-SECOND MOVIE!!! ★</div>
+          <video controls playsInline preload="none" poster="/video/explainer-poster.jpg" aria-label="90-second explainer: how a loop runs overnight">
+            <source src="/video/explainer.mp4" type="video/mp4" />
+          </video>
+        </figure>
+
         <p className="construction">
           <span className="dig" aria-hidden="true">👷</span> <span>UNDER CONSTRUCTION</span> <span className="dig" aria-hidden="true">🚧</span>
         </p>
