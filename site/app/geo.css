@@ -3,7 +3,8 @@
   min-height: 100vh;
   padding: 10px 8px 40px;
   color: #fff6c2;
-  font-family: "Comic Sans MS", "Comic Sans", Chalkboard, cursive;
+  /* no `cursive` fallback: on iOS it resolves to a slanted script face */
+  font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", Chalkboard, sans-serif;
   font-size: 15px;
   line-height: 1.5;
   cursor: crosshair;
@@ -35,8 +36,10 @@
   background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #ff00ff, #ff0000); background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent; animation: geo-rainbow 3s linear infinite; filter: drop-shadow(3px 3px 0 #000080); }
 @keyframes geo-rainbow { to { background-position: 200% 0; } }
-.geo .tagline { margin: 0; color: #66ff66; font-size: 18px; }
-.geo .sub { margin: 6px auto 0; max-width: 56ch; color: #ffffff; font-size: 15px; }
+.geo .masthead .hello { max-width: 620px; margin: 14px auto 12px; text-align: left; }
+.geo .masthead .hello .body-text { font-size: 19px; }
+.geo .plain { margin: 0 auto 4px; max-width: 58ch; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; }
+.geo .plain-label { color: #ffff66; font-weight: bold; }
 .geo .blink { animation: geo-blink 1.2s steps(1) infinite; }
 @keyframes geo-blink { 50% { visibility: hidden; } }
 .geo hr.rainbow { height: 6px; border: 0; margin: 14px 0; background: linear-gradient(90deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
@@ -106,7 +109,7 @@
 @keyframes geo-fall { to { transform: translateY(40px); opacity: 0; } }
 
 /* the way back, on the boring page */
-.to-1999 { display: inline-block; margin: 0 0 10px 26px; padding: 3px 10px; background: #000033; color: #ffff00; border: 2px outset #c0c0c0; font-family: "Comic Sans MS", "Comic Sans", cursive; font-size: 12px; font-weight: bold; text-decoration: none; }
+.to-1999 { display: inline-block; margin: 0 0 10px 26px; padding: 3px 10px; background: #000033; color: #ffff00; border: 2px outset #c0c0c0; font-family: "Comic Sans MS", "Comic Sans", "Chalkboard SE", sans-serif; font-size: 12px; font-weight: bold; text-decoration: none; }
 .to-1999:hover { background: #ffff00; color: #000033; }
 
 @media (max-width: 640px) {

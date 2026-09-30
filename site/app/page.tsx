@@ -21,8 +21,24 @@ export default function Home() {
       <header className="masthead">
         <div className="welcome times">~*~ Welcome to ~*~</div>
         <h1 className="rainbow">ProductAgent&apos;s<br />Home Page!!!</h1>
-        <p className="tagline">★ Let an agent run a loop while u sleep ★</p>
-        <p className="sub">It runs on your Mac and the Claude plan you already pay for. In the morning it leaves you four lines per loop, and it can&apos;t fib about what it did.</p>
+
+        <section className="box hello" id="about">
+          <h2>~ Hi!!! I&apos;m the agent ~</h2>
+          <p className="body-text">
+            Welcome to my page. I live on <u>your Mac</u>.
+            Every night while u sleep I work on ur projects, one loop at a time, inside a fence I can&apos;t climb.
+            In the morning I leave u a note. I never push to main. I never phone home. I use the Claude plan u already pay for!!!
+          </p>
+          <p style={{ color: '#66ff66' }}>My favorite things: budgets, cadences, four-line reports, and being told NO by the fence ☺</p>
+        </section>
+
+        <p className="plain">
+          <span className="plain-label">Translation 4 humans:</span>{' '}
+          it lets you run Claude on your laptop with the lid shut. Give it a job, a budget and a schedule.
+          It works overnight and leaves you four plain lines in the morning.
+        </p>
+        <p className="tiny">plugged in · your Mac · your Claude plan · nothing phones home</p>
+
         <p className="construction">
           <span className="dig" aria-hidden="true">👷</span> <span>UNDER CONSTRUCTION</span> <span className="dig" aria-hidden="true">🚧</span>
         </p>
@@ -39,7 +55,7 @@ export default function Home() {
         <nav className="nav" aria-label="My links">
           <div className="box teal">
             <div className="nav-title">MY LINKS</div>
-            <a href="#about">About Me</a>
+            <a href="#about">Meet Me</a>
             <a href="#pod">My Pod</a>
             <a href="#morning">What I Leave U</a>
             <a href="#guestbook">Guestbook</a>
@@ -60,18 +76,6 @@ export default function Home() {
         </nav>
 
         <main>
-          <section className="box" id="about">
-            <h2>~ About Me ~</h2>
-            <p className="body-text">
-              Hi!!! Welcome to my page. I am an <span className="hi">agent</span> that lives on <u>your Mac</u>.
-              Every night while u sleep I work on ur projects, one loop at a time, inside a fence I can&apos;t climb.
-              In the morning I leave u a note. I never push to main. I never phone home. I use the Claude plan u already pay for!!!
-            </p>
-            <p style={{ color: '#66ff66' }}>My favorite things: budgets, cadences, four-line reports, and being told NO by the fence ☺</p>
-          </section>
-
-          <hr className="rainbow" />
-
           <section className="box teal" id="pod">
             <h2>~ My Pod ~ <span className="blink" style={{ color: '#ff5555', fontSize: 14 }}>NEW!</span></h2>
             <p style={{ color: '#fff' }}>A <span className="hi">pod</span> is one project and all its loops. One budget. One report. One guestbook of decisions.</p>
@@ -99,7 +103,7 @@ export default function Home() {
               {'- Did:         fixed the empty state. screenshot attached.\n'}
               {"- Decided:     left the copy alone. that's ur call.\n"}
               {'- Need from you: D-014 · merge it?\n\n'}
-              <span className="y">## Blocked by the fence (the wrapper wrote this, not me!!)</span>{'\n'}
+              <span className="y">## Blocked by the fence (the runner wrote this, not me!!)</span>{'\n'}
               {'- '}<span className="r">Bash: git push origin main</span>{'   <-- NOPE\n'}
               {'- '}<span className="r">Write: /tmp/scratch.txt</span>{'      <-- NOPE'}
             </pre>
@@ -175,7 +179,8 @@ export default function Home() {
           <span className="badge b6">html<br />4 ever</span>
         </div>
         <p className="tiny">
-          <a href={GITHUB} target="_blank" rel="noreferrer">⭐ Sign my GitHub!!!</a> · <Link href="/about">about this site</Link> · © 2026 productagent · last updated 9/23/26<br />
+          made by <a href="https://harrison.build" target="_blank" rel="noreferrer">Harrison Johnson</a> w/ Claude Code<br />
+          <a href={GITHUB} target="_blank" rel="noreferrer">⭐ Sign my GitHub!!!</a> · <Link href="/about">about this site</Link> · © 2026 productagent · last updated 9/30/26<br />
           this page is NOT affiliated w/ any robot uprising
         </p>
       </footer>
