@@ -27,7 +27,12 @@ harnesses/        # every harness as a folder with a harness.json manifest
   flow-design/  prototype-swarm/  pm-strategist/
   karma/  rev-intel-harness/      # links to their own repos
 site/             # productagent.dev (Next.js, reads harnesses/ at build time)
+onboarding-proto/ # demo-only post-install onboarding (Vite). Does not install anything.
 ```
+
+There is also an interactive **[post-install onboarding prototype](onboarding-proto/README.md)** —
+nine beats that teach Loop, Run, Order and Decision and sell the lid-shut night. Demo
+only; `cd onboarding-proto && npm install && npm run dev`.
 
 ## Getting started
 
