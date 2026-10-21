@@ -73,19 +73,22 @@ def _git_argv_mutates(argv):
 
 
 def git_mutation(cmd):
-    cmd = cmd[:20000]
+    if len(cmd) > 20000:
+        return True  # too long to audit: flag it rather than truncate it
     if EXECUTES_TEXT.search(cmd):
         return bool(RAW_GIT.search(cmd))
     try:
         lex = shlex.shlex(HEREDOC.sub("", cmd).replace("\n", " ; "), posix=True, punctuation_chars=True)
         lex.whitespace_split = True
+        lex.commenters = ""  # a `#` must not swallow the lines joined after it
         tokens = list(lex)
     except ValueError:
         return bool(RAW_GIT.search(cmd))
     seg = []
     for tok in tokens + [";"]:
         if tok in SEPARATORS:
-            if seg and os.path.basename(seg[0]) == "git" and _git_argv_mutates(seg):
+            # git anywhere in the segment counts (FOO=1 git, time git, if git): over-flags, never misses
+            if any(os.path.basename(t) == "git" and _git_argv_mutates(seg[i:]) for i, t in enumerate(seg)):
                 return True
             seg = []
         else:
