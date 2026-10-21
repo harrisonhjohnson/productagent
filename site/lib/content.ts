@@ -4,6 +4,8 @@ import path from 'node:path';
 import matter from 'gray-matter';
 
 export const GITHUB = 'https://github.com/harrisonhjohnson/productagent';
+export const AUTHOR_GITHUB = 'https://github.com/harrisonhjohnson';
+export const AUTHOR_LINKEDIN = 'https://www.linkedin.com/in/harrison-johnson/';
 const REF = 'main';
 const REPO_ROOT = path.resolve(process.cwd(), '..');
 

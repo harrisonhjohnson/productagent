@@ -4,10 +4,9 @@ import { DescentPanel } from '@/components/descent-panel';
 import { InstallLine } from '@/components/install-line';
 import { INSTALL_COMMAND } from '@/lib/install';
 import { Shell } from '@/components/shell';
-import { GITHUB, getTree } from '@/lib/content';
+import { AUTHOR_GITHUB, AUTHOR_LINKEDIN, GITHUB, getTree } from '@/lib/content';
 
 const SITE = 'https://productagent.dev';
-const AUTHOR_GITHUB = 'https://github.com/harrisonhjohnson';
 
 const TITLE = 'About productagent.dev: free Claude Code harnesses for product managers';
 const DESCRIPTION =
@@ -78,7 +77,7 @@ export default function About() {
         name: 'Harrison Johnson',
         jobTitle: 'Product manager',
         url: `${SITE}/about`,
-        sameAs: [AUTHOR_GITHUB],
+        sameAs: [AUTHOR_GITHUB, AUTHOR_LINKEDIN],
       },
       {
         '@type': 'AboutPage',
@@ -225,6 +224,7 @@ export default function About() {
           <ul>
             <li><a href={GITHUB} target="_blank" rel="noreferrer">Star harrisonhjohnson/productagent on GitHub</a> to get new harnesses as they ship.</li>
             <li><a href={AUTHOR_GITHUB} target="_blank" rel="noreferrer">Follow Harrison on GitHub</a>.</li>
+            <li><a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Connect with Harrison on LinkedIn</a>.</li>
             <li>Found a bug or want a harness? <a href={`${GITHUB}/issues`} target="_blank" rel="noreferrer">Open an issue</a>.</li>
             <li>Agents and crawlers: read <a href="/llms.txt">/llms.txt</a> for a plain-text map of the site.</li>
           </ul>

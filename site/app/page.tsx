@@ -6,7 +6,7 @@ import { Onboarding } from '@/components/onboarding';
 import { StickyNotes } from '@/components/loop-usecases';
 import { Morning } from '@/components/morning';
 import { Shell } from '@/components/shell';
-import { countAll, getTree } from '@/lib/content';
+import { AUTHOR_LINKEDIN, countAll, getTree } from '@/lib/content';
 import Link from 'next/link';
 import { getEvidence } from '@/lib/evidence';
 import './geo.css';
@@ -60,7 +60,7 @@ export default function Home() {
             <Link href="/evidence">See the receipts →</Link>
           </p>
           <p className="lead-byline">
-            Built and run by Harrison Johnson, a product manager, with Claude Code. Claude wrote most of the code; the calls are mine.
+            Built and run by <a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Harrison Johnson</a>, a product manager, with Claude Code. Claude wrote most of the code; the calls are mine.
           </p>
         </section>
 

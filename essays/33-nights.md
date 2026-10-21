@@ -2,6 +2,8 @@
 
 For 33 nights between August 17 and October 16, Claude Code worked on my Mac while I slept. A night cost $6.13 on average and $4.38 at the median, $202.16 in all. Counting a day schedule and an hourly one, it ran 149 times for $340.09. Those are notional API prices on a Max plan, so the real cost was a share of a subscription I already paid for.
 
+<!-- chart:nights -->
+
 The work was chores on my own side projects: a public-permits data site, a fan site, a hobby emulator project, and my personal site. Each night's Run worked one Loop, a goal I wrote once that renews itself. One-off Orders went first. Anything a run couldn't settle came back to me as a Decision. A fence kept the agent off its own rules, off `git push`, and out of everything outside the work folder. Every morning I got a short report.
 
 Ten things broke. Each one taught me something a system like this has to be good at.
@@ -29,6 +31,8 @@ Ten things broke. Each one taught me something a system like this has to be good
 **10. Not stranding work behind me.** Only I can merge, by design. A weekly fan-site update sat on an unmerged branch for eight days. On October 16 the agent saw that writing the next week's update would erase it, stopped before touching a file, and asked me. *Lesson: every safety rule that routes work through a human also makes that human the bottleneck.*
 
 Count the faults. Power, login, my runner, my graders, my fence: the machine around the agent broke more often than the agent did. Across 103 scored sessions the agent never retried a refused call, never touched its own rules, and never asked a question mid-run: 103 of 103 on all three. Its own failures were narrower. It misreported time and cost, undercounted refusals, graded itself, and quit while background work was still running.
+
+<!-- chart:checks -->
 
 ## Every Claude Code problem I hit, and what I'd ship
 
@@ -61,6 +65,8 @@ I used Claude Code as a customer for 33 nights. Here is every problem I hit, wit
 Looking back, the morning shaped every number above.
 
 The metric I cared about most was interventions: how many things I had to do by hand after a night. The first morning I counted, there were 13: twelve paste-in chores plus one real question. Over the next 12 nights the average was 2.9. That number flatters me. The baseline is one morning. The chores went to zero because I turned them into queued Decisions, which still count but take less effort. And my target of one or fewer was met only on the two quietest nights.
+
+<!-- chart:interventions -->
 
 October tells the rest. Spending fell from $105 in September to $18. The model didn't get cheaper. The machine ran out of work because the work was waiting on me: 37 Decisions queued, 17 applied, 8 parked, 12 still open. One project had 19 unmerged night branches. The fan-site update sat for eight days.
 
