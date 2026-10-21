@@ -22,7 +22,7 @@ const TRACK_INSET = 209;
 export function DescentPanel({ label, marks, readout }: Props) {
   const progress = useScrollProgress();
   const percent = Math.round(progress * 100);
-  const panelRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
 
   const scrollToPointer = useCallback((clientY: number) => {
@@ -73,7 +73,7 @@ export function DescentPanel({ label, marks, readout }: Props) {
   }
 
   return (
-    <aside
+    <div
       ref={panelRef}
       className={`descent-panel${dragging ? ' is-dragging' : ''}`}
       role="slider"
@@ -111,6 +111,6 @@ export function DescentPanel({ label, marks, readout }: Props) {
         />
       </div>
       <p className="descent-note">drag to scroll</p>
-    </aside>
+    </div>
   );
 }

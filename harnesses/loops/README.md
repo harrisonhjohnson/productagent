@@ -2,7 +2,7 @@
 
 A loop is a piece of work you describe once and an agent keeps doing, one bounded run at
 a time, while you are asleep or away. You set four knobs. The machine does the rest inside
-a fence it cannot climb. In the morning you read four sentences per loop and make the
+a fence: permission rules, with the OS sandbox underneath for anything the rules miss. In the morning you read four sentences per loop and make the
 decisions only you can make.
 
 This is the harness I run on my own portfolio every night. Everything here is copied off
@@ -90,7 +90,10 @@ bridges the two, and never guesses.
 - **A floor.** `plan_floor_percent` in the charter (default 20) is the part of your week
   the machine will not touch. Before a night it reads the plan utilization Claude Code
   caches locally; if less than the floor is left, or the five-hour window is nearly full,
-  it skips the night and says so in the morning. No cache, no gate.
+  it skips the night and says so in the morning. No cache, no gate. The cache can also go
+  stale: on my machine it once went 313 hours without updating, and the gate never fired.
+  Until Claude Code exposes quota directly ([ask 5](https://productagent.dev/asks#5-a-quota-i-can-read)),
+  treat the floor as best effort.
 - **An estimate.** The ten-minute checker snapshots that cache whenever it changes, and
   the runner logs dollars per run with a timestamp. After five nights with both, the
   machine knows how many points of your week a dollar costs on your plan, and every

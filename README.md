@@ -6,7 +6,7 @@ or start at [harnesses/README.md](harnesses/README.md).
 
 The centre of it is **[Loops](harnesses/loops/README.md)**: give an agent a goal, a budget,
 a cadence and a model. It works one bounded run at a time while you sleep, inside a fence
-it cannot climb, and hands you four plain sentences in the morning. Around it:
+(permission rules with the OS sandbox underneath), and hands you four plain sentences in the morning. Around it:
 
 - **[TODO](harnesses/todo/README.md)** — one markdown list shared between the terminal and a Telegram bot. The bot is also the phone-side write path for loops (`/loops`, `/loop L-03 budget 5`).
 - **[flow-design](harnesses/flow-design/SKILL.md)** and **[prototype-swarm](harnesses/prototype-swarm/SKILL.md)** — a screen-by-screen interview that ends in a clickable prototype, and a swarm that fills in the screens it links to.
