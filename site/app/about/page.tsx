@@ -39,7 +39,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Is it safe to let an agent run unattended?',
-    a: 'Loops is built around that question. Each run has a dollar budget and a timeout. A fence of Claude Code permissions allows a short list of actions and blocks git push, rm, shells and edits to the loops file. The runner keeps its own list of every blocked call and prints the list under the morning report, so the agent cannot hide what it tried. Nothing runs until you write a loop, and --off unloads the schedule.',
+    a: 'Loops is built around that question. Each run has a dollar budget and a timeout. A fence of Claude Code permissions allows a short list of actions and blocks git push, rm, shells and edits to the loops file, and the OS sandbox underneath stops what text rules miss, such as a one-line python3 -c. The runner keeps its own list of every blocked call and prints the list under the morning report, so the agent cannot hide what it tried. Nothing runs until you write a loop, and --off unloads the schedule.',
   },
   {
     q: 'Does it work with Codex or ChatGPT?',
@@ -151,6 +151,23 @@ export default function About() {
         </div>
 
         <article className="doc">
+          <h2 id="author">Who made this</h2>
+          <p>
+            Harrison Johnson, a product manager in New York. He has spent a decade building marketplaces and B2B
+            software, as employee number one, as a co-founder, and as a product lead. He built productagent.dev with
+            Claude Code and runs Loops on his own projects every night. Three pages come out of that work:
+          </p>
+          <ul>
+            <li><Link href="/33-nights"><b>33 nights of unattended Claude Code</b></Link>: ten things that broke, what each taught, and why the morning review is the product.</li>
+            <li><Link href="/asks"><b>Eleven Claude Code asks</b></Link>: every problem from those nights, written as a spec with evidence, a way to measure it, and what to leave out.</li>
+            <li><Link href="/evidence"><b>The receipts</b></Link>: the run record behind both, numbers only.</li>
+          </ul>
+          <p>
+            <a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            {' · '}
+            <a href={AUTHOR_GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
+          </p>
+
           <h2 id="who">Who productagent.dev is for</h2>
           <ul>
             <li>Product managers who already run part of the day in Claude Code or Codex.</li>
@@ -230,7 +247,7 @@ export default function About() {
           </ul>
         </article>
       </section>
-      <DescentPanel label="ABOUT" marks={['WHO', 'WHAT', 'INSTALL', 'FAQ']} readout={{ kind: 'items', total: count }} />
+      <DescentPanel label="ABOUT" marks={['AUTHOR', 'WHAT', 'INSTALL', 'FAQ']} readout={{ kind: 'items', total: count }} />
     </Shell>
   );
 }

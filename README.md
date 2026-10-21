@@ -4,6 +4,12 @@ Working tools for product managers who run their day with Claude Code, published
 folders they actually are. Browse them at **[productagent.dev](https://productagent.dev)**
 or start at [harnesses/README.md](harnesses/README.md).
 
+**Start with the writing.** Three pages come out of running this on my own projects:
+
+- **[33 nights of unattended Claude Code](https://productagent.dev/33-nights)** ([source](essays/33-nights.md)): ten things that broke, what each taught, and why the morning review is the product.
+- **[Eleven Claude Code asks, written as specs](https://productagent.dev/asks)** ([source](essays/asks.md)): problem, evidence, ship, measure, not doing.
+- **[The receipts](https://productagent.dev/evidence)** ([data](evidence/evidence.json)): the run record behind both, numbers only.
+
 The centre of it is **[Loops](harnesses/loops/README.md)**: give an agent a goal, a budget,
 a cadence and a model. It works one bounded run at a time while you sleep, inside a fence
 (permission rules with the OS sandbox underneath), and hands you four plain sentences in the morning. Around it:
@@ -21,6 +27,8 @@ Four words carry the whole system: a **Loop** is work with a goal that renews it
 ## What's in this repo
 
 ```
+essays/           # the 33-nights essay and the eleven asks
+evidence/         # the run record behind them (evidence.json)
 harnesses/        # every harness as a folder with a harness.json manifest
   loops/          # the flagship: fence, charter, runner, morning judge, spec
   todo/           # the list + the Telegram bot
@@ -35,5 +43,5 @@ Clone the repo, open the harness you want, and copy its folder into your own set
 README says what to copy and what to edit first. Nothing here phones home, and nothing is
 hosted: every harness runs on your machine, on your Claude Code subscription.
 
-Built by Harrison Johnson with Claude. The agents did the copying and the first pass of
+Built by [Harrison Johnson](https://www.linkedin.com/in/harrison-johnson/) with Claude. The agents did the copying and the first pass of
 scrubbing; the judgment about what to publish is mine.
