@@ -143,7 +143,7 @@ export default function About() {
           <p className="why-lede">
             productagent.dev is a free, public library of {count} Claude Code harnesses for product managers and
             operators: skills, agents, shell scripts on a schedule, a permissions fence and a Telegram bot. The
-            flagship, Loops, lets an agent keep working while you sleep. You give each loop a goal, a budget, a cadence
+            flagship, Loops, lets Claude keep working overnight and hands the decisions back to you in the morning. You give each loop a goal, a budget, a cadence
             and a model. Loops runs on your Mac and the Claude or ChatGPT plan you already pay for, stays inside a fence
             it cannot climb, and leaves four plain lines per loop in the morning. Install Loops with one line:{' '}
             <code>{INSTALL_COMMAND}</code>

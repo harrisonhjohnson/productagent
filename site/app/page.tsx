@@ -34,7 +34,7 @@ export default function Home() {
           <Image src="/loops-retro.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 94vw" className="hero-img" />
           <div className="hero-copy">
             <p className="hero-eyebrow">PRODUCTAGENT</p>
-            <h1 id="page-heading">Let an agent run a loop<br />while you sleep.</h1>
+            <h1 id="page-heading">Claude writes the code at night.<br />You review it in the morning.</h1>
             <p className="hero-meta">claude code · codex · your mac · your plan · {counts.harnesses} harnesses</p>
           </div>
         </div>

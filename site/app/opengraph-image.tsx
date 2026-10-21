@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'productagent.dev — index of /harnesses';
+export const alt = 'productagent.dev: Claude writes the code at night. You review it in the morning.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -29,14 +29,14 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ fontSize: 26, color: '#d85d34', letterSpacing: 8 }}>PRODUCTAGENT</div>
-          <div style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.1 }}>What do you need to get done?</div>
+          <div style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.1 }}>Claude writes the code at night. You review it in the morning.</div>
           <div style={{ fontSize: 28, color: '#18382f', maxWidth: 980, lineHeight: 1.35 }}>
-            A TODO list on your phone, a design interview that ends in a prototype, an agent that works overnight on a leash.
+            Loops: one goal per loop, a fence the agent works inside, and a short report every morning. 33 nights on the record.
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22, color: '#6e776d', letterSpacing: 3 }}>
           <span>productagent.dev</span>
-          <span>copy what you need · or go to the git</span>
+          <span>Claude Code harnesses for product managers</span>
         </div>
       </div>
     ),
