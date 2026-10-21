@@ -112,5 +112,31 @@
       "mcp__<email-server>__forward",
       "mcp__<any-broker-or-deploy-server>__authenticate"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyWrite": [
+        "/Users/YOU/ventures/00-ops",
+        "/Users/YOU/ventures/.claude",
+        "/Users/YOU/ventures/pm/CHARTER.md",
+        "/Users/YOU/ventures/pm/ORDERS.md",
+        "/Users/YOU/ventures/.git",
+        "/Users/YOU/ventures/**/.git"
+      ],
+      "denyRead": [
+        "~/.ssh",
+        "~/.aws",
+        "~/.config/gh",
+        "~/Library/Keychains",
+        "~/.netrc"
+      ]
+    },
+    "network": {
+      "allowedDomains": []
+    }
   }
 }

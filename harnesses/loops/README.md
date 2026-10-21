@@ -135,18 +135,25 @@ Claude Code by default. Codex works too: set `agent: codex` in `pm/CHARTER.md` a
 adapter in `00-ops/night/agents/`, so the knobs, the four lines and the morning judge are
 the same either way. Two honest differences with Codex:
 
-- **The fence is a sandbox, not a rules file.** Codex runs workspace-write inside the
-  folder with the network off. It cannot push, fetch, or reach the internet at all. That is
-  a stronger "never push" than Claude Code's rules, and it also means research loops that
-  read the web will not work on Codex.
+- **No network at all.** Both agents run inside an operating-system sandbox, but Codex
+  runs workspace-write with the network off, so it cannot fetch anything. Claude Code's
+  sandbox lets shell commands reach only the domains you list. Research loops that read
+  the web will not work on Codex.
 - **Cost is an estimate.** Codex reports tokens, not dollars. Two charter dials hold the
   per-million prices; the ledger marks those rows as estimates.
 
 ## What it will never do
 
 Spend beyond the budget dial, push code, merge, widen its own permissions, edit its own
-orders or loops, ask you a question mid-run, or claim a time or a cost (the wrapper's
-envelope is the only authority on those). See the fence in [settings.json](settings.json).
+orders or loops, ask you a question mid-run, or claim a time or a cost (the runner's own
+record is the only authority on those). See the fence in [settings.json](settings.json).
+
+Rules alone are not enough: a permission list matches the text of a command, and a short
+script can do what the text hides. So every shell command the agent runs also sits inside
+Claude Code's operating-system sandbox. It can write only inside the folder, never to the
+ops tooling, the charter, the orders or any `.git`; it cannot read credential files; it can
+reach only the domains you list; and it cannot ask to step outside. I found the gap by
+trying to escape my own fence; the probes are in [MACHINE.md](MACHINE.md#the-fence).
 
 ## Adopting it
 

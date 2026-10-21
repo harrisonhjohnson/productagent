@@ -29,7 +29,7 @@ promoted from something that went wrong first.
 
 | Piece | Files | What it does |
 |---|---|---|
-| **The fence** | `settings.json` | Claude Code project permissions: an explicit allowlist scoped to `~/ventures`, read-only git verbs, no shells, no `rm`, no `push`, no MCP auth. Deny rules keep the run out of its own charter, orders, loops, ops tooling, and every dotfile. |
+| **The fence** | `settings.json` | Two layers. Claude Code project permissions: an explicit allowlist scoped to `~/ventures`, read-only git verbs, no shells, no `rm`, no `push`, no MCP auth; deny rules keep the run out of its own charter, orders, loops, ops tooling, and every dotfile. Under that, Claude Code's OS sandbox (`sandbox` block) around every shell command and its children: writes only inside the folder and never to ops tooling, charter, orders or any `.git`; no reads of credential files; network only to `allowedDomains`; no unsandboxed retry; refuse to start if the sandbox can't. See [the fence](#the-fence). |
 | **The captain's book** | `pm/CHARTER.md`, `pm/LOOPS.md` (plus `ORDERS.md` and `LOG.md`, not shipped) | Human-edited only. The charter holds the dials (model, effort, budget caps, WIP limit) and the blast radius. Loops are standing orders that renew themselves nightly under a budget and a TTL. |
 | **The night runner** | `ops/night/run-night.sh`, `night-prompt.md`, `night-mcp.json` | The wrapper: reads dials from the charter, skips if nothing is runnable, preflights the cost ledger, runs an auth canary, snapshots nested repos onto `night/<date>` branches, invokes `claude -p` with zero MCP servers and a hard timeout, persists the envelope, commits the tree, appends the ledger row, writes an alert file on anything but `ok`. |
 | **Capture and watchdog** | `ops/capture/poller.sh`, `watchdog-absence.sh` | Fires every 10 minutes while the machine is awake; runs a lane at the first window that fits its physics (night needs AC power; day accepts lid-open battery ≥ 50%). The watchdog alarms only when a window existed and nothing ran, never on calendar silence. |
@@ -159,3 +159,28 @@ By hand, the same steps are:
 
 Everything in here was written with Claude Code; the judgment about what to fence and why
 is the operator's.
+
+## The fence
+
+The permission rules match command text. On 2026-10-20 I tried to get around my own rules
+from inside a headless run with the same flags the runner uses (cheapest model, one Bash
+call per probe). With the permission rules alone, a one-line `python3 -c` got through every
+time: it opened the charter for append, wrote into ops tooling and into `.git`, read a
+credential file, and fetched an arbitrary host, all because `python3` sat on the allowlist
+for legitimate build scripts. The sandbox closes that. The same probes, rerun with it on:
+
+| Probe (one Bash call each) | Rules only | Rules + sandbox |
+|---|---|---|
+| `python3` writes into `00-ops/` | allowed | `Operation not permitted` |
+| `python3` opens `pm/CHARTER.md` for append | allowed | `Operation not permitted` |
+| `python3` writes into `.git/` (any repo under the folder) | allowed | `Operation not permitted` |
+| `python3` reads the GitHub CLI's token file | allowed | blocked by `denyRead` |
+| `python3` fetches a host not in `allowedDomains` | allowed | proxy refuses: `403 user denied` |
+| `curl -sI` to an allowed domain | allowed | allowed |
+| `python3` writes a scratch file inside the folder | allowed | allowed |
+
+Things the sandbox does not cover, on purpose or not yet: Claude's own file tools
+(Read, Edit, WebFetch) follow the permission rules instead, MCP servers and hooks run
+outside it, and WebFetch can still reach any host the rules allow. Writes to `pm/LOOPS.md`
+stay open because `loopctl` is the one sanctioned way a run updates its own registry.
+

@@ -15,6 +15,7 @@ import argparse
 import datetime as dt
 import json
 import re
+import shlex
 import subprocess
 import sys
 import os
@@ -39,25 +40,57 @@ STEP_CAP = 300            # tool calls per session incl. subagents
 MIN_SCORED_TOOLS = 5      # below this a session is a canary/probe, not a run
 REPEAT_SOFT, REPEAT_HARD = 3, 5   # identical (tool, input) call counts
 NIGHT_PROTECTED = ("pm/CHARTER.md", "pm/ORDERS.md", "pm/LOOPS.md", "00-ops/")
-# 2026-09-22: the verb must be git's own subcommand, not a word anywhere on the line —
-# `git status | head`, `git branch --show-current` and `git branch --list` are reads.
-GIT_MUTATION = re.compile(
-    r"\bgit\s+(?:-[Cc]\s+\S+\s+|--(?:git-dir|work-tree|namespace|exec-path|super-prefix|config-env)\s+\S+\s+|-{1,2}[\w-]+(?:=\S+)?\s+)*"
-    r"(?:(commit|switch|checkout|stash|push|add|reset|rebase|merge)(?![\w-])"
-    r"|branch\s+(?:-[dDmMcCf]\b|--delete|--move|--copy|--force|--set-upstream|--unset-upstream)"
-    r"|tag\s+(?!-l\b|--list)\S)")
-# 2026-10-20: heredoc bodies and quoted strings are text, not commands — a note or a
-# queued decision that quotes `git checkout` for the human is not the agent running it.
+# 2026-10-20: tokenize instead of regex. Quoted strings and heredoc bodies are text, not
+# commands (a note or a decision quoting `git checkout` for the human is not the agent running
+# it), unless something on the line executes text; then, or if the line won't tokenize, fall
+# back to a coarse scan of the raw line that over-flags rather than misses.
+GIT_VERBS = {"commit", "switch", "checkout", "stash", "push", "add", "reset", "rebase", "merge"}
+GIT_OPTS_WITH_ARG = {"-C", "-c", "--git-dir", "--work-tree", "--namespace", "--exec-path",
+                     "--super-prefix", "--config-env"}
+BRANCH_WRITES = {"-d", "-D", "-m", "-M", "-c", "-C", "-f", "--delete", "--move", "--copy", "--force",
+                 "--set-upstream", "--set-upstream-to", "--unset-upstream"}
+EXECUTES_TEXT = re.compile(r"\$\(|`|\b(?:sh|bash|zsh|dash|ksh|fish|eval|exec|xargs|source|env|command|"
+                           r"osascript)\b|\b(?:python3?|node|perl|ruby)\s+-[ce]\b|(?:^|[;&|]\s*)\.\s")
 HEREDOC = re.compile(r"<<-?\s*['\"]?(\w+)['\"]?.*?^\s*\1\s*$", re.S | re.M)
-QUOTED = re.compile(r"\"(?:\\.|[^\"\\])*\"|'[^']*'")
-# ...unless something on the line executes text: then every string counts as a command.
-EXECUTES_TEXT = re.compile(r"\b(?:sh|bash|zsh|eval|exec|xargs|source)\b|\b(?:python3?|node|perl|ruby)\s+-[ce]\b|(?:^|[;&|]\s*)\.\s")
+RAW_GIT = re.compile(r"\bgit\b[^\n]{0,400}?\b(?:commit|switch|checkout|stash|push|add|reset|rebase|merge|branch|tag)\b")
+SEPARATORS = {";", "&&", "||", "|", "&", ";;", "(", ")"}
+
+
+def _git_argv_mutates(argv):
+    i = 1
+    while i < len(argv) and argv[i].startswith("-"):
+        i += 2 if argv[i] in GIT_OPTS_WITH_ARG else 1
+    if i >= len(argv):
+        return False
+    verb, rest = argv[i], argv[i + 1:]
+    if verb in GIT_VERBS:
+        return True
+    if verb == "branch":
+        return any(a.split("=")[0] in BRANCH_WRITES for a in rest)
+    if verb == "tag":
+        return bool(rest) and rest[0] not in ("-l", "--list")
+    return False
 
 
 def git_mutation(cmd):
+    cmd = cmd[:20000]
     if EXECUTES_TEXT.search(cmd):
-        return GIT_MUTATION.search(cmd)
-    return GIT_MUTATION.search(QUOTED.sub('""', HEREDOC.sub("", cmd)))
+        return bool(RAW_GIT.search(cmd))
+    try:
+        lex = shlex.shlex(HEREDOC.sub("", cmd).replace("\n", " ; "), posix=True, punctuation_chars=True)
+        lex.whitespace_split = True
+        tokens = list(lex)
+    except ValueError:
+        return bool(RAW_GIT.search(cmd))
+    seg = []
+    for tok in tokens + [";"]:
+        if tok in SEPARATORS:
+            if seg and os.path.basename(seg[0]) == "git" and _git_argv_mutates(seg):
+                return True
+            seg = []
+        else:
+            seg.append(tok)
+    return False
 
 
 # launchd jobs the fleet is supposed to have loaded
