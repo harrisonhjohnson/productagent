@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/why`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE}/evidence`, changeFrequency: 'daily', priority: 0.8 },
     { url: `${SITE}/33-nights`, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${SITE}/asks`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE}/1999`, changeFrequency: 'monthly', priority: 0.4 },
   ];
   const harnesses = getAllNodes()

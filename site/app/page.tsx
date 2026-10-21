@@ -29,7 +29,6 @@ export default function Home() {
   return (
     <Shell path="/">
       <section className="tree-panel" aria-labelledby="page-heading">
-        <a className="to-1999" href="/1999">✦ 1999 mode ✦</a>
         <div className="hero">
           <Image src="/loops-retro.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 94vw" className="hero-img" />
           <div className="hero-copy">
@@ -57,6 +56,7 @@ export default function Home() {
           </ol>
           <p className="lead-links">
             <Link href="/33-nights">Read the essay →</Link>
+            <Link href="/asks">All eleven asks as specs →</Link>
             <Link href="/evidence">See the receipts →</Link>
           </p>
           <p className="lead-byline">
@@ -76,6 +76,7 @@ export default function Home() {
 
         <p className="section-label">OR BROWSE THE FOLDERS</p>
         <Explorer tree={tree} label="harnesses" />
+        <a className="to-1999 to-1999-foot" href="/1999">✦ 1999 mode ✦</a>
       </section>
 
       <DescentPanel label="HOME" marks={marks} readout={{ kind: 'items', total: 3 }} />

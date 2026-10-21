@@ -622,3 +622,14 @@ button { font: inherit; }
 @media (max-width: 560px) { .check { grid-template-columns: minmax(0, 1fr) 56px; } .check-meter { display: none; } }
 .lead-byline a { color: inherit; }
 .chart-iv .chart-bar span { z-index: 2; background: var(--background); padding: 0 2px; }
+
+.asks-index { padding: 18px 26px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.asks-index ol { margin: 0; padding-left: 1.6em; columns: 2 280px; column-gap: 32px; font-family: var(--font-sans-local); font-size: 14px; line-height: 1.5; }
+.asks-index li { break-inside: avoid; padding: 2px 0; }
+.asks-index a { color: var(--link); }
+.asks h2 { margin-top: 2.2em; }
+.asks h2 + p strong:first-child, .asks p > strong:first-child { font-family: var(--font-mono-local); font-size: .78em; letter-spacing: .1em; text-transform: uppercase; }
+.author-wide { margin: 0 26px 40px; max-width: calc(72ch - 36px); }
+.hero-eyebrow a { color: inherit; }
+@media (max-width: 560px) { .asks-index { padding: 14px 16px; } .author-wide { margin: 0 16px 32px; } }
+.to-1999-foot { margin: 18px 0 28px 26px; }

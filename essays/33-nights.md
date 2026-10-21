@@ -36,7 +36,7 @@ Count the faults. Power, login, my runner, my graders, my fence: the machine aro
 
 ## Every Claude Code problem I hit, and what I'd ship
 
-I used Claude Code as a customer for 33 nights. Here is every problem I hit, with what I'd ship as its PM.
+I used Claude Code as a customer for 33 nights. Here is every problem I hit, with what I'd ship as its PM. Each one is also written up as a full spec, with how I'd measure it and what I'd leave out, on [its own page](/asks).
 
 **Refusals in the record.** The headless JSON listed a `git push` denial and missed all three Edit denials in my first probe. The agent's own count is no backup: 34 refusals against "none." *Ship:* every refused call in the output, with the rule that fired and the tool input.
 

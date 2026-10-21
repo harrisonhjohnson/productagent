@@ -24,6 +24,7 @@ Install one skill: copy its folder into ~/.claude/skills/ (agents go in ~/.claud
 - [Loops machine](${SITE}/harnesses/loops/MACHINE.md): the runner, the fence and the morning judge
 - [Why loops](${SITE}/why): sourced quotes from the people building Claude Code
 - [33 nights](${SITE}/33-nights): essay. 33 unattended nights of Claude Code, ten things that broke, and what I would ship as its PM
+- [Eleven Claude Code asks](${SITE}/asks): the problems from those nights written as specs (problem, evidence, ship, measure, not doing)
 - [Evidence](${SITE}/evidence): the real run record behind the essay, numbers only
 
 ## Harnesses
