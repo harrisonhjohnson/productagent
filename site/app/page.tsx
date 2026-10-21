@@ -2,12 +2,19 @@ import Link from 'next/link';
 import { Guestbook, Sparkles, Webring } from '@/components/geo-client';
 import { GITHUB, getTree } from '@/lib/content';
 import { INSTALL_COMMAND as INSTALL } from '@/lib/install';
+import { getEvidence, lastNight } from '@/lib/evidence';
 import './geo.css';
 
 const TAGS: Record<string, [string, string]> = { loops: ['hot', 'HOT!'], 'self-maintenance': ['new', 'NEW!'] };
 
 export default function Home() {
   const stuff = getTree().filter((n) => n.kind === 'folder' || n.kind === 'link');
+  const ev = getEvidence();
+  const last = ev ? lastNight(ev) : null;
+  const marquee = ev && last
+    ? `*** LAST NIGHT ON RECORD (${last.date}): ${last.status.toUpperCase()} *** $${last.cost_usd.toFixed(2)} *** ${last.refused_calls ?? 0} CALLS REFUSED BY THE FENCE *** ${last.interventions ?? 0} THINGS NEEDED U *** ${ev.totals.nights} NIGHTS ON RECORD NOTHING PHONED HOME *** THANX 4 VISITING!!! ***`
+    : '*** NO EVIDENCE FILE YET *** NOTHING PHONED HOME *** THANX 4 VISITING!!! ***';
+  const counter = String(ev?.totals.interventions.latest ?? 0).padStart(6, '0').split('');
 
   return (
     <div className="geo">
@@ -15,7 +22,7 @@ export default function Home() {
       <Link className="boring-tab" href="/boring">boring mode →</Link>
 
       <div className="marquee" role="marquee" aria-label="Last night">
-        <span>*** LAST NIGHT: 3 LOOPS RAN *** 0 PUSHES *** EVERY REFUSED CALL WAS LISTED *** 1 THING NEEDS U *** NOTHING PHONED HOME *** THANX 4 VISITING!!! ***</span>
+        <span>{marquee}</span>
       </div>
 
       <header className="masthead">
@@ -26,8 +33,8 @@ export default function Home() {
           <h2>~ Hi!!! I&apos;m the agent ~</h2>
           <p className="body-text">
             Welcome to my page. I live on <u>your Mac</u>.
-            Every night while u sleep I work on ur projects, one loop at a time, inside a fence I can&apos;t climb.
-            In the morning I leave u a note. I never push to main. I never phone home. I use the Claude plan u already pay for!!!
+            Every night while u sleep I work on ur projects, one loop at a time, inside a fence u set (every call it says NO to gets written down).
+            In the morning I leave u a note. U ship, not me. I never phone home. I use the Claude plan u already pay for!!!
           </p>
           <p style={{ color: '#66ff66' }}>My favorite things: budgets, cadences, four-line reports, and being told NO by the fence ☺</p>
         </section>
@@ -50,10 +57,11 @@ export default function Home() {
           <span className="dig" aria-hidden="true">👷</span> <span>UNDER CONSTRUCTION</span> <span className="dig" aria-hidden="true">🚧</span>
         </p>
         <p>
-          You are visitor number{' '}
-          <span className="counter" title="Actually: how many times the morning had to act. Lower is better!!">
-            <b>0</b><b>0</b><b>0</b><b>4</b><b>1</b><b>2</b>
+          Times the morning had to act, last nite on record:{' '}
+          <span className="counter" title="Interventions last night, from the runner's own line on the report. Lower is better!!">
+            {counter.map((d, i) => <b key={i}>{d}</b>)}
           </span>
+          {' '}<Link href="/evidence" className="tiny">(see every nite)</Link>
         </p>
         <p className="blink" style={{ color: '#ff66ff', fontWeight: 'bold' }}>★ NEW!! Pods!!! Scroll down ★</p>
       </header>
@@ -68,6 +76,7 @@ export default function Home() {
             <a href="#guestbook">Guestbook</a>
             <a href="#stuff">Cool Stuff</a>
             <a href="#install">Get It!!</a>
+            <Link href="/evidence">The Receipts</Link>
             <Link href="/why">Why Loops?</Link>
             <Link href="/about">About This Site</Link>
           </div>

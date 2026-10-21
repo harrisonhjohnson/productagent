@@ -39,7 +39,22 @@ STEP_CAP = 300            # tool calls per session incl. subagents
 MIN_SCORED_TOOLS = 5      # below this a session is a canary/probe, not a run
 REPEAT_SOFT, REPEAT_HARD = 3, 5   # identical (tool, input) call counts
 NIGHT_PROTECTED = ("pm/CHARTER.md", "pm/ORDERS.md", "pm/LOOPS.md", "00-ops/")
-GIT_MUTATION = re.compile(r"\bgit\b[^|;&]*\b(commit|switch|checkout|branch|stash|push|add|reset|rebase|merge|tag)\b")
+# 2026-09-22: the verb must be git's own subcommand, not a word anywhere on the line —
+# `git status | head`, `git branch --show-current` and `git branch --list` are reads.
+GIT_MUTATION = re.compile(
+    r"\bgit\s+(?:-C\s+\S+\s+|-c\s+\S+\s+|--no-pager\s+)*"
+    r"(?:(commit|switch|checkout|stash|push|add|reset|rebase|merge)(?![\w-])"
+    r"|branch\s+(?:-[dDmMcCf]\b|--delete|--move|--copy|--force|--set-upstream|--unset-upstream)"
+    r"|tag\s+(?!-l\b|--list)\S)")
+# 2026-10-20: heredoc bodies and quoted strings are text, not commands — a note or a
+# queued decision that quotes `git checkout` for the human is not the agent running it.
+HEREDOC = re.compile(r"<<-?\s*['\"]?(\w+)['\"]?.*?^\s*\1\s*$", re.S | re.M)
+QUOTED = re.compile(r"\"(?:\\.|[^\"\\])*\"|'[^']*'")
+
+
+def git_mutation(cmd):
+    return GIT_MUTATION.search(QUOTED.sub('""', HEREDOC.sub("", cmd)))
+
 
 # launchd jobs the fleet is supposed to have loaded
 EXPECTED_JOBS = [
@@ -286,7 +301,7 @@ def _parse_file(path, ev):
                             ev["writes"].append(fp)
                     elif name == "Bash":
                         cmd = inp.get("command", "")
-                        if GIT_MUTATION.search(cmd):
+                        if git_mutation(cmd):
                             ev["git_mutations"].append(cmd[:120])
                 elif b.get("type") == "tool_result" and b.get("is_error"):
                     ev["errors"] += 1

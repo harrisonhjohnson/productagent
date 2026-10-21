@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE}/about`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${SITE}/why`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE}/evidence`, changeFrequency: 'daily', priority: 0.8 },
     { url: `${SITE}/boring`, changeFrequency: 'weekly', priority: 0.6 },
   ];
   const harnesses = getAllNodes()
