@@ -205,7 +205,7 @@ export default function About() {
             harness gets copied off Harrison&apos;s machine, scrubbed of personal paths, budgets and client names, and
             published here as a folder. Claude Code wrote most of the code and much of the prose; Harrison makes the calls on what
             ships and what the rules are. Every example on the site is synthetic. The one exception is
-            <a href="/evidence">the receipts</a>: the real run record, numbers only, frozen at a cutoff date.
+            <a href="/evidence">the receipts</a>: the real run record, numbers only, frozen at a cutoff date. <a href="/33-nights">The essay</a> walks through what those nights taught.
           </p>
           <p>
             The site reads the <a href={GITHUB} target="_blank" rel="noreferrer">GitHub repository</a> at build time, so

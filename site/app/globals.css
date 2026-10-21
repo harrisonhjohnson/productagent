@@ -568,3 +568,7 @@ button { font: inherit; }
 .ev-foot { margin-top: 6px; }
 @media (max-width: 780px) { .ev-stats, .ev-scroll { margin-left: 16px; margin-right: 14px; } .ev-scorers { margin-left: 16px; margin-right: 14px; width: calc(100% - 30px); } }
 @media (max-width: 500px) { .ev-stats, .ev-scroll { margin-left: 10px; margin-right: 10px; } .ev-scorers { margin-left: 10px; margin-right: 10px; width: calc(100% - 20px); } }
+
+.essay { max-width: 72ch; font-size: 15px; line-height: 1.7; }
+.essay h2 { font-size: 1.15rem; }
+.why-rule a { color: var(--orange); }

@@ -30,7 +30,7 @@ export default function Home() {
 
         <p className="byline">
           Built and run by Harrison Johnson, a product manager, with Claude Code: 33 nights of unattended runs, every
-          one on the record. <Link href="/evidence">Read the receipts →</Link>
+          one on the record. <Link href="/33-nights">Read what broke →</Link> <Link href="/evidence">See the receipts →</Link>
         </p>
 
         <InstallLine />
