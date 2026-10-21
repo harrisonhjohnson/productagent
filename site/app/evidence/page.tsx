@@ -64,16 +64,18 @@ export default function EvidencePage() {
       <section className="tree-panel" aria-labelledby="ev-heading">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span aria-current="page">evidence</span></nav>
         <div className="why-header">
-          <p className="hero-eyebrow why-eyebrow">EVERY RUN, AS THE RUNNER SAW IT</p>
+          <p className="hero-eyebrow why-eyebrow">THE NUMBERS BEHIND <Link href="/33-nights">33 NIGHTS</Link></p>
           <h1 id="ev-heading">The receipts.</h1>
           <p className="why-lede">
-            This page is exported from the files the morning reads: the cost ledger the runner writes, the trajectory
-            scores the health desk computes from transcripts the run cannot edit, the refused-call list the runner
-            appends under each report, the judge’s grade of the report against the diff, and the count of times the
-            morning had to act. Nothing here is written by the agent about itself.
+            For 33 nights Claude Code worked unattended on my Mac. This page is every one of those nights, as the
+            records saw them: the cost ledger the runner writes, seven automatic checks the health desk runs over each
+            transcript, the refused calls the runner lists under each report, an LLM judge’s grade of each report
+            against the actual diff, and how many things I had to do by hand the next morning. Nothing here is
+            written by the agent about itself. The story is in <Link href="/33-nights">the essay</Link>; what I’d
+            change in Claude Code is in <Link href="/asks">the asks</Link>.
           </p>
           <p className="why-lede">
-            Read it with its limits. These are runs on one person’s Mac, on one person’s ventures. The work was chores:
+            Read it with its limits. These are runs on one person’s Mac, on one person’s side projects. The work was chores:
             ship a fix, read a feed, write candidate rows. It is not a benchmark of product judgment, and the judge has
             run three times. What it does show is whether the machine stays inside its fence, what a night costs, and
             whether the morning is getting shorter.
@@ -99,7 +101,7 @@ export default function EvidencePage() {
 
         <h2 className="why-part"><span>II</span> Trajectory scorers</h2>
         <p className="why-part-lede">
-          Seven deterministic checks over every unattended session’s transcript. The share that scored clean, out of the
+          Seven deterministic checks the health desk runs over every unattended session’s transcript. The share that scored clean, out of the
           sessions where the check applied.
         </p>
         <table className="ev-table ev-scorers">
@@ -121,7 +123,7 @@ export default function EvidencePage() {
         <p className="why-part-lede ev-foot">
           The ones that are not clean are real. {gitBad} sessions ran a git command only the runner may run; most predate the rule
           that promoted it from a prompt line to a scorer. {reportBad} sessions ended without a report, which is the
-          failure the four-lines rule exists to catch. The git scorer also has false positives: on 2026-09-28 and 2026-10-16 it
+          failure the rule that every run ends in a report exists to catch. The git scorer also has false positives: on 2026-09-28 and 2026-10-16 it
           flagged a note the agent wrote, <code>git merge-base</code> (a read), and a decision that quoted a command for the human to run.
           The scorer is fixed for future runs; the numbers above stay as recorded.
         </p>
@@ -156,6 +158,8 @@ export default function EvidencePage() {
         <p className="why-part-lede ev-foot">
           A dash means the record did not exist yet that night: the fence section was added on 2026-09-22, the
           interventions line the same week, the health desk on 2026-09-04. Older nights have only the ledger.
+          On 2026-09-22 itself, the health desk counted 34 refused calls in the night’s transcript while the
+          agent’s report said “Blocked by the fence: none.” That gap is why the runner writes the list now.
           {last && last.sessions_scored === 0 ? ' The newest night has not been through the health desk yet.' : ''}
         </p>
 

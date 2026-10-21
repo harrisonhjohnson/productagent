@@ -24,7 +24,7 @@ Ten things broke. Each one taught me something a system like this has to be good
 
 **7. Grading evidence, not claims.** One hourly loop ran 63 identical rechecks and marked each one as progress. My auto-park rule trusted that claim, so it never fired. I caught it by reading the board. *Lesson: progress means a changed file or a diff, not a sentence.*
 
-**8. Grading the graders.** On September 22 my health checks raised 5 critical findings, and all 5 were false. The LLM judge ran 3 times and gave a clean night a C. My git scorer flagged reads as writes: `git branch --list`, `git merge-base`, and a command quoted in a note to me. *Lesson: a grader needs the same review as the thing it grades.*
+**8. Grading the graders.** On September 22 my health checks raised 5 critical alarms, and not one was a real emergency. The LLM judge ran 3 times and gave a clean night a C. My git scorer flagged reads as writes: `git branch --list`, `git merge-base`, and a command quoted in a note to me. *Lesson: a grader needs the same review as the thing it grades.*
 
 **9. A fence that holds against a script.** Permission rules match the text of a command. On October 2 an attended session merged and pushed through `git -C <path> push`, a form my deny rules didn't match. On October 20 I tried to escape my own fence. With rules alone, one line of `python3 -c` wrote into my ops tooling and `.git`, read a credential file, and reached an arbitrary website: five tries, five escapes. Then I turned on Claude Code's OS sandbox for every run. The same five probes now fail with `Operation not permitted`. *Lesson: rules say what you meant; the sandbox enforces it.*
 
