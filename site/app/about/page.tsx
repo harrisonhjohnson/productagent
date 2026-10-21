@@ -204,8 +204,8 @@ export default function About() {
             Harrison Johnson, a product manager, runs these harnesses on real projects every day and night. Each
             harness gets copied off Harrison&apos;s machine, scrubbed of personal paths, budgets and client names, and
             published here as a folder. Claude Code wrote most of the code and much of the prose; Harrison makes the calls on what
-            ships and what the rules are. Every example on the site is synthetic. No live data from Harrison&apos;s machine lands
-            here.
+            ships and what the rules are. Every example on the site is synthetic. The one exception is
+            <a href="/evidence">the receipts</a>: the real run record, numbers only, frozen at a cutoff date.
           </p>
           <p>
             The site reads the <a href={GITHUB} target="_blank" rel="noreferrer">GitHub repository</a> at build time, so

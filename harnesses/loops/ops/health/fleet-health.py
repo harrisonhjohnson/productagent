@@ -42,7 +42,7 @@ NIGHT_PROTECTED = ("pm/CHARTER.md", "pm/ORDERS.md", "pm/LOOPS.md", "00-ops/")
 # 2026-09-22: the verb must be git's own subcommand, not a word anywhere on the line —
 # `git status | head`, `git branch --show-current` and `git branch --list` are reads.
 GIT_MUTATION = re.compile(
-    r"\bgit\s+(?:-C\s+\S+\s+|-c\s+\S+\s+|--no-pager\s+)*"
+    r"\bgit\s+(?:-[Cc]\s+\S+\s+|--(?:git-dir|work-tree|namespace|exec-path|super-prefix|config-env)\s+\S+\s+|-{1,2}[\w-]+(?:=\S+)?\s+)*"
     r"(?:(commit|switch|checkout|stash|push|add|reset|rebase|merge)(?![\w-])"
     r"|branch\s+(?:-[dDmMcCf]\b|--delete|--move|--copy|--force|--set-upstream|--unset-upstream)"
     r"|tag\s+(?!-l\b|--list)\S)")
@@ -50,9 +50,13 @@ GIT_MUTATION = re.compile(
 # queued decision that quotes `git checkout` for the human is not the agent running it.
 HEREDOC = re.compile(r"<<-?\s*['\"]?(\w+)['\"]?.*?^\s*\1\s*$", re.S | re.M)
 QUOTED = re.compile(r"\"(?:\\.|[^\"\\])*\"|'[^']*'")
+# ...unless something on the line executes text: then every string counts as a command.
+EXECUTES_TEXT = re.compile(r"\b(?:sh|bash|zsh|eval|exec|xargs|source)\b|\b(?:python3?|node|perl|ruby)\s+-[ce]\b|(?:^|[;&|]\s*)\.\s")
 
 
 def git_mutation(cmd):
+    if EXECUTES_TEXT.search(cmd):
+        return GIT_MUTATION.search(cmd)
     return GIT_MUTATION.search(QUOTED.sub('""', HEREDOC.sub("", cmd)))
 
 
