@@ -572,3 +572,27 @@ button { font: inherit; }
 .essay { max-width: 72ch; font-size: 15px; line-height: 1.7; }
 .essay h2 { font-size: 1.15rem; }
 .why-rule a { color: var(--orange); }
+
+.lead { display: grid; gap: 14px; padding: 22px 26px 24px; border-bottom: 1px solid var(--ink); background: var(--paper-deep); }
+.lead .section-label { margin: 0; padding: 0; }
+.lead-title { margin: 0; font-size: clamp(1.25rem, 2.6vw, 1.9rem); line-height: 1.15; letter-spacing: -.03em; text-wrap: balance; }
+.lead-title a { color: var(--ink); text-decoration: none; }
+.lead-title a:hover { color: var(--orange); }
+.lead-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--ink); background: var(--paper); }
+.lead-stat { display: grid; gap: 6px; padding: 12px 14px; border-right: 1px solid var(--line); }
+.lead-stat:last-child { border-right: 0; }
+.lead-stat b { font-family: var(--font-mono-local); font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: -.04em; line-height: 1; }
+.lead-stat span { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; }
+.lead-sub { margin: 4px 0 0; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-muted); }
+.lead-asks { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; max-width: 72ch; font-family: var(--font-sans-local); font-size: 14px; line-height: 1.5; }
+.lead-asks code { font-family: var(--font-mono-local); font-size: .86em; }
+.lead-links { margin: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; font-weight: 700; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.lead-links a { color: var(--orange); }
+.lead-byline { margin: 0; font-family: var(--font-sans-local); font-size: 13px; color: var(--ink-muted); }
+@media (max-width: 560px) {
+  .lead { padding: 18px 16px 20px; }
+  .lead-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lead-stat:nth-child(2) { border-right: 0; }
+  .lead-stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .topbar-extra { display: none; }
+}

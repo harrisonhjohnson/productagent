@@ -13,6 +13,8 @@ export function Shell({ path, children }: { path: string; children: React.ReactN
             <span>PRODUCTAGENT</span>
           </Link>
           <Link className="topbar-link" href="/about">ABOUT</Link>
+          <Link className="topbar-link" href="/33-nights">ESSAY</Link>
+          <Link className="topbar-link topbar-extra" href="/evidence">RECEIPTS</Link>
         </nav>
         <a className="topbar-path" href={GITHUB} target="_blank" rel="noreferrer" aria-label="Repository on GitHub" style={{ textDecoration: 'none' }}>
           harrisonhjohnson/productagent · {path}

@@ -8,12 +8,23 @@ import { Morning } from '@/components/morning';
 import { Shell } from '@/components/shell';
 import { countAll, getTree } from '@/lib/content';
 import Link from 'next/link';
+import { getEvidence } from '@/lib/evidence';
 import './geo.css';
 
 export default function Home() {
   const tree = getTree();
   const counts = countAll();
   const marks = ['I', 'II', 'III'];
+  const t = getEvidence()?.totals;
+  const short = (d?: string | null) =>
+    d ? new Date(`${d}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).toUpperCase() : '';
+  const range = t ? `${short(t.first_night)} – ${short(t.last_night)}` : '';
+  const stats: [string, string][] = [
+    [String(t?.nights ?? 33), 'unattended nights'],
+    [t ? `$${(t.night_cost_usd / t.nights).toFixed(2)}` : '$6.13', 'average night'],
+    ['10', 'things broke'],
+    ['11', 'Claude Code asks'],
+  ];
 
   return (
     <Shell path="/">
@@ -28,10 +39,30 @@ export default function Home() {
           </div>
         </div>
 
-        <p className="byline">
-          Built and run by Harrison Johnson, a product manager, with Claude Code: 33 nights of unattended runs, every
-          one on the record. <Link href="/33-nights">Read what broke →</Link> <Link href="/evidence">See the receipts →</Link>
-        </p>
+        <section className="lead" aria-labelledby="lead-heading">
+          <p className="section-label">ESSAY · FROM THE RUN RECORD, {range}</p>
+          <h2 id="lead-heading" className="lead-title">
+            <Link href="/33-nights">33 nights of unattended Claude Code, and what I&apos;d ship as its PM</Link>
+          </h2>
+          <div className="lead-stats">
+            {stats.map(([big, label]) => (
+              <div key={label} className="lead-stat"><b>{big}</b><span>{label}</span></div>
+            ))}
+          </div>
+          <p className="lead-sub">Three of the asks, each from a night it went wrong:</p>
+          <ol className="lead-asks">
+            <li><b>Refusals in the record.</b> One report said &ldquo;blocked by the fence: none&rdquo; on a night with 34 refused calls.</li>
+            <li><b>Sandbox on by default for headless runs.</b> Rules alone let one line of <code>python3 -c</code> escape five ways out of five.</li>
+            <li><b>No exit with work pending.</b> Four nights ended on &ldquo;waiting on the task notification&rdquo; with no report.</li>
+          </ol>
+          <p className="lead-links">
+            <Link href="/33-nights">Read the essay →</Link>
+            <Link href="/evidence">See the receipts →</Link>
+          </p>
+          <p className="lead-byline">
+            Built and run by Harrison Johnson, a product manager, with Claude Code. Claude wrote most of the code; the calls are mine.
+          </p>
+        </section>
 
         <InstallLine />
         <Onboarding />
