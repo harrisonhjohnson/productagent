@@ -8,7 +8,7 @@ import rehypeShiki from '@shikijs/rehype';
 import rehypeStringify from 'rehype-stringify';
 import { codeToHtml } from 'shiki';
 
-const THEME = 'vitesse-light';
+const THEMES = { light: 'vitesse-light', dark: 'vitesse-dark' };
 
 export async function renderMarkdown(md: string): Promise<string> {
   const file = await unified()
@@ -16,7 +16,7 @@ export async function renderMarkdown(md: string): Promise<string> {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSlug)
-    .use(rehypeShiki, { theme: THEME, fallbackLanguage: 'text' })
+    .use(rehypeShiki, { themes: THEMES, fallbackLanguage: 'text' })
     .use(rehypeStringify)
     .process(md);
   return String(file);
@@ -24,9 +24,9 @@ export async function renderMarkdown(md: string): Promise<string> {
 
 export async function renderCode(src: string, lang: string): Promise<string> {
   try {
-    return await codeToHtml(src, { lang, theme: THEME });
+    return await codeToHtml(src, { lang, themes: THEMES });
   } catch {
-    return await codeToHtml(src, { lang: 'text', theme: THEME });
+    return await codeToHtml(src, { lang: 'text', themes: THEMES });
   }
 }
 

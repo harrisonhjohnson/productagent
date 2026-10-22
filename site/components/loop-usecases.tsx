@@ -126,15 +126,12 @@ export function CycleDiagram() {
   );
 }
 
-type Note = { goal: string; knobs: string; tilt: number };
+type Note = { goal: string; knobs: string };
 
 const NOTES: Note[] = [
-  { goal: 'Watch three competitors’ changelogs. Tell me what changed and whether it matters.', knobs: 'weekly · sonnet · $2 a run', tilt: -1.6 },
-  { goal: 'Ship one small fix from the backlog. Verify it renders before you report it.', knobs: 'nightly · opus · $6 a run', tilt: 1.1 },
-  { goal: 'Read yesterday’s support tickets. Cluster them. Name the top three themes.', knobs: 'nightly · sonnet · $3 a run', tilt: -0.7 },
-  { goal: 'Check every box on the launch checklist against the repo. Flag the ones that lie.', knobs: 'every 2nd night · sonnet · $2 a run', tilt: 1.8 },
-  { goal: 'Draft the weekly update from this week’s reports. I edit. I send.', knobs: 'weekly · opus · $4 a run', tilt: -1.2 },
-  { goal: 'Find ten companies that look like our best customer. Say why, with links.', knobs: 'every 3rd night · sonnet · $3 a run', tilt: 0.9 },
+  { goal: 'Watch three competitors’ changelogs. Tell me what changed and whether it matters.', knobs: 'weekly · sonnet · $2 a run' },
+  { goal: 'Ship one small fix from the backlog. Verify it renders before you report it.', knobs: 'nightly · opus · $6 a run' },
+  { goal: 'Check every box on the launch checklist against the repo. Flag the ones that lie.', knobs: 'every 2nd night · sonnet · $2 a run' },
 ];
 
 export function SleepBlock() {
@@ -184,7 +181,7 @@ export function StickyNotes() {
       </p>
       <ul className="notes" aria-label="Example loops">
         {NOTES.map((n, i) => (
-          <li className="note" key={i} style={{ ['--tilt' as string]: `${n.tilt}deg` }}>
+          <li className="note" key={i}>
             <span className="note-pin" aria-hidden="true" />
             <p className="note-goal">{n.goal}</p>
             <p className="note-knobs">{n.knobs}</p>

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Explorer } from '@/components/explorer';
 import { DescentPanel } from '@/components/descent-panel';
 import { InstallLine } from '@/components/install-line';
@@ -6,14 +5,13 @@ import { Onboarding } from '@/components/onboarding';
 import { StickyNotes } from '@/components/loop-usecases';
 import { Morning } from '@/components/morning';
 import { Shell } from '@/components/shell';
-import { AUTHOR_LINKEDIN, countAll, getTree } from '@/lib/content';
+import { AUTHOR_LINKEDIN, getTree } from '@/lib/content';
 import Link from 'next/link';
 import { getEvidence } from '@/lib/evidence';
 import './geo.css';
 
 export default function Home() {
   const tree = getTree();
-  const counts = countAll();
   const marks = ['I', 'II', 'III'];
   const t = getEvidence()?.totals;
   const short = (d?: string | null) =>
@@ -29,26 +27,18 @@ export default function Home() {
   return (
     <Shell path="/">
       <section className="tree-panel" aria-labelledby="page-heading">
-        <div className="hero">
-          <Image src="/loops-retro.png" alt="" fill priority sizes="(max-width: 780px) 100vw, 94vw" className="hero-img" />
-          <div className="hero-copy">
-            <p className="hero-eyebrow">PRODUCTAGENT</p>
-            <h1 id="page-heading">Claude writes the code at night.<br />You review it in the morning.</h1>
-            <p className="hero-meta">claude code · your mac · your plan · {counts.harnesses} harnesses</p>
-          </div>
-        </div>
-
-        <section className="lead" aria-labelledby="lead-heading">
-          <p className="section-label">ESSAY · FROM THE RUN RECORD, {range}</p>
-          <h2 id="lead-heading" className="lead-title">
-            <Link href="/33-nights">33 nights of unattended Claude Code, and what I&apos;d ship as its PM</Link>
-          </h2>
+        <section className="lead" aria-labelledby="page-heading">
+          <p className="section-label">PRODUCTAGENT · BY HARRISON JOHNSON</p>
+          <h1 id="page-heading" className="lead-h1">Claude writes the code at night.<br />You review it in the morning.</h1>
           <div className="lead-stats">
             {stats.map(([big, label]) => (
               <div key={label} className="lead-stat"><b>{big}</b><span>{label}</span></div>
             ))}
           </div>
-          <p className="lead-sub">Three of the asks, each from a night it went wrong:</p>
+          <h2 className="lead-title">
+            <Link href="/33-nights">33 nights of unattended Claude Code, and what I&apos;d ship as its PM</Link>
+          </h2>
+          <p className="lead-sub">From the run record, {range}. Three of the asks, each from a night it went wrong:</p>
           <ol className="lead-asks">
             <li><b>Refusals in the record.</b> One report said &ldquo;blocked by the fence: none&rdquo; on a night with 34 refused calls.</li>
             <li><b>Sandbox on by default for headless runs.</b> Rules alone let one line of <code>python3 -c</code> escape five ways out of five.</li>
@@ -57,12 +47,22 @@ export default function Home() {
           <p className="lead-links">
             <Link href="/33-nights">Read the essay →</Link>
             <Link href="/asks">All eleven asks as specs →</Link>
+            <Link href="/morning">The morning as a Claude Code feature →</Link>
             <Link href="/evidence">See the receipts →</Link>
           </p>
           <p className="lead-byline">
             Built and run by <a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Harrison Johnson</a>, a product manager, with Claude Code. Claude wrote most of the code; the calls are mine.
           </p>
         </section>
+
+        <div className="part-break">
+          <p className="part-break-kicker">PART TWO</p>
+          <h2 className="part-break-title">The thing I built to run these nights</h2>
+          <p className="part-break-lede">
+            Loops is free and open source. You give it a goal, a budget, a cadence and a model; it works one bounded
+            run at a time while you sleep and leaves you four lines in the morning.
+          </p>
+        </div>
 
         <Morning />
 
@@ -76,7 +76,6 @@ export default function Home() {
 
         <p className="section-label">OR BROWSE THE FOLDERS</p>
         <Explorer tree={tree} label="harnesses" />
-        <a className="to-1999 to-1999-foot" href="/1999">✦ 1999 mode ✦</a>
       </section>
 
       <DescentPanel label="HOME" marks={marks} readout={{ kind: 'items', total: 3 }} />
