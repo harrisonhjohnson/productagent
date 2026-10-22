@@ -5,7 +5,7 @@ export function Morning() {
       <p className="section-label" id="morning-heading">WHAT YOU READ IN THE MORNING</p>
       <div className="term" role="figure" aria-label="Example of one loop's morning report">
         <div className="term-bar"><span /><span /><span /><em>pm/nights/2026-09-15.md</em></div>
-        <pre>{`## L-04 — Permit research, iteration 2
+        <pre>{`## L-04 · Permit research, iteration 2
 - Trying to:   read the second of five county permit files and pull the generator count.
 - Did:         read all four documents, every page. The permit says 96 units; the agency
                web page says 98. Recorded the gap as a discrepancy, did not reconcile it.

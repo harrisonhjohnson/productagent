@@ -17,8 +17,8 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'productagent — tools for PMs who run their day with Claude Code',
-    template: '%s — productagent',
+    default: 'productagent · tools for PMs who run their day with Claude Code',
+    template: '%s · productagent',
   },
   description:
     'Loops: give an agent a goal, a budget, a cadence and a model, and read four plain sentences in the morning. Plus a TODO bot for your phone, a design interview that ends in a prototype, and a strategy agent that argues back. Copy what you need.',

@@ -98,8 +98,7 @@ export function InstallLine() {
 
       {!a && (
         <p className="install-note">
-          Pick one and the steps below adapt. Either way it runs on your own Mac, on your own subscription, and
-          nothing phones home.
+          Pick one and the steps below adapt. Either way it runs on your own Mac and subscription. Nothing phones home.
         </p>
       )}
 

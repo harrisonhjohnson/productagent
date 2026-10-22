@@ -177,7 +177,7 @@ export function StickyNotes() {
     <>
       <p className="usecases-lede">
         A loop is a sticky note with a budget. Write the goal the way you would say it to a new hire on their first
-        day, then pick a cadence, a model and a price. These are examples, not live loops.
+        day, then pick a cadence, a model and a price. These are examples.
       </p>
       <ul className="notes" aria-label="Example loops">
         {NOTES.map((n, i) => (

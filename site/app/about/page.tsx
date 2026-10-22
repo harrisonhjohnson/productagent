@@ -139,7 +139,7 @@ export default function About() {
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span aria-current="page">about</span></nav>
         <div className="why-header">
           <p className="hero-eyebrow why-eyebrow">ABOUT PRODUCTAGENT.DEV</p>
-          <h1 id="about-heading">Claude Code harnesses for product managers. Free, public, on your own Mac.</h1>
+          <h1 id="about-heading">Claude Code harnesses for product managers, free to read and run on your own Mac.</h1>
           <p className="why-lede">
             productagent.dev is a free, public library of {count} Claude Code harnesses for product managers and
             operators: skills, agents, shell scripts on a schedule, a permissions fence and a Telegram bot. The
@@ -191,7 +191,7 @@ export default function About() {
           </ul>
 
           <h2 id="morning">What Loops leaves you in the morning</h2>
-          <pre><code>{`## L-03 — Ship one fix
+          <pre><code>{`## L-03 · Ship one fix
 - Trying to: ship the "sort permits by county" backlog item.
 - Did: added the county filter; the page renders in a headless browser.
 - Decided: left the mobile layout alone; separate backlog item.

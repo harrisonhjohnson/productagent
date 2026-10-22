@@ -51,7 +51,7 @@ export default function MorningPage() {
             morning took as long as I let it, and when I skipped it the next night had nothing to do. Today my morning is
             a markdown file. This is what I would build so it takes five minutes.
           </p>
-          <p className="why-rule">A sketch, not a shipped feature. Every line in it comes from a real morning.</p>
+          <p className="why-rule">A design sketch. Every line in it comes from a real morning.</p>
         </div>
 
         <div className="tui-wrap">
@@ -72,8 +72,7 @@ export default function MorningPage() {
           </p>
           <p>
             <b>2. One keystroke per Decision.</b> 37 Decisions queued over the run; 12 were still open at the end. A
-            run that hands back a Decision has to write the options, and its own recommendation, so answering is a key
-            press and not a paragraph.
+            run that hands back a Decision has to write the options, and its own recommendation, so answering takes one key press.
           </p>
           <p>
             <b>3. Facts come from the runner, in their own panel.</b> One report said a run took &ldquo;~33 minutes&rdquo;;
@@ -90,7 +89,7 @@ export default function MorningPage() {
             averaged 2.9. The cheap way to zero is to stop asking, which is how a system quietly takes decisions away from
             the person. Instead, when I answer the same Decision the same way three times, the screen offers to make it
             standing. I approve the rule once, it is listed and revocable, and approving it counts as an intervention
-            that day. The count falls because the work got easier, not because it got hidden.
+            that day. The count should fall only because the work got easier.
           </p>
 
           <h2 id="measure">How I would know it worked</h2>
@@ -103,7 +102,7 @@ export default function MorningPage() {
 
           <h2 id="not-doing">Not doing</h2>
           <ul>
-            <li><b>Auto-merge.</b> Only a person merges. The screen makes merging fast, not automatic.</li>
+            <li><b>Auto-merge.</b> Only a person merges. The screen makes it one key press.</li>
             <li><b>Pings at 3am.</b> Nothing reaches me before the morning unless a run is stuck and spending.</li>
             <li><b>A hosted dashboard.</b> The review lives in the terminal, next to the code it is about.</li>
           </ul>
@@ -114,8 +113,7 @@ export default function MorningPage() {
             and a readable quota, are in <Link href="/asks">the asks</Link>.
           </p>
           <p>
-            <i>Claude helped draft this sketch from the run record. The calls are mine. —{' '}
-            <a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Harrison Johnson</a></i>
+            <i>Claude helped draft this sketch from the run record. The calls are mine (<a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Harrison Johnson</a>).</i>
           </p>
         </article>
       </section>
