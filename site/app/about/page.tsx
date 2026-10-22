@@ -39,7 +39,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Is it safe to let an agent run unattended?',
-    a: 'Loops is built around that question. Each run has a dollar budget and a timeout. A fence of Claude Code permissions allows a short list of actions and blocks git push, rm, shells and edits to the loops file, and the OS sandbox underneath stops what text rules miss, such as a one-line python3 -c. The runner keeps its own list of every blocked call and prints the list under the morning report, so the agent cannot hide what it tried. Nothing runs until you write a loop, and --off unloads the schedule.',
+    a: 'Loops is built around that question. Each run has a dollar budget and a timeout. A fence of Claude Code permissions allows a short list of actions and blocks git push, rm, shells and edits to the loops file, and the OS sandbox underneath stops what text rules miss, such as a one-line python3 -c. The runner keeps its own list of every blocked call and prints the list under the morning report, so the agent cannot hide what it tried. Nothing runs until you write a loop, and running the installer again with --off stops the schedule.',
   },
   {
     q: 'Does it work with Codex or ChatGPT?',
@@ -205,8 +205,7 @@ export default function About() {
           </p>
         </article>
 
-        <p className="section-label" id="install">INSTALL</p>
-        <InstallLine />
+        <div id="install"><InstallLine /></div>
         <article className="doc">
           <p>
             Want one skill, not the whole machine? Copy a skill folder (for example{' '}

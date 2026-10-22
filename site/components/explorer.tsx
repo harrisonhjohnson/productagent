@@ -20,9 +20,9 @@ function idOf(n: TreeNode) {
   return n.slug.join('/');
 }
 
-function initialExpanded(nodes: TreeNode[], activeSlug?: string[]) {
+function initialExpanded(nodes: TreeNode[], activeSlug?: string[], collapsed = false) {
   const result = new Set<string>();
-  nodes.forEach((node) => {
+  if (!collapsed) nodes.forEach((node) => {
     if (node.kind === 'folder') result.add(idOf(node));
   });
   if (activeSlug) {
@@ -54,10 +54,11 @@ type Props = {
   activeSlug?: string[];
   trackScroll?: boolean;
   label: string;
+  collapsed?: boolean;
 };
 
-export function Explorer({ tree, activeSlug, trackScroll = false, label }: Props) {
-  const [expanded, setExpanded] = useState<Set<string>>(() => initialExpanded(tree, activeSlug));
+export function Explorer({ tree, activeSlug, trackScroll = false, label, collapsed = false }: Props) {
+  const [expanded, setExpanded] = useState<Set<string>>(() => initialExpanded(tree, activeSlug, collapsed));
   const progress = useScrollProgress();
   const visibleNodes = useMemo(() => flattenTree(tree, expanded), [tree, expanded]);
   const activeId = activeSlug?.join('/');

@@ -15,7 +15,7 @@ export default function Home() {
   const marks = ['I', 'II', 'III'];
   const t = getEvidence()?.totals;
   const short = (d?: string | null) =>
-    d ? new Date(`${d}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).toUpperCase() : '';
+    d ? new Date(`${d}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }) : '';
   const range = t ? `${short(t.first_night)} – ${short(t.last_night)}` : '';
   const stats: [string, string][] = [
     [String(t?.nights ?? 33), 'unattended nights'],
@@ -35,6 +35,7 @@ export default function Home() {
               <div key={label} className="lead-stat"><b>{big}</b><span>{label}</span></div>
             ))}
           </div>
+          <p className="lead-kicker">THE ESSAY · 8 MIN READ</p>
           <h2 className="lead-title">
             <Link href="/33-nights">33 nights of unattended Claude Code, and what I&apos;d ship as its PM</Link>
           </h2>
@@ -44,12 +45,15 @@ export default function Home() {
             <li><b>Sandbox on by default for headless runs.</b> Rules alone let one line of <code>python3 -c</code> escape five ways out of five.</li>
             <li><b>No exit with work pending.</b> Four nights ended on &ldquo;waiting on the task notification&rdquo; with no report.</li>
           </ol>
-          <p className="lead-links">
-            <Link href="/33-nights">Read the essay →</Link>
-            <Link href="/asks">All eleven asks as specs →</Link>
-            <Link href="/morning">The morning as a Claude Code feature →</Link>
-            <Link href="/evidence">See the receipts →</Link>
-          </p>
+          <div className="lead-cta">
+            <Link className="lead-primary" href="/33-nights">Read the essay →</Link>
+            <p className="lead-links">
+              <span>Then:</span>
+              <Link href="/asks">all eleven asks as specs</Link>
+              <Link href="/morning">the morning as a Claude Code feature</Link>
+              <Link href="/evidence">the receipts</Link>
+            </p>
+          </div>
           <p className="lead-byline">
             Built and run by <a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Harrison Johnson</a>, a product manager, with Claude Code. Claude wrote most of the code; the calls are mine.
           </p>
@@ -75,7 +79,7 @@ export default function Home() {
         <Onboarding />
 
         <p className="section-label">OR BROWSE THE FOLDERS</p>
-        <Explorer tree={tree} label="harnesses" />
+        <Explorer tree={tree} label="harnesses" collapsed />
       </section>
 
       <DescentPanel label="HOME" marks={marks} readout={{ kind: 'items', total: 3 }} />

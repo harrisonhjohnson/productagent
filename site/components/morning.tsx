@@ -11,7 +11,6 @@ export function Morning() {
                web page says 98. Recorded the gap as a discrepancy, did not reconcile it.
 - Decided:     one row per permit, not per building. Flagging it, since it is your call.
 - Need from you: check the renewal on the state portal; it needs a login the fence denies.
-- Where to look: pm/nights/loops/L-04.md, data/ledger-2026-09-15.md
 
 run: 41 min · $3.80 of $6 · 0 pushes · 0 denials · progress: yes`}</pre>
       </div>
