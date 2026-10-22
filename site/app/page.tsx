@@ -34,7 +34,7 @@ export default function Home() {
           <div className="hero-copy">
             <p className="hero-eyebrow">PRODUCTAGENT</p>
             <h1 id="page-heading">Claude writes the code at night.<br />You review it in the morning.</h1>
-            <p className="hero-meta">claude code · codex · your mac · your plan · {counts.harnesses} harnesses</p>
+            <p className="hero-meta">claude code · your mac · your plan · {counts.harnesses} harnesses</p>
           </div>
         </div>
 
@@ -64,15 +64,15 @@ export default function Home() {
           </p>
         </section>
 
-        <InstallLine />
-        <Onboarding />
+        <Morning />
 
         <section className="usecases" aria-labelledby="usecases-heading">
           <p className="section-label" id="usecases-heading">WHAT A LOOP LOOKS LIKE</p>
           <StickyNotes />
         </section>
 
-        <Morning />
+        <InstallLine />
+        <Onboarding />
 
         <p className="section-label">OR BROWSE THE FOLDERS</p>
         <Explorer tree={tree} label="harnesses" />

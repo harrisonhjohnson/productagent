@@ -2,8 +2,8 @@
 export function Onboarding() {
   return (
     <section className="onboard" aria-labelledby="onboard-heading">
-      <p className="section-label" id="onboard-heading">WHAT HAPPENS AFTER YOU PASTE IT</p>
-      <div className="onboard-grid">
+      <details className="onboard-grid">
+        <summary className="section-label" id="onboard-heading">WHAT HAPPENS AFTER YOU PASTE IT: FOUR QUESTIONS</summary>
         <div className="term term-onboard" role="figure" aria-label="The four questions the installer asks">
           <div className="term-bar"><span /><span /><span /><em>~ · install.sh</em></div>
           <pre>{`Installing to ~/loops
@@ -43,7 +43,7 @@ Dry run   every guard, no model call, no spend
 Tonight   plug the laptop in. Lid open or shut.
 Morning   read pm/nights/<date>.md`}</pre>
         </div>
-      </div>
+      </details>
     </section>
   );
 }

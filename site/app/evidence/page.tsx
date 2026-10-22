@@ -61,7 +61,7 @@ export default function EvidencePage() {
 
   return (
     <Shell path="/evidence">
-      <section className="tree-panel" aria-labelledby="ev-heading">
+      <section className="tree-panel read read-wide" aria-labelledby="ev-heading">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span aria-current="page">evidence</span></nav>
         <div className="why-header">
           <p className="hero-eyebrow why-eyebrow">THE NUMBERS BEHIND <Link href="/33-nights">33 NIGHTS</Link></p>

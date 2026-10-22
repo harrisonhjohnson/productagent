@@ -135,7 +135,7 @@ export default function About() {
   return (
     <Shell path="/about">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(graph) }} />
-      <section className="tree-panel" aria-labelledby="about-heading">
+      <section className="tree-panel read" aria-labelledby="about-heading">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span aria-current="page">about</span></nav>
         <div className="why-header">
           <p className="hero-eyebrow why-eyebrow">ABOUT PRODUCTAGENT.DEV</p>
@@ -145,9 +145,9 @@ export default function About() {
             operators: skills, agents, shell scripts on a schedule, a permissions fence and a Telegram bot. The
             flagship, Loops, lets Claude keep working overnight and hands the decisions back to you in the morning. You give each loop a goal, a budget, a cadence
             and a model. Loops runs on your Mac and the Claude or ChatGPT plan you already pay for, works inside a fence
-            (permission rules with the OS sandbox underneath), and leaves four plain lines per loop in the morning. Install Loops with one line:{' '}
-            <code>{INSTALL_COMMAND}</code>
+            (permission rules with the OS sandbox underneath), and leaves four plain lines per loop in the morning.
           </p>
+          <pre className="about-install"><code>{INSTALL_COMMAND}</code></pre>
         </div>
 
         <article className="doc">
@@ -220,8 +220,8 @@ export default function About() {
             Harrison Johnson, a product manager, runs these harnesses on real projects every day and night. Each
             harness gets copied off Harrison&apos;s machine, scrubbed of personal paths, budgets and client names, and
             published here as a folder. Claude Code wrote most of the code and much of the prose; Harrison makes the calls on what
-            ships and what the rules are. Every example on the site is synthetic. The one exception is
-            <a href="/evidence">the receipts</a>: the real run record, numbers only, frozen at a cutoff date. <a href="/33-nights">The essay</a> walks through what those nights taught.
+            ships and what the rules are. Every example on the site is synthetic. The one exception is{' '}
+            <Link href="/evidence">the receipts</Link>: the real run record, numbers only, frozen at a cutoff date. <Link href="/33-nights">The essay</Link> walks through what those nights taught.
           </p>
           <p>
             The site reads the <a href={GITHUB} target="_blank" rel="noreferrer">GitHub repository</a> at build time, so

@@ -30,7 +30,7 @@ export default async function Essay() {
 
   return (
     <Shell path="/33-nights">
-      <section className="tree-panel" aria-labelledby="essay-heading">
+      <section className="tree-panel read" aria-labelledby="essay-heading">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span aria-current="page">33 nights</span></nav>
         <div className="why-header">
           <p className="hero-eyebrow why-eyebrow">ESSAY · {Math.round(words / 230)} MIN READ</p>

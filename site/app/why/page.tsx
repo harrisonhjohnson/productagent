@@ -17,7 +17,7 @@ export default function Why() {
   const graphs = QUOTES.filter((q) => q.part === 'graphs');
   return (
     <Shell path="/why">
-      <section className="tree-panel" aria-labelledby="why-heading">
+      <section className="tree-panel read" aria-labelledby="why-heading">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span>why</span></nav>
         <div className="why-header">
           <p className="hero-eyebrow why-eyebrow">WHY LOOPS, WHY GRAPHS</p>

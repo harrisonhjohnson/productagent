@@ -15,21 +15,10 @@ export type Quote = {
 
 export const QUOTES: Quote[] = [
   {
-    id: 'cherny-loops',
-    part: 'loops',
-    text: 'I don’t prompt Claude anymore. I have loops running that prompt Claude and figuring out what to do. My job is to write loops.',
-    who: 'Boris Cherny, creator of Claude Code',
-    where: 'Meta @Scale, as reported by TechCrunch',
-    date: 'June 2026',
-    url: 'https://techcrunch.com/2026/06/22/the-ai-world-is-getting-loopy/',
-    took: 'The whole folder. A loop is written once and renews itself; you read four lines, not a transcript.',
-    home: true,
-  },
-  {
     id: 'cherny-arc',
     part: 'loops',
-    text: 'Two years ago, we wrote source code by hand. We started to transition so agents write the code. And now we’re transitioning to the point where agents are prompting agents that then write the code. As big as the step from source code to agents was, loops are just as important and as big a step.',
-    who: 'Boris Cherny',
+    text: 'Two years ago, we wrote source code by hand. We started to transition so agents write the code. And now we’re transitioning to the point where agents are prompting agents that then write the code. … As big as the step from source code to agents was, loops are just as important and as big a step.',
+    who: 'Boris Cherny, creator of Claude Code',
     where: 'Meta @Scale, as reported by TechCrunch',
     date: 'June 2026',
     url: 'https://techcrunch.com/2026/06/22/the-ai-world-is-getting-loopy/',
@@ -79,7 +68,7 @@ export const QUOTES: Quote[] = [
   {
     id: 'harness-memory',
     part: 'loops',
-    text: 'Each new session begins with no memory of what came before.',
+    text: '…each new session begins with no memory of what came before.',
     who: 'Anthropic',
     where: 'Effective harnesses for long-running agents',
     date: 'November 2025',
@@ -89,7 +78,7 @@ export const QUOTES: Quote[] = [
   {
     id: 'harness-bridge',
     part: 'loops',
-    text: 'Agents need a way to bridge the gap between coding sessions.',
+    text: '…agents need a way to bridge the gap between coding sessions.',
     who: 'Anthropic',
     where: 'Effective harnesses for long-running agents',
     date: 'November 2025',

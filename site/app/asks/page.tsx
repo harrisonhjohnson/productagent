@@ -26,7 +26,7 @@ export default async function Asks() {
 
   return (
     <Shell path="/asks">
-      <section className="tree-panel" aria-labelledby="asks-heading">
+      <section className="tree-panel read" aria-labelledby="asks-heading">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">harnesses</Link><span>/</span><span aria-current="page">asks</span></nav>
         <div className="why-header">
           <p className="hero-eyebrow why-eyebrow">SPECS · FROM <Link href="/33-nights">33 NIGHTS</Link></p>

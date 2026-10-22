@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import { TerminalSquare } from 'lucide-react';
 import { GITHUB } from '@/lib/content';
-import { TopbarReadout } from './topbar-readout';
 
-export function Shell({ path, children }: { path: string; children: React.ReactNode }) {
+export function Shell({ children }: { path: string; children: React.ReactNode }) {
   return (
     <main className="site-shell">
       <header className="topbar">
@@ -14,13 +13,12 @@ export function Shell({ path, children }: { path: string; children: React.ReactN
           </Link>
           <Link className="topbar-link" href="/about">ABOUT</Link>
           <Link className="topbar-link" href="/33-nights">ESSAY</Link>
-          <Link className="topbar-link topbar-extra" href="/asks">ASKS</Link>
-          <Link className="topbar-link topbar-extra" href="/evidence">RECEIPTS</Link>
+          <Link className="topbar-link" href="/asks">ASKS</Link>
+          <Link className="topbar-link" href="/evidence">RECEIPTS</Link>
         </nav>
-        <a className="topbar-path" href={GITHUB} target="_blank" rel="noreferrer" aria-label="Repository on GitHub" style={{ textDecoration: 'none' }}>
-          harrisonhjohnson/productagent · {path}
+        <a className="topbar-path" href={GITHUB} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+          SOURCE ON GITHUB ↗
         </a>
-        <TopbarReadout />
       </header>
       <div className="page-grid">{children}</div>
     </main>
