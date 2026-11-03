@@ -254,12 +254,3 @@ export function AskGrid({ m }: { m: Machine }) {
   );
 }
 
-export function AskThumb({ fig, line }: { fig: Fig; line: ReactNode }) {
-  return (
-    <Link href={`/asks#fig-ask-${fig.id}`} className="ask-thumb">
-      <Diagram fig={fig} st="b" label={`${fig.t}. ${fig.nb}`} />
-      <b>{fig.t}</b>
-      <span>{line}</span>
-    </Link>
-  );
-}

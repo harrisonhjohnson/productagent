@@ -799,12 +799,4 @@ a { color: var(--link); text-underline-offset: 2px; }
 
 .fig-home { left: auto; transform: none; width: auto; margin: 0; }
 .home-machine { padding: 8px 26px 30px; display: grid; gap: 10px; }
-.ask-thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; padding: 0; list-style: none; }
-.ask-thumb { display: grid; gap: 6px; align-content: start; padding: 10px 12px 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; color: var(--ink); text-decoration: none; min-width: 0; }
-.ask-thumb:hover { border-color: var(--gold); }
-.ask-thumb:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
-.ask-thumb .fig-svg { max-width: none; }
-.ask-thumb b { font-family: var(--font-mono-local); font-size: 13px; letter-spacing: -.01em; }
-.ask-thumb span { font-size: 13.5px; color: var(--ink-muted); line-height: 1.45; }
 @media (max-width: 500px) { .home-machine { padding-left: 10px; padding-right: 10px; } }
-.lead-asks.ask-thumbs { padding-left: 0; max-width: none; }

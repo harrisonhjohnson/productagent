@@ -8,15 +8,13 @@ import { Shell } from '@/components/shell';
 import { AUTHOR_LINKEDIN, getTree } from '@/lib/content';
 import Link from 'next/link';
 import { getEvidence } from '@/lib/evidence';
-import { AskThumb, ModelFigure } from '@/components/figures';
-import { ASK_FIGS } from '@/lib/figures';
+import { ModelFigure } from '@/components/figures';
 import { getMachine } from '@/lib/machine';
 import './geo.css';
 
 export default function Home() {
   const tree = getTree();
   const machine = getMachine();
-  const ask = (id: string) => ASK_FIGS.find((f) => f.id === id)!;
   const marks = ['I', 'II', 'III'];
   const t = getEvidence()?.totals;
   const short = (d?: string | null) =>
@@ -45,11 +43,11 @@ export default function Home() {
             <Link href="/33-nights">33 nights of unattended Claude Code, and what I&apos;d ship as its PM</Link>
           </h2>
           <p className="lead-sub">From the run record, {range}. Three of the asks, each from a night it went wrong:</p>
-          <div className="lead-asks ask-thumbs">
-            <AskThumb fig={ask('refusals')} line={<>One report said &ldquo;blocked by the fence: none&rdquo; on a night with 34 refused calls.</>} />
-            <AskThumb fig={ask('sandbox')} line={<>Rules alone let one line of <code>python3 -c</code> escape five ways out of five.</>} />
-            <AskThumb fig={ask('no-exit')} line={<>Four nights ended on &ldquo;waiting on the task notification&rdquo; with no report.</>} />
-          </div>
+          <ol className="lead-asks">
+            <li><b>Refusals in the record.</b> One report said &ldquo;blocked by the fence: none&rdquo; on a night with 34 refused calls.</li>
+            <li><b>Sandbox on by default for headless runs.</b> Rules alone let one line of <code>python3 -c</code> escape five ways out of five.</li>
+            <li><b>No exit with work pending.</b> Four nights ended on &ldquo;waiting on the task notification&rdquo; with no report.</li>
+          </ol>
           <div className="lead-cta">
             <Link className="lead-primary" href="/33-nights">Read the essay →</Link>
             <p className="lead-links">
