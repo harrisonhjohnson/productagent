@@ -2,8 +2,6 @@
 
 For 33 nights between August 17 and October 16, Claude Code worked on my Mac while I slept. A night cost $6.13 on average and $4.38 at the median, $202.16 in all. Counting a day schedule and an hourly one, it ran 149 times for $340.09. Those are notional API prices on a Max plan, so the real cost was a share of a subscription I already paid for.
 
-<!-- chart:nights -->
-
 The work was chores on my own side projects: a public-permits data site, a fan site, a hobby emulator project, and my personal site. Each night's Run worked one Loop, a goal I wrote once that renews itself. One-off Orders went first. Anything a run couldn't settle came back to me as a Decision. A fence kept the agent off its own rules, off `git push`, and out of everything outside the work folder. Every morning I got a short report.
 
 <!-- figure:machine -->
@@ -93,6 +91,8 @@ The metric I cared about most was interventions: how many things I had to do by 
 <!-- chart:interventions -->
 
 Spending fell from $105 in September to $18 in October. The model didn't get cheaper. The machine ran out of work because the work was waiting on me: 37 Decisions queued, 17 applied, 8 parked, 12 still open. One project had 19 unmerged night branches. The fan-site update sat for eight days.
+
+<!-- chart:nights -->
 
 A night takes 8 minutes of machine time. The morning takes as long as I let it, and when I skip it, the next night has nothing to do. A system like this works when I can clear the morning in a few minutes. That shifted my job too. I stopped writing code and started reviewing it: reading the report, settling the Decisions, merging the branches. What I'd build to make that morning five minutes long is [sketched here](/morning).
 
