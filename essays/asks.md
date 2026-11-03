@@ -146,6 +146,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 
 ## 11. Defaults that fail quietly
 
+<!-- figure:ask-defaults -->
+
 **Problem.** Two defaults change a headless run without saying so.
 
 **Evidence.** The 60-second default hook timeout silently killed a hook that needed ten minutes. `claude -p` waits 3 seconds for input unless you pass `</dev/null`.

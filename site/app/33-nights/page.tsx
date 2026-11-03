@@ -4,11 +4,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { DescentPanel } from '@/components/descent-panel';
 import { EssayChart } from '@/components/essay-charts';
-import { BreakFigure, ModelFigure } from '@/components/figures';
+import { AskFigure, BreakFigure, ModelFigure } from '@/components/figures';
 import { Shell } from '@/components/shell';
 import { AUTHOR_GITHUB, AUTHOR_LINKEDIN } from '@/lib/content';
 import { getEvidence } from '@/lib/evidence';
-import { BREAK_FIGS } from '@/lib/figures';
+import { ASK_FIGS, BREAK_FIGS } from '@/lib/figures';
 import { getMachine } from '@/lib/machine';
 import { extractHeadings, renderMarkdown } from '@/lib/render';
 
@@ -36,6 +36,10 @@ export default async function Essay() {
     if (kind === 'chart') return ev ? <EssayChart key={key} name={name} ev={ev} num={++num} /> : null;
     if (name === 'machine') return <ModelFigure key={key} m={machine} num={++num} />;
     if (name === 'limits') return <Limits key={key} />;
+    if (name.startsWith('ask-')) {
+      const fig = ASK_FIGS.find((f) => f.id === name.slice(4));
+      return fig ? <AskFigure key={key} fig={fig} num={++num} /> : null;
+    }
     const n = Number(name.replace('break-', ''));
     const fig = BREAK_FIGS.find((f) => f.n === n), b = machine.breaks.find((x) => x.n === n);
     return fig && b ? <BreakFigure key={key} fig={fig} b={b} num={++num} /> : null;

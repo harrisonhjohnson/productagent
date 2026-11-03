@@ -82,45 +82,67 @@ I used Claude Code as a customer for 33 nights. Each problem I hit is also writt
 
 ### Refusals in the record
 
+<!-- figure:ask-refusals -->
+
 The headless JSON listed a `git push` denial and missed all three Edit denials in my first probe. The agent's own count was worse. It said "none" on a night with 34. The output should list every refused call, with the rule that fired and the tool input.
 
 ### Sandbox on by default for headless runs
+
+<!-- figure:ask-sandbox -->
 
 Prefix rules failed both ways. On August 18 `git status:*` didn't match `git -C <path> status`. On October 2 `git -C` got past my push and merge denies. And no text rule can see inside `python3 -c`. I'd match git and common CLIs on their real verb, offer a read-only git preset, and turn the OS sandbox on for `claude -p`, refusing to start if it can't.
 
 ### No exit with work pending
 
+<!-- figure:ask-no-exit -->
+
 Four nights ended on "waiting on the task notification." `claude -p` should wait for or stop background shells and subagents, and report how many were left.
 
 ### A login made for unattended runs
+
+<!-- figure:ask-login -->
 
 My runner spends a model call before every night just to learn whether it's logged in. I'd ship `claude auth status --json` with no model call, showing when the login expires, plus a warning days ahead.
 
 ### A quota I can read
 
+<!-- figure:ask-quota -->
+
 My rule was to stop at 85% of the weekly plan. It never fired: the usage cache went 313 hours stale, then threw a KeyError. Each model has its own weekly allowance, so a job with no model pin can drain the wrong one silently. Before this project, one scheduled job used about 96% of the top model's week that way. I'd add `claude usage --json` per model with reset times, and a quota ceiling flag on `claude -p`.
 
 ### Cost in the currency I pay
+
+<!-- figure:ask-cost -->
 
 On a Max plan the dollar figure is a proxy. My real limit was quota. Show quota used next to the dollar figure.
 
 ### A turn limit in the CLI
 
+<!-- figure:ask-turns -->
+
 `--max-turns` exists in the SDK but not the CLI, so wall-clock time was my only hard ceiling. Add `--max-turns` and a tool-call budget to `claude -p`.
 
 ### One settings file, two kinds of session
+
+<!-- figure:ask-profiles -->
 
 Closing the git hole for the night also blocked my own merges in the morning. Named permission profiles, chosen per run, would fix it.
 
 ### Transcripts I can query
 
+<!-- figure:ask-transcripts -->
+
 My health checks work by reverse-engineering the session files on disk, and telling a night run from a day run meant reading the first prompt. I'd ship a documented session index with tags I set per run.
 
 ### Skills without user permissions
 
+<!-- figure:ask-skills -->
+
 Loading only project settings, which the fence needs, also drops my user skills. I worked around it with symlinks. Let me choose skills, permissions, and hooks separately.
 
 ### Smaller ones
+
+<!-- figure:ask-defaults -->
 
 The 60-second default hook timeout silently killed a 10-minute hook. `claude -p` waits 3 seconds for input unless you pass `</dev/null`. Two things worked better than I expected: a new deny rule binds a running session at once, and structured output made the judge easy to build.
 

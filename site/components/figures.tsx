@@ -108,7 +108,7 @@ export function Diagram({ fig, st, label }: { fig: Fig; st: St; label: string })
       y = a.y + (b.y - a.y) * t + (bd.dy || 0);
     }
     top.push(
-      <a key={`b${bd.n}`} href={`#fig-break-${bd.n}`} className={`bd ${bd.k}`} aria-label={`Break ${bd.n}`}>
+      <a key={`b${bd.n}`} href={`${fig.badgeBase ?? ''}#fig-break-${bd.n}`} className={`bd ${bd.k}`} aria-label={`Break ${bd.n}`}>
         <circle cx={x} cy={y} r={9} />
         <text x={x} y={y + 3.6} textAnchor="middle">{bd.n}</text>
       </a>,
@@ -140,9 +140,9 @@ export function attributionCounts(m: Machine) {
   return c;
 }
 
-export function ModelFigure({ m, num }: { m: Machine; num: number }) {
+export function ModelFigure({ m, num, home }: { m: Machine; num?: number; home?: boolean }) {
   const fig: Fig = {
-    n: 0, t: 'The night machine', W: 860, H: 500,
+    n: 0, t: 'The night machine', W: 860, H: 500, badgeBase: home ? '/33-nights' : '',
     nodes: m.parts.map((p) => ({ id: p.id, x: MODEL_LAYOUT[p.id][0], y: MODEL_LAYOUT[p.id][1], l: p.label.replace("'", '’'), s: p.detail, mine: p.owner === 'mine' ? 1 : 0 })),
     edges: m.links.map((l) => ({ a: l.from, b: l.to, l: l.verb, t: MODEL_LABEL_T[`${l.from}>${l.to}`] })),
     badges: m.breaks.map((b) => {
@@ -153,11 +153,11 @@ export function ModelFigure({ m, num }: { m: Machine; num: number }) {
   };
   const c = attributionCounts(m);
   return (
-    <figure className="fig fig-model" id="fig-machine">
+    <figure className={`fig fig-model${home ? ' fig-home' : ''}`} id="fig-machine">
       <figcaption>
-        <span className="fig-num">Figure {num}.</span> {cap(word(c.machine))} of the {word(m.breaks.length)} breaks were in the
+        {num ? <span className="fig-num">Figure {num}. </span> : null}{cap(word(c.machine))} of the {word(m.breaks.length)} breaks were in the
         machine around the agent. {cap(word(c.agent))} were the agent’s, {word(c.shared)} needed both, and {word(c.design)} was a
-        rule working as designed. Each number links to its break.
+        rule working as designed. Each number links to its break{home ? ' in the essay' : ''}.
       </figcaption>
       <div className="fig-scroll">
         <Diagram fig={fig} st="b" label={`The parts of the night machine and how they connect, with the ${m.breaks.length} breaks pinned where they happened.`} />
@@ -208,7 +208,7 @@ export function AskFigure({ fig, num }: { fig: Fig; num: number }) {
       <figcaption><span className="fig-num">Figure {num}.</span> {fig.claim}</figcaption>
       <FigureToggle
         labels={['Today', 'Proposed']}
-        broke={<><Diagram fig={fig} st="b" label={`${fig.t}. ${fig.nb}`} /><p className="fig-note">{fig.nb}</p></>}
+        broke={<Diagram fig={fig} st="b" label={`${fig.t}. ${fig.nb}`} />}
         fixed={<><Diagram fig={fig} st="f" label={`${fig.t}. ${fig.nf}`} /><p className="fig-note">{fig.nf}</p></>}
       />
     </figure>
@@ -251,5 +251,15 @@ export function AskGrid({ m }: { m: Machine }) {
       </div>
       <p className="fig-note">Asks with an empty row came from friction outside the ten breaks: quota, cost, turn limits, skills, quiet defaults.</p>
     </figure>
+  );
+}
+
+export function AskThumb({ fig, line }: { fig: Fig; line: ReactNode }) {
+  return (
+    <Link href={`/asks#fig-ask-${fig.id}`} className="ask-thumb">
+      <Diagram fig={fig} st="b" label={`${fig.t}. ${fig.nb}`} />
+      <b>{fig.t}</b>
+      <span>{line}</span>
+    </Link>
   );
 }

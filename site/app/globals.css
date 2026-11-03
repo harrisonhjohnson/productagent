@@ -734,7 +734,7 @@ a { color: var(--link); text-underline-offset: 2px; }
 .fig-model { position: relative; left: 50%; transform: translateX(-50%); width: min(920px, calc(100vw - 120px)); }
 .fig-model .fig-svg { min-width: 640px; }
 @media (max-width: 760px) { .fig-model { left: auto; transform: none; width: auto; } }
-.fig a.bd, .fig a.bd text { text-decoration: none; }
+.fig-svg a.bd, .fig-svg a.bd text { text-decoration: none; }
 .fig-seg { display: inline-flex; width: max-content; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
 .fig-seg button { font: 600 11.5px var(--font-mono-local); letter-spacing: .04em; padding: 6px 11px; border: 0; background: transparent; color: var(--ink-muted); cursor: pointer; }
 .fig-seg button[aria-pressed='true'] { background: var(--ink); color: var(--background); }
@@ -766,33 +766,45 @@ a { color: var(--link); text-underline-offset: 2px; }
 .ask-grid th, .ask-grid td { background: none; }
 .fig-note { font-family: var(--font-sans-local); }
 .ask-grid td { color: var(--gold); font-size: 15px; }
-.fig .nd rect { fill: var(--background); stroke: rgba(var(--ink-rgb), .55); stroke-width: 1.2; }
-.fig .nd.mine rect { stroke-dasharray: 4 2.5; }
-.fig .nd.bad rect { stroke: var(--gold); stroke-width: 2; fill: rgba(201, 145, 28, .12); }
-.fig .nd .l { font: 700 11.5px var(--font-sans-local); fill: var(--ink); }
-.fig .nd .s { font: 9.5px var(--font-sans-local); fill: var(--ink-muted); }
-.fig .nd.bad .s { fill: var(--orange); font-weight: 700; }
-.fig .ed { fill: none; stroke: rgba(var(--ink-rgb), .6); stroke-width: 1.3; }
-.fig .ed.stop { stroke-width: 2.4; }
-.fig .ed.bad { stroke: var(--gold); stroke-width: 2; }
-.fig .ed.dash { stroke-dasharray: 4 3; }
-.fig .ah { fill: rgba(var(--ink-rgb), .6); }
-.fig .ah.bad { fill: var(--gold); }
-.fig .lb rect { fill: var(--paper); }
-.fig .lb text { font: 9.5px var(--font-sans-local); fill: var(--ink-muted); }
-.fig .lb.bad text { fill: var(--orange); font-weight: 700; }
-.fig .x { fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; }
-.fig .x.thin { stroke-width: 1.4; }
-.fig .tx { font: 9.5px var(--font-mono-local); fill: var(--ink-muted); }
-.fig .tx.bad { fill: var(--orange); font-weight: 700; }
-.fig .tx.big { font: 700 11px var(--font-mono-local); fill: var(--ink); }
-.fig .u { fill: var(--gold); opacity: .85; }
-.fig .u.ok { fill: rgba(var(--ink-rgb), .25); opacity: 1; }
-.fig .bd circle { stroke: var(--gold); stroke-width: 1.6; fill: var(--paper); }
-.fig .bd.m circle { fill: var(--gold); }
-.fig .bd.s circle { fill: rgba(201, 145, 28, .35); }
-.fig .bd.d circle { stroke: var(--ink-muted); stroke-dasharray: 2.5 2; }
-.fig .bd text { font: 700 10.5px var(--font-mono-local); fill: var(--orange); }
-.fig .bd.m text { fill: #1b1407; }
-.fig .bd.d text { fill: var(--ink-muted); }
-.fig .bd:hover circle { stroke-width: 3; }
+.fig-svg .nd rect { fill: var(--background); stroke: rgba(var(--ink-rgb), .55); stroke-width: 1.2; }
+.fig-svg .nd.mine rect { stroke-dasharray: 4 2.5; }
+.fig-svg .nd.bad rect { stroke: var(--gold); stroke-width: 2; fill: rgba(201, 145, 28, .12); }
+.fig-svg .nd .l { font: 700 11.5px var(--font-sans-local); fill: var(--ink); }
+.fig-svg .nd .s { font: 9.5px var(--font-sans-local); fill: var(--ink-muted); }
+.fig-svg .nd.bad .s { fill: var(--orange); font-weight: 700; }
+.fig-svg .ed { fill: none; stroke: rgba(var(--ink-rgb), .6); stroke-width: 1.3; }
+.fig-svg .ed.stop { stroke-width: 2.4; }
+.fig-svg .ed.bad { stroke: var(--gold); stroke-width: 2; }
+.fig-svg .ed.dash { stroke-dasharray: 4 3; }
+.fig-svg .ah { fill: rgba(var(--ink-rgb), .6); }
+.fig-svg .ah.bad { fill: var(--gold); }
+.fig-svg .lb rect { fill: var(--paper); }
+.fig-svg .lb text { font: 9.5px var(--font-sans-local); fill: var(--ink-muted); }
+.fig-svg .lb.bad text { fill: var(--orange); font-weight: 700; }
+.fig-svg .x { fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; }
+.fig-svg .x.thin { stroke-width: 1.4; }
+.fig-svg .tx { font: 9.5px var(--font-mono-local); fill: var(--ink-muted); }
+.fig-svg .tx.bad { fill: var(--orange); font-weight: 700; }
+.fig-svg .tx.big { font: 700 11px var(--font-mono-local); fill: var(--ink); }
+.fig-svg .u { fill: var(--gold); opacity: .85; }
+.fig-svg .u.ok { fill: rgba(var(--ink-rgb), .25); opacity: 1; }
+.fig-svg .bd circle { stroke: var(--gold); stroke-width: 1.6; fill: var(--paper); }
+.fig-svg .bd.m circle { fill: var(--gold); }
+.fig-svg .bd.s circle { fill: rgba(201, 145, 28, .35); }
+.fig-svg .bd.d circle { stroke: var(--ink-muted); stroke-dasharray: 2.5 2; }
+.fig-svg .bd text { font: 700 10.5px var(--font-mono-local); fill: var(--orange); }
+.fig-svg .bd.m text { fill: #1b1407; }
+.fig-svg .bd.d text { fill: var(--ink-muted); }
+.fig-svg .bd:hover circle { stroke-width: 3; }
+
+.fig-home { left: auto; transform: none; width: auto; margin: 0; }
+.home-machine { padding: 8px 26px 30px; display: grid; gap: 10px; }
+.ask-thumbs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; padding: 0; list-style: none; }
+.ask-thumb { display: grid; gap: 6px; align-content: start; padding: 10px 12px 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; color: var(--ink); text-decoration: none; min-width: 0; }
+.ask-thumb:hover { border-color: var(--gold); }
+.ask-thumb:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.ask-thumb .fig-svg { max-width: none; }
+.ask-thumb b { font-family: var(--font-mono-local); font-size: 13px; letter-spacing: -.01em; }
+.ask-thumb span { font-size: 13.5px; color: var(--ink-muted); line-height: 1.45; }
+@media (max-width: 500px) { .home-machine { padding-left: 10px; padding-right: 10px; } }
+.lead-asks.ask-thumbs { padding-left: 0; max-width: none; }

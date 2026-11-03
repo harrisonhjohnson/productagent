@@ -14,7 +14,7 @@ export type FigEdge = {
 export type Badge = { n: number; k: string; node?: string; a?: string; b?: string; t?: number; dx?: number; dy?: number };
 export type Fig = {
   n: number; id?: string; t: string; claim?: string; nodes: FigNode[]; edges: FigEdge[];
-  nb?: string; nf?: string; table?: boolean; units?: number; W?: number; H?: number; badges?: Badge[];
+  nb?: string; nf?: string; table?: boolean; units?: number; W?: number; H?: number; badges?: Badge[]; badgeBase?: string;
 };
 
 export const L = 60, C = 220, R = 380, T = 36, M = 118, B = 200;
@@ -29,7 +29,7 @@ export const MODEL_LAYOUT: Record<string, [number, number]> = {
 };
 export const MODEL_LABEL_T: Record<string, number> = { 'session>graders': 0.45, 'runner>branch': 0.62, 'runlog>report': 0.4, 'graders>report': 0.45, 'branch>me': 0.55 };
 export const MODEL_BADGE_OFFSET: Record<number, { t?: number; dx?: number; dy?: number }> = {
-  3: { t: 0.5, dy: -16 }, 4: { t: 0.75, dy: -14 }, 10: { t: 0.42, dx: 22, dy: 14 },
+  3: { t: 0.5, dy: -16 }, 4: { t: 0.3, dy: 0 }, 10: { t: 0.42, dx: 22, dy: 14 },
 };
 
 export const BREAK_FIGS: Fig[] = [
@@ -349,4 +349,18 @@ export const ASK_FIGS: Fig[] = [
     ],
     nb: 'I worked around it with symlinks.',
     nf: 'Ship: choose skills, permissions and hooks separately.' },
+  { n: 11, id: 'defaults', t: 'Defaults that fail quietly', claim: 'Two defaults change a headless run and say nothing.',
+    nodes: [
+      { id: 'cli', x: L, y: M, l: 'claude -p' },
+      { id: 'hook', x: C, y: T, l: 'Hook', s: 'needs 10 minutes', b: { s: 'killed at 60 s' }, bad: 'b' },
+      { id: 'in', x: C, y: B, l: 'Stdin', b: { s: 'waits 3 s' }, f: { s: 'wait reported' }, bad: 'b' },
+      { id: 'out', x: R, y: M, l: 'Run output', b: { s: 'no mention' }, f: { s: 'one line per default' }, bad: 'b' },
+    ],
+    edges: [
+      { a: 'cli', b: 'hook', l: 'runs' }, { a: 'cli', b: 'in', l: 'waits on' },
+      { a: 'hook', b: 'out', l: 'silent', only: 'b', bad: 1, dash: 1, cut: 1 }, { a: 'hook', b: 'out', l: 'timeout noted', only: 'f' },
+      { a: 'in', b: 'out', l: 'silent', only: 'b', bad: 1, dash: 1, cut: 1 }, { a: 'in', b: 'out', l: 'wait noted', only: 'f' },
+    ],
+    nb: 'The 60-second default hook timeout killed a hook that needed ten minutes. claude -p waits 3 seconds for input unless you pass </dev/null.',
+    nf: 'Ship: one line in the output whenever a hook hits its timeout or the stdin wait changes a run.' },
 ];
