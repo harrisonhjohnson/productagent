@@ -6,6 +6,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 
 ## 1. Sandbox on by default for headless runs
 
+<!-- figure:ask-sandbox -->
+
 **Problem.** Permission rules match the text of a command. They miss forms the author didn't think of, and they can't see inside an interpreter at all.
 
 **Evidence.** On August 18, `git status:*` didn't match `git -C <path> status`. On October 2, `git -C <path> push` got past my push deny in an attended session. On October 20, with rules alone, one line of `python3 -c` wrote into my ops tooling and `.git`, read a credential file, and reached an arbitrary website: five tries, five escapes. With the OS sandbox on, all five fail with `Operation not permitted`.
@@ -17,6 +19,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 **Not doing.** Turning the sandbox on by default for interactive sessions. There, a person reads the prompts, and a surprise break costs more than it saves.
 
 ## 2. Refusals in the record
+
+<!-- figure:ask-refusals -->
 
 **Problem.** The headless output doesn't reliably list refused calls, and the agent's own summary undercounts them.
 
@@ -30,6 +34,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 
 ## 3. No exit with work pending
 
+<!-- figure:ask-no-exit -->
+
 **Problem.** A headless session can end while its own background shells or subagents are still running, and leave no result.
 
 **Evidence.** Four nights ended on "waiting on the task notification" with no report. My runner graded the first one ok.
@@ -41,6 +47,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 **Not doing.** Retrying automatically. Whether to retry is the runner's call.
 
 ## 4. A login made for unattended runs
+
+<!-- figure:ask-login -->
 
 **Problem.** A scheduled job has no cheap way to know, before it starts, whether its login will hold.
 
@@ -54,6 +62,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 
 ## 5. A quota I can read
 
+<!-- figure:ask-quota -->
+
 **Problem.** On a plan, the real limit is quota, and a script can't read it. Each model has its own weekly allowance, so a job with no model pin can drain the wrong one.
 
 **Evidence.** My rule was to stop at 85% of the weekly plan. It never fired: the usage cache I read went 313 hours stale, then threw a KeyError. Before this project, one scheduled job with no model pin used about 96% of the top model's week.
@@ -65,6 +75,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 **Not doing.** Choosing a cheaper model on the user's behalf when quota runs low. Say so and stop; let the person choose.
 
 ## 6. Cost in the currency I pay
+
+<!-- figure:ask-cost -->
 
 **Problem.** On a plan, the result reports dollars at API prices. That number is a proxy; the limit that bites is quota.
 
@@ -78,6 +90,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 
 ## 7. A turn limit in the CLI
 
+<!-- figure:ask-turns -->
+
 **Problem.** `--max-turns` exists in the SDK but not the CLI, so wall-clock time is the only hard ceiling on a headless run.
 
 **Evidence.** My step budget of 300 tool calls could only be checked after the fact, by scoring transcripts the next morning.
@@ -89,6 +103,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 **Not doing.** A default budget. The right number depends on the job.
 
 ## 8. Named permission profiles
+
+<!-- figure:ask-profiles -->
 
 **Problem.** One settings file serves two kinds of session: the agent alone at night, and me at the keyboard in the morning.
 
@@ -102,6 +118,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 
 ## 9. Transcripts I can query
 
+<!-- figure:ask-transcripts -->
+
 **Problem.** Session files on disk are undocumented, so any tool that reads them breaks when they change.
 
 **Evidence.** My health checks work by reverse-engineering the session files. Telling a night run from a day run meant reading the first prompt.
@@ -113,6 +131,8 @@ I wrote them as a customer. I don't know the roadmap, and some of these may alre
 **Not doing.** A hosted dashboard. A file on disk is enough, and it stays on the user's machine.
 
 ## 10. Skills without user permissions
+
+<!-- figure:ask-skills -->
 
 **Problem.** `--setting-sources` loads skills, permissions, and hooks together, so a fenced run can't have my skills without my looser permissions.
 

@@ -140,7 +140,7 @@ export default function EvidencePage() {
             </thead>
             <tbody>
               {nights.map((n) => (
-                <tr key={n.date}>
+                <tr key={n.date} id={`night-${n.date}`}>
                   <td>{n.date}</td>
                   <td className={n.status === 'ok' ? undefined : 'ev-warn'}>{statusWord(n.status)}{n.runs > 1 ? ` ×${n.runs}` : ''}</td>
                   <td>{usd(n.cost_usd)}{n.cost_is_estimate ? '*' : ''}</td>

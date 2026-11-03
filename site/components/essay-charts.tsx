@@ -3,11 +3,11 @@ import { SCORERS, SCORER_MEANING, type Evidence } from '@/lib/evidence';
 const CAP = 14;
 const md = (d: string) => `${Number(d.slice(5, 7))}/${Number(d.slice(8, 10))}`;
 
-function NightsChart({ ev }: { ev: Evidence }) {
+function NightsChart({ ev, num }: { ev: Evidence; num?: number }) {
   const nights = ev.nights.filter((n) => n.lane === 'night');
   return (
     <figure className="chart">
-      <figcaption>Cost of each night at API prices. Gold nights did not finish clean.</figcaption>
+      <figcaption>{num ? <span className="fig-num">Figure {num}. </span> : null}Cost of each night at API prices. Gold nights did not finish clean.</figcaption>
       <div className="chart-bars" role="img" aria-label={`${nights.length} nights, one bar each, cost in dollars`}>
         {nights.map((n) => (
           <div
@@ -25,7 +25,7 @@ function NightsChart({ ev }: { ev: Evidence }) {
   );
 }
 
-function InterventionsChart({ ev }: { ev: Evidence }) {
+function InterventionsChart({ ev, num }: { ev: Evidence; num?: number }) {
   const base = ev.totals.interventions.baseline_2026_09_18;
   const rows = [
     { date: '2026-09-18', v: base, base: true },
@@ -33,7 +33,7 @@ function InterventionsChart({ ev }: { ev: Evidence }) {
   ];
   return (
     <figure className="chart">
-      <figcaption>Things I did by hand the next morning. First bar is the baseline; the line is my target of one.</figcaption>
+      <figcaption>{num ? <span className="fig-num">Figure {num}. </span> : null}Things I did by hand the next morning. First bar is the baseline; the line is my target of one.</figcaption>
       <div className="chart-bars chart-iv" role="img" aria-label={`Interventions per morning: baseline ${base}, then ${rows.slice(1).map((r) => r.v).join(', ')}`}>
         <div className="chart-target" style={{ bottom: `${(1 / base) * 100}%` }} />
         {rows.map((r) => (
@@ -47,11 +47,11 @@ function InterventionsChart({ ev }: { ev: Evidence }) {
   );
 }
 
-function ChecksChart({ ev }: { ev: Evidence }) {
+function ChecksChart({ ev, num }: { ev: Evidence; num?: number }) {
   const t = ev.totals.trajectory_clean;
   return (
     <figure className="chart">
-      <figcaption>Seven checks run on every scored session, read from the transcripts, not the reports.</figcaption>
+      <figcaption>{num ? <span className="fig-num">Figure {num}. </span> : null}Seven checks run on every scored session, read from the transcripts, not the reports.</figcaption>
       <div className="checks">
         {SCORERS.map((s) => {
           const { clean, scored } = t[s];
@@ -68,9 +68,9 @@ function ChecksChart({ ev }: { ev: Evidence }) {
   );
 }
 
-export function EssayChart({ name, ev }: { name: string; ev: Evidence }) {
-  if (name === 'nights') return <NightsChart ev={ev} />;
-  if (name === 'interventions') return <InterventionsChart ev={ev} />;
-  if (name === 'checks') return <ChecksChart ev={ev} />;
+export function EssayChart({ name, ev, num }: { name: string; ev: Evidence; num?: number }) {
+  if (name === 'nights') return <NightsChart ev={ev} num={num} />;
+  if (name === 'interventions') return <InterventionsChart ev={ev} num={num} />;
+  if (name === 'checks') return <ChecksChart ev={ev} num={num} />;
   return null;
 }

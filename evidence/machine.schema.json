@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Unattended agent machine",
+  "description": "Parts of an unattended agent setup, the links between them, and each break pinned to a part or link. One file per setup.",
+  "type": "object",
+  "required": ["version", "parts", "links", "breaks"],
+  "properties": {
+    "version": { "const": 1 },
+    "through": { "type": "string", "format": "date", "description": "Last date the record covers." },
+    "about": { "type": "string" },
+    "parts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "owner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "label": { "type": "string" },
+          "detail": { "type": "string" },
+          "owner": {
+            "enum": ["hardware", "mine", "claude-code", "output", "person"],
+            "description": "Who builds the part: the machine itself, the operator, the agent product, a thing the run produces, or a person."
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "verb"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "verb": { "type": "string", "description": "Reads from → to, e.g. runner launches session." }
+        }
+      }
+    },
+    "breaks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["n", "title", "attribution", "at", "fix"],
+        "properties": {
+          "n": { "type": "integer" },
+          "title": { "type": "string" },
+          "attribution": {
+            "enum": ["machine", "agent", "shared", "design"],
+            "description": "machine: the setup around the agent failed. agent: the model's own behavior. shared: both had to fail. design: a rule working as intended that still cost something."
+          },
+          "at": {
+            "oneOf": [
+              { "type": "object", "required": ["part"], "properties": { "part": { "type": "string" } } },
+              { "type": "object", "required": ["link"], "properties": { "link": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 } } }
+            ]
+          },
+          "dates": { "type": "array", "items": { "type": "string", "format": "date" } },
+          "fix": { "enum": ["shipped", "open"] },
+          "fix_note": { "type": "string" },
+          "receipts": {
+            "type": "array",
+            "items": { "type": "object", "required": ["label", "href"], "properties": { "label": { "type": "string" }, "href": { "type": "string" } } }
+          }
+        }
+      }
+    },
+    "asks": {
+      "type": "array",
+      "description": "Product asks, each linked to the breaks it would have prevented. An empty list means the ask came from friction outside the breaks.",
+      "items": {
+        "type": "object",
+        "required": ["n", "id", "title", "breaks"],
+        "properties": {
+          "n": { "type": "integer" },
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "breaks": { "type": "array", "items": { "type": "integer" } }
+        }
+      }
+    }
+  }
+}

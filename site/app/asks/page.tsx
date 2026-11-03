@@ -3,11 +3,15 @@ import path from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { DescentPanel } from '@/components/descent-panel';
+import { AskFigure, AskGrid } from '@/components/figures';
 import { Shell } from '@/components/shell';
 import { AUTHOR_GITHUB, AUTHOR_LINKEDIN } from '@/lib/content';
+import { ASK_FIGS } from '@/lib/figures';
+import { getMachine } from '@/lib/machine';
 import { renderMarkdown } from '@/lib/render';
 
 const FILE = path.resolve(process.cwd(), '..', 'essays', 'asks.md');
+const FIGURE = /^<!-- figure:ask-([\w-]+) -->$/m;
 
 export const metadata: Metadata = {
   title: 'eleven Claude Code asks',
@@ -22,7 +26,10 @@ export default async function Asks() {
   const title = md.match(/^# (.+)$/m)?.[1] ?? 'Eleven Claude Code asks';
   const body = md.replace(/^# .+\n+/, '');
   const asks = [...body.matchAll(/^## (\d+)\. (.+)$/gm)].map((m) => ({ n: m[1], name: m[2], id: slug(`${m[1]}. ${m[2]}`) }));
-  const html = await renderMarkdown(body);
+  const machine = getMachine();
+  const parts = body.split(FIGURE);
+  const html = await Promise.all(parts.map((p, i) => (i % 2 ? Promise.resolve(p) : renderMarkdown(p))));
+  let num = 1;
 
   return (
     <Shell path="/asks">
@@ -38,7 +45,14 @@ export default async function Asks() {
             {asks.map((a) => <li key={a.id}><a href={`#${a.id}`}>{a.name}</a></li>)}
           </ol>
         </nav>
-        <article className="doc essay asks" dangerouslySetInnerHTML={{ __html: html }} />
+        <article className="doc essay asks">
+          {html.map((h, i) => {
+            if (i === 0) return <div key={i}><div dangerouslySetInnerHTML={{ __html: h }} /><AskGrid m={machine} /></div>;
+            if (!(i % 2)) return <div key={i} dangerouslySetInnerHTML={{ __html: h }} />;
+            const fig = ASK_FIGS.find((f) => f.id === h);
+            return fig ? <AskFigure key={i} fig={fig} num={++num} /> : null;
+          })}
+        </article>
         <aside className="author author-wide">
           <p>
             <b>Harrison Johnson</b> is a product manager in New York who runs his own projects with Claude Code day and
