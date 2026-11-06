@@ -5,6 +5,10 @@ site/.vercel
 site/next-env.d.ts
 site/tsconfig.tsbuildinfo
 
+# onboarding prototype
+onboarding-proto/node_modules
+onboarding-proto/dist
+
 # never publish
 .DS_Store
 **/.env
