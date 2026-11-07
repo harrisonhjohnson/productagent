@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'productagent.dev: Claude writes the code at night. You review it in the morning.';
+export const alt = 'productagent.dev: Wake up to work that’s already done.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -29,9 +29,9 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
           <div style={{ fontSize: 26, color: '#d85d34', letterSpacing: 8 }}>PRODUCTAGENT</div>
-          <div style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.1 }}>Claude writes the code at night. You review it in the morning.</div>
+          <div style={{ fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.1 }}>Wake up to work that’s already done.</div>
           <div style={{ fontSize: 28, color: '#18382f', maxWidth: 980, lineHeight: 1.35 }}>
-            Loops: one goal per loop, a fence the agent works inside, and a short report every morning. 33 nights on the record.
+            Loops runs Claude Code while you sleep, on the plan you already pay for. One goal, one budget, a four-line report by morning.
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22, color: '#6e776d', letterSpacing: 3 }}>
