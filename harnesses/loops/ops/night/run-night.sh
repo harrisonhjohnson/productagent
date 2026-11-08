@@ -57,7 +57,7 @@ alert() { # headline detail
     echo "Log:   $LOG"; echo "State: $STATE"; echo
     echo "_The morning meeting reads this first. Delete this file once acknowledged._"
   } >"$ALERT_FILE"
-  /usr/bin/osascript -e "display notification \"$1\" with title \"Ventures night run\" subtitle \"$TODAY\" sound name \"Basso\"" >/dev/null 2>&1
+  /usr/bin/osascript -e "display notification \"$1\" with title \"Loops night run\" subtitle \"$TODAY\" sound name \"Basso\"" >/dev/null 2>&1
 }
 
 run_with_timeout() { # secs outfile cmd...

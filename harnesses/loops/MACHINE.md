@@ -119,8 +119,8 @@ both scorers regardless of the dial, for comparison.
 
 Two user LaunchAgents, both `RunAtLoad`:
 
-- `com.ventures.capture`: runs `ops/capture/poller.sh` with `StartInterval 600`.
-- `com.ventures.capture-watchdog`: runs `ops/capture/watchdog-absence.sh` with
+- `com.loops.capture`: runs `ops/capture/poller.sh` with `StartInterval 600`.
+- `com.loops.capture-watchdog`: runs `ops/capture/watchdog-absence.sh` with
   `StartInterval 3600`.
 
 The wrapper itself has no schedule. Opportunistic capture replaced fixed-time firing

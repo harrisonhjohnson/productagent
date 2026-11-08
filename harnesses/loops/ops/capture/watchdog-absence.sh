@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ventures absence watchdog — hourly (com.ventures.capture-watchdog, StartInterval 3600,
+# Loops absence watchdog — hourly (com.loops.capture-watchdog, StartInterval 3600,
 # RunAtLoad true). Law 4: the alarm lives outside the thing it watches.
 #
 # Charter v2 (variable presence): alarms are OPPORTUNITY-BASED, never calendar-based.
@@ -29,7 +29,7 @@ alert() { # stamp-key alert-file title body...
     echo "_Hourly opportunity-based watchdog (capture/watchdog-absence.sh). Delete once acknowledged._"
   } >"$alert_file"
   echo "$TODAY" >"$stamp"
-  /usr/bin/osascript -e "display notification \"$title\" with title \"Ventures capture\" subtitle \"$TODAY\" sound name \"Basso\"" >/dev/null 2>&1
+  /usr/bin/osascript -e "display notification \"$title\" with title \"Loops checker\" subtitle \"$TODAY\" sound name \"Basso\"" >/dev/null 2>&1
   return 0
 }
 
@@ -46,7 +46,7 @@ if pmset -g batt | grep -q "AC Power" && [ "$(uptime_secs)" -gt 1800 ]; then
   if [ "$(cat "$CAP/last-ac" 2>/dev/null)" != "$TODAY" ] && [ ! -f "$CAP/PAUSED" ]; then
     alert poller "$CAP/ALERT.md" "POLLER DEAD" \
       "The machine is on AC power right now, but the 10-min poller has not stamped last-ac today." \
-      "Either launchd job com.ventures.capture is unloaded/broken, or poller.sh is failing before the stamp." \
+      "Either launchd job com.loops.capture is unloaded/broken, or poller.sh is failing before the stamp." \
       "Check: launchctl list | grep ventures.capture" && rc=1
   fi
 fi

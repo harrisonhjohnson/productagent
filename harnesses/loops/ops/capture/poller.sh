@@ -1,6 +1,6 @@
 #!/bin/bash
-# Ventures capture poller — fires every 10 min while the machine is awake
-# (com.ventures.capture, StartInterval 600, RunAtLoad true). Fixed-time firing was
+# Loops capture poller — fires every 10 min while the machine is awake
+# (com.loops.capture, StartInterval 600, RunAtLoad true). Fixed-time firing was
 # replaced by opportunistic compute capture — a lane runs at the first
 # window, any hour, until terminal for the day. The wrappers stay the sole authority on
 # gates/budget/state/git; this script decides only WHEN to invoke them.

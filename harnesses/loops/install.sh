@@ -23,7 +23,7 @@ for a in "$@"; do
     --no-arm) ARM=0 ;;
     --no-init) INIT=0 ;;
     --off)
-      for l in com.ventures.capture com.ventures.capture-watchdog; do
+      for l in com.loops.capture com.loops.capture-watchdog; do
         launchctl bootout "gui/$(id -u)/$l" 2>/dev/null || true
       done
       echo "Loops: schedule unloaded. Files in $LOOPS_HOME untouched."; exit 0 ;;
@@ -114,12 +114,12 @@ write_plist() { # label script interval
 PL
 }
 mkdir -p "$LAUNCH_AGENTS" "$LOOPS_HOME/00-ops/capture/logs"
-write_plist com.ventures.capture          poller.sh           600
-write_plist com.ventures.capture-watchdog watchdog-absence.sh 3600
-note "wrote  ~/Library/LaunchAgents/com.ventures.capture{,-watchdog}.plist"
+write_plist com.loops.capture          poller.sh           600
+write_plist com.loops.capture-watchdog watchdog-absence.sh 3600
+note "wrote  ~/Library/LaunchAgents/com.loops.capture{,-watchdog}.plist"
 
 if [ "$ARM" = 1 ]; then
-  for l in com.ventures.capture com.ventures.capture-watchdog; do
+  for l in com.loops.capture com.loops.capture-watchdog; do
     launchctl bootout "gui/$(id -u)/$l" 2>/dev/null || true
     launchctl bootstrap "gui/$(id -u)" "$LAUNCH_AGENTS/$l.plist"
   done

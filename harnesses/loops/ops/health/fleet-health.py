@@ -98,8 +98,8 @@ def git_mutation(cmd):
 
 # launchd jobs the fleet is supposed to have loaded
 EXPECTED_JOBS = [
-    ("com.ventures.capture", "capture poller (night+day lanes)"),
-    ("com.ventures.capture-watchdog", "absence watchdog"),
+    ("com.loops.capture", "capture poller (night+day lanes)"),
+    ("com.loops.capture-watchdog", "absence watchdog"),
     # add any other unattended lanes you run, e.g. a Telegram bridge:
     # ("com.example.telegrambot", "Telegram bot"),
 ]
