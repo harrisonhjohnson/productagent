@@ -22,7 +22,7 @@ import os
 from pathlib import Path
 
 HOME = Path.home()
-VENT = Path(os.environ.get("LOOPS_HOME", HOME / "ventures"))
+VENT = Path(os.environ.get("LOOPS_HOME", HOME / "loops"))
 OPS = VENT / "00-ops"
 TRANSCRIPTS = HOME / ".claude/projects"
 # Claude Code keys transcripts by the session cwd with "/" -> "-"
@@ -175,7 +175,7 @@ def check_launchd():
     return results
 
 
-# ---- ventures lanes -----------------------------------------------------
+# ---- lanes -----------------------------------------------------
 
 def lane_state(lane, state_path, max_age_days, terminal_ok):
     """Grade a lane's run-state.json for freshness and outcome."""
@@ -232,7 +232,7 @@ def check_ventures():
 
     # budgets vs charter dials (night); day caps live in its wrapper
     capn = float(dial("cost_cap_per_night_usd", 15))
-    capw = float(dial("cost_cap_per_week_usd", 50))
+    capw = float(dial("cost_cap_rolling_7day_usd", None) or dial("cost_cap_per_week_usd", 45))
     capm = float(dial("monthly_cost_cap_usd", 150))
     rows, wk, mo = ledger_sums(OPS / "night/cost-ledger.jsonl")
     info["night_budget"] = (wk, capw, mo, capm)
@@ -471,12 +471,13 @@ def check_loop_state(hours):
 # ---- git ground truth ---------------------------------------------------
 
 def check_git(hours):
-    """Night branches created in the window across nested venture repos —
+    """Night branches created in the window across the product repos inside the folder —
     the authoritative record of what a night actually changed."""
     facts = []
     cutoff = dt.datetime.now() - dt.timedelta(hours=hours)
-    repos = [d for d in sorted(VENT.glob("0*-*/")) if (d / ".git").exists()]
-    repos += [d for d in sorted(VENT.glob("0*-*/site/")) if (d / ".git").exists()]
+    skip = {"00-ops", "pm", "docs", "reports"}
+    repos = [d for d in sorted(VENT.glob("*/")) + sorted(VENT.glob("*/site/"))
+             if (d / ".git").exists() and d.relative_to(VENT).parts[0] not in skip]
     for repo in repos:
         try:
             out = subprocess.run(
@@ -526,7 +527,7 @@ def render(jobs, vinfo, sessions, gitfacts, hours):
 
     ns, ds = vinfo.get("night_state"), vinfo.get("day_state")
     wk, capw, mo, capm = vinfo.get("night_budget", (0, 0, 0, 0))
-    L.append("## Ventures lanes")
+    L.append("## Lanes")
     if ns:
         L.append(f"- **night**: {ns['date']} status=`{ns['status']}` rc={ns.get('rc')} "
                  f"cost=${ns.get('cost_usd', 0):.2f} ({ns.get('note', '')})")

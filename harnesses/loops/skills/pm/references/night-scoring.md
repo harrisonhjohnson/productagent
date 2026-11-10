@@ -50,7 +50,7 @@ signal, so a malformed section silently breaks the scheduler.
 The autoevals `LLMClassifier` shape: rubric prompt + `choice_scores`
 (A=1 · B=0.6 · C=0.3 · D=0 · E=skip), chain-of-thought, structured output, pinned cheap
 model (`claude-sonnet-5`, `--tools ""`, no MCP). Input = report + envelope + **the night
-session's own write set, read from its transcripts** (first prompt "ventures night run"),
+session's own write set, read from its transcripts** (first prompt "unattended Loops run", or "ventures night run" on older installs),
 with the night commit's diff limited to those paths, plus same-day commits on nested
 `night/<date>` branches. Output appended to `scores.jsonl` with `unsupported_claims` and
 `unmentioned_changes`. First run: A, a few cents, ~16 s.

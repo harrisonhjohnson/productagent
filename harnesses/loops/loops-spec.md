@@ -1,5 +1,11 @@
 # Loops — product spec
 
+> **Historical.** This is the original spec, written while Loops ran on the author's own
+> small-ventures folder, so §§3–7 mention a portfolio registry, briefs and a finance
+> review. Those were that setup, not part of Loops. The current terms are in
+> [`pm/CHARTER.md`](pm/CHARTER.md) and the current loop format is in
+> [`pm/LOOPS.md`](pm/LOOPS.md).
+
 **Status:** RATIFIED — v1 implemented and probe-verified the same session. Divergence
 from spec, for the record: runnable-loop selection went wrapper-side in v1 (the §8 v2
 idea, nearly free since the wrapper builds the prompt); per-loop budget is enforced as an

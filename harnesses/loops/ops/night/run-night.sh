@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ventures night run — invoked by the capture poller (00-ops/capture/poller.sh) at the
+# Loops night run — invoked by the capture poller (00-ops/capture/poller.sh) at the
 # first awake+AC window of the day, any hour, 7 days/week (no fixed schedule); the
 # same-day marker makes repeat invocations a no-op. Built from three nights of hand-run
 # wrapper duty. Rules learned the hard way, enforced here:
@@ -10,7 +10,7 @@
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-VENT="${LOOPS_HOME:-$HOME/ventures}"
+VENT="${LOOPS_HOME:-$HOME/loops}"
 OPS="$VENT/00-ops/night"
 # NIGHT_*_OVERRIDE vars exist for forced-test probes only (same pattern as CAPTURE_*)
 STATE="${NIGHT_STATE_OVERRIDE:-$OPS/run-state.json}"
@@ -118,7 +118,7 @@ for m in re.finditer(r"^## (L-\d+)[^\n]*\n(.*?)(?=^## |\Z)",text,re.M|re.S):
     lid,body=m.group(1),m.group(2)
     def field(k,d=""):
         f=re.search(r"^- %s: *(.+)$"%k,body,re.M); return f.group(1).strip() if f else d
-    if not field("status").startswith("active"):
+    if field("status").split(" ")[0] not in ("trial","active"):  # spec v1.1: both run
         skips.append(f"{lid} status={field('status')[:30] or 'missing'}"); continue
     n=cadence_n.get(field("cadence"))
     try:
@@ -238,7 +238,7 @@ if ! grep -q READY "$CANARY"; then
 fi
 rm -f "$CANARY"
 
-# ---- git: umbrella stays on main; nested venture repos get night branches
+# ---- git: this folder stays on main; each product repo inside it gets a night branch
 snapshot_repo() { # dir
   local d="$1"
   [ -d "$d/.git" ] || return 0
@@ -254,17 +254,15 @@ commit_repo() { # dir label
   [ -d "$d/.git" ] || return 0
   if [ -n "$(git -C "$d" status --porcelain)" ]; then
     git -C "$d" add -A
-    git -C "$d" -c user.name="ventures-night" -c user.email="night@local" \
+    git -C "$d" -c user.name="loops-night" -c user.email="night@local" \
       commit -q -m "night run $TODAY${2:+: $2}"
     note "committed in $d: $(git -C "$d" log --oneline -1)"
   fi
 }
 NESTED=""
-for d in "$VENT"/0*-*/; do
-  [ -d "$d/.git" ] && { snapshot_repo "$d"; NESTED="$NESTED $d"; }
-done
-# ventures whose site is its own nested repo (deploys from a push you make by hand)
-for d in "$VENT"/0*-*/site/; do
+# any folder with its own .git, one level down (plus a nested site/ repo inside one)
+for d in "$VENT"/*/ "$VENT"/*/site/; do
+  case "$d" in "$VENT"/00-ops/*|"$VENT"/pm/*|"$VENT"/docs/*|"$VENT"/reports/*) continue ;; esac
   [ -d "$d/.git" ] && { snapshot_repo "$d"; NESTED="$NESTED $d"; }
 done
 

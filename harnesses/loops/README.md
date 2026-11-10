@@ -55,7 +55,7 @@ it came from:
 - Did: added the county filter and checked the page renders in a headless browser.
 - Decided: left the mobile layout alone; it is a separate backlog item.
 - Need from you: merge branch night/2026-09-14 if the screenshot looks right.
-- Where to look: pm/nights/loops/L-03.md, 009-site/app/permits.tsx
+- Where to look: pm/nights/loops/L-03.md, app/src/permits.tsx
 ```
 
 If the four lines are missing, the run is not done. That rule is in the loop's

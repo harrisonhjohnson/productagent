@@ -1,14 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Skill(launch-business)",
-      "Skill(brand)",
-      "Skill(growth)",
-      "Skill(finance)",
       "Skill(pm)",
       "Agent(*)",
-      "Read(//Users/YOU/ventures/**)",
-      "Edit(//Users/YOU/ventures/**)",
+      "Read(//Users/YOU/loops/**)",
+      "Edit(//Users/YOU/loops/**)",
       "Read(//Users/YOU/.claude/skills/**)",
       "WebSearch",
       "WebFetch",
@@ -95,22 +91,17 @@
       "Bash(brew:*)",
       "Bash(pip install:*)",
       "Bash(stripe:*)",
-      "Edit(//Users/YOU/ventures/00-ops/**)",
-      "Edit(//Users/YOU/ventures/pm/CHARTER.md)",
-      "Edit(//Users/YOU/ventures/pm/ORDERS.md)",
-      "Edit(//Users/YOU/ventures/pm/LOOPS.md)",
-      "Edit(//Users/YOU/ventures/.claude/settings.json)",
-      "Edit(//Users/YOU/ventures/<NNN>-venture-with-its-own-deploy/**)",
+      "Edit(//Users/YOU/loops/00-ops/**)",
+      "Edit(//Users/YOU/loops/pm/CHARTER.md)",
+      "Edit(//Users/YOU/loops/pm/ORDERS.md)",
+      "Edit(//Users/YOU/loops/pm/LOOPS.md)",
+      "Edit(//Users/YOU/loops/.claude/settings.json)",
       "Edit(//Users/YOU/.claude/**)",
       "Edit(//Users/YOU/.claude.json)",
       "Edit(//Users/YOU/Library/LaunchAgents/**)",
       "Read(//Users/YOU/.ssh/**)",
       "Read(//Users/YOU/.aws/**)",
-      "Read(//Users/YOU/**/.env)",
-      "mcp__<email-server>__send_message",
-      "mcp__<email-server>__reply",
-      "mcp__<email-server>__forward",
-      "mcp__<any-broker-or-deploy-server>__authenticate"
+      "Read(//Users/YOU/**/.env)"
     ]
   },
   "sandbox": {
@@ -120,12 +111,13 @@
     "allowUnsandboxedCommands": false,
     "filesystem": {
       "denyWrite": [
-        "/Users/YOU/ventures/00-ops",
-        "/Users/YOU/ventures/.claude",
-        "/Users/YOU/ventures/pm/CHARTER.md",
-        "/Users/YOU/ventures/pm/ORDERS.md",
-        "/Users/YOU/ventures/.git",
-        "/Users/YOU/ventures/**/.git"
+        "/Users/YOU/loops/00-ops",
+        "/Users/YOU/loops/.claude",
+        "/Users/YOU/loops/pm/CHARTER.md",
+        "/Users/YOU/loops/pm/ORDERS.md",
+        "/Users/YOU/loops/pm/LOOPS.md",
+        "/Users/YOU/loops/.git",
+        "/Users/YOU/loops/**/.git"
       ],
       "denyRead": [
         "~/.ssh",

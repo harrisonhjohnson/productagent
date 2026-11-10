@@ -36,7 +36,7 @@ plan files as seeds; the planner does not read karma.
 """
 import argparse, datetime as dt, glob, json, os, re, sys
 
-LOOPS_HOME = os.environ.get("LOOPS_HOME", os.path.expanduser("~/ventures"))
+LOOPS_HOME = os.environ.get("LOOPS_HOME", os.path.expanduser("~/loops"))
 CORPUS = os.environ.get("PLAN_CORPUS", os.path.join(LOOPS_HOME, "009-grid"))
 NIGHTS = os.path.join(LOOPS_HOME, "pm", "nights")
 DECISIONS = os.path.join(LOOPS_HOME, "pm", "DECISIONS.md")

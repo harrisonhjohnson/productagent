@@ -82,7 +82,7 @@ keep_or_copy "$SRC/pm/templates/ORDERS.md"  "$LOOPS_HOME/pm/ORDERS.md"
 
 # the fence: Claude Code permission paths are absolute, so fill in this machine's paths
 if [ ! -e "$LOOPS_HOME/.claude/settings.json" ]; then
-  sed -e "s|/Users/YOU/ventures|$LOOPS_HOME|g" -e "s|/Users/YOU|$HOME|g" \
+  sed -e "s|/Users/YOU/loops|$LOOPS_HOME|g" -e "s|/Users/YOU|$HOME|g" \
     "$SRC/settings.json" >"$LOOPS_HOME/.claude/settings.json"
   note "wrote  .claude/settings.json (the fence, with your paths filled in)"
 else

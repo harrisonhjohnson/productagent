@@ -14,7 +14,7 @@
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-VENT="${LOOPS_HOME:-$HOME/ventures}"
+VENT="${LOOPS_HOME:-$HOME/loops}"
 CAP="${CAPTURE_DIR:-$VENT/00-ops/capture}"
 TODAY="$(date +%F)"
 mkdir -p "$CAP"
@@ -47,7 +47,7 @@ if pmset -g batt | grep -q "AC Power" && [ "$(uptime_secs)" -gt 1800 ]; then
     alert poller "$CAP/ALERT.md" "POLLER DEAD" \
       "The machine is on AC power right now, but the 10-min poller has not stamped last-ac today." \
       "Either launchd job com.loops.capture is unloaded/broken, or poller.sh is failing before the stamp." \
-      "Check: launchctl list | grep ventures.capture" && rc=1
+      "Check: launchctl list | grep loops.capture" && rc=1
   fi
 fi
 

@@ -7,7 +7,7 @@
 # Appends {"date","judge":{choice,score,...}} to 00-ops/health/scores.jsonl.
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
-VENT="${LOOPS_HOME:-$HOME/ventures}"; H="$VENT/00-ops/health"
+VENT="${LOOPS_HOME:-$HOME/loops}"; H="$VENT/00-ops/health"
 CLAUDE_BIN="${CLAUDE_BIN:-$(command -v claude || echo "$HOME/.local/bin/claude")}"
 DATE="${1:-$(date +%F)}"
 MODEL="${JUDGE_MODEL:-claude-sonnet-5}"     # pinned on purpose: never inherit /model
@@ -22,7 +22,7 @@ cd "$VENT" || exit 1
 WRITESET="$(python3 - "$DATE" <<'PY'
 import json,sys,glob,os,datetime
 date=sys.argv[1]; home=os.path.expanduser("~")
-vent=os.environ.get("LOOPS_HOME",f"{home}/ventures")
+vent=os.environ.get("LOOPS_HOME",f"{home}/loops")
 tdir=f"{home}/.claude/projects/-"+vent.strip("/").replace("/","-")
 day=datetime.date.fromisoformat(date)
 writes=set()
@@ -39,7 +39,7 @@ for f in glob.glob(f"{tdir}/*.jsonl"):
             if not night and r.get("type")=="user":
                 c=(r.get("message") or {}).get("content")
                 t=c if isinstance(c,str) else " ".join(b.get("text","") for b in (c or []) if isinstance(b,dict))
-                if "ventures night run" in t: night=True
+                if "ventures night run" in t or "unattended Loops run" in t: night=True
             ts=r.get("timestamp","")
             m_=r.get("message")
             if not isinstance(m_,dict) or not isinstance(m_.get("content"),list): continue
@@ -55,11 +55,11 @@ PY
 )"
 
 evidence() {
-  local shas; shas="$(git log --author=ventures-night --since="$DATE 00:00" --until="$DATE 23:59:59" --format=%H)"
+  local shas; shas="$(git log --author=ventures-night --author=loops-night --since="$DATE 00:00" --until="$DATE 23:59:59" --format=%H)"
   echo "## Files the night session(s) actually wrote on $DATE (from transcripts — authoritative)"
   echo "${WRITESET:-(none found)}"
   echo
-  echo "## Umbrella night commit(s) $DATE: ${shas:-none}"
+  echo "## Loops folder night commit(s) $DATE: ${shas:-none}"
   echo "(The wrapper commits the whole dirty tree; paths NOT in the write set above were"
   echo "swept in from earlier human/day sessions — do not hold the report to them.)"
   for s in $shas; do
@@ -69,7 +69,8 @@ evidence() {
       printf '%s\n' "$WRITESET" | xargs git show --format= -p "$s" --
     fi
   done
-  for d in "$VENT"/0*-*/ "$VENT"/0*-*/site/; do
+  for d in "$VENT"/*/ "$VENT"/*/site/; do
+    case "$d" in "$VENT"/00-ops/*|"$VENT"/pm/*|"$VENT"/docs/*|"$VENT"/reports/*) continue ;; esac
     [ -d "$d/.git" ] || continue
     git -C "$d" show-ref --quiet "refs/heads/night/$DATE" || continue
     local nshas; nshas="$(git -C "$d" log "night/$DATE" --since="$DATE 00:00" --until="$DATE 23:59:59" --format=%H)"

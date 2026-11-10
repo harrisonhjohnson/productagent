@@ -2,11 +2,10 @@
 
 
 _This is the engineering page. For what a loop is and how to use one, start at [README.md](README.md)._
-A captain's night order book, for a portfolio of small ventures run by one person and
-one coding agent: judgment written down at dusk, executed by the watch overnight, the
-captain woken only under named conditions.
+A captain's night order book for product work: judgment written down at dusk, executed
+by the watch overnight, the captain woken only under named conditions.
 
-This is the machine that lets Claude Code work unattended on `~/ventures` while its
+This is the machine that lets Claude Code work unattended on `~/loops` while its
 operator sleeps, travels, or is simply away from the laptop — without ever being able to
 spend money, push code, widen its own permissions, or rewrite its own orders. It was built
 by the operator with Claude over about a month of nightly runs; every rule below was
@@ -29,12 +28,12 @@ promoted from something that went wrong first.
 
 | Piece | Files | What it does |
 |---|---|---|
-| **The fence** | `settings.json` | Two layers. Claude Code project permissions: an explicit allowlist scoped to `~/ventures`, read-only git verbs, no shells, no `rm`, no `push`, no MCP auth; deny rules keep the run out of its own charter, orders, loops, ops tooling, and every dotfile. Under that, Claude Code's OS sandbox (`sandbox` block) around every shell command and its children: writes only inside the folder and never to ops tooling, charter, orders or any `.git`; no reads of credential files; network only to `allowedDomains`; no unsandboxed retry; refuse to start if the sandbox can't. See [the fence](#the-fence). |
+| **The fence** | `settings.json` | Two layers. Claude Code project permissions: an explicit allowlist scoped to `~/loops`, read-only git verbs, no shells, no `rm`, no `push`, no MCP auth; deny rules keep the run out of its own charter, orders, loops, ops tooling, and every dotfile. Under that, Claude Code's OS sandbox (`sandbox` block) around every shell command and its children: writes only inside the folder and never to ops tooling, charter, orders or any `.git`; no reads of credential files; network only to `allowedDomains`; no unsandboxed retry; refuse to start if the sandbox can't. See [the fence](#the-fence). |
 | **The captain's book** | `pm/CHARTER.md`, `pm/LOOPS.md` (plus `ORDERS.md` and `LOG.md`, not shipped) | Human-edited only. The charter holds the dials (model, effort, budget caps, WIP limit) and the blast radius. Loops are standing orders that renew themselves nightly under a budget and a TTL. |
 | **The night runner** | `ops/night/run-night.sh`, `night-prompt.md`, `night-mcp.json` | The wrapper: reads dials from the charter, skips if nothing is runnable, preflights the cost ledger, runs an auth canary, snapshots nested repos onto `night/<date>` branches, invokes `claude -p` with zero MCP servers and a hard timeout, persists the envelope, commits the tree, appends the ledger row, writes an alert file on anything but `ok`. |
 | **Capture and watchdog** | `ops/capture/poller.sh`, `watchdog-absence.sh` | Fires every 10 minutes while the machine is awake; runs a lane at the first window that fits its physics (night needs AC power; day accepts lid-open battery ≥ 50%). The watchdog alarms only when a window existed and nothing ran, never on calendar silence. |
 | **Health desk** | `ops/health/fleet-health.py`, `judge-night.sh`, `judge-night.md` | Morning ground truth. Deterministic trajectory scorers over the session transcripts the run cannot edit (step budget, repeat loops, denied-then-retried, protected-path writes, git mutations), plus an LLM judge that grades the night's report against the diff of what it actually wrote. |
-| **The disciplines** | `skills/{pm,brand,growth,finance,launch-business}` | Five Claude Code skills. `pm` is the chief of staff and runs the standup; the other four each own one thing (voice and design, the honest signal, the economic verdict, the launch pipeline) and refuse the others'. |
+| **The morning** | `skills/pm` | A Claude Code skill for the person-present half: reads the night, runs the health check and the judge, walks the pending decisions, and writes tonight's orders or a new loop. |
 
 ## How a night runs
 
@@ -47,11 +46,11 @@ promoted from something that went wrong first.
    after two consecutive over-cap nights.
 4. An auth canary (`Reply with exactly: READY`) proves the CLI is logged in before any
    real spend.
-5. Every nested venture repo gets a pre-night snapshot commit and a `night/<date>` branch.
+5. Every product repo inside the folder (any subfolder with its own `.git`) gets a pre-night snapshot commit and a `night/<date>` branch.
 6. `claude -p` runs the night prompt with `--strict-mcp-config` against an empty MCP
    config, project-only settings, and a hard timeout. One retry on a non-timeout failure.
 7. The result envelope is persisted to `pm/nights/<date>-envelope.md` before anything
-   else can fail. The tree is committed as `ventures-night`. A ledger row is appended.
+   else can fail. The tree is committed as `loops-night`. A ledger row is appended.
 8. Anything but `ok` writes `ALERT.md` and fires a macOS notification. The morning
    standup reads the alert, then the health desk, then the report, then the diff.
 
@@ -130,7 +129,7 @@ after fixed times kept landing on a closed laptop.
 
 `install.sh` in this folder is what `curl -fsSL https://productagent.dev/install.sh | bash`
 runs. It lays the folder out as `$LOOPS_HOME/{.claude/settings.json, 00-ops/{night,capture,health}, pm/}`
-(default `~/loops`), fills `/Users/YOU` and the ventures path into the fence, copies the
+(default `~/loops`), fills `/Users/YOU` and the Loops path into the fence, copies the
 templates in `pm/templates/` as an empty `LOOPS.md` and `ORDERS.md`, initialises a git
 repo for the runner to commit into, writes and loads the two LaunchAgents below with
 `LOOPS_HOME` in their environment, and, when a terminal is present, hands off to
@@ -140,7 +139,7 @@ raises `cost_cap_per_night_usd` if the per-run budget exceeds it, sets
 `projects[<folder>].hasTrustDialogAccepted` in `~/.claude.json` for Claude Code, runs the
 runner with `NIGHT_PROBE=1`, and reports the probe's note. Without a terminal it prints the
 steps instead. Every script reads `LOOPS_HOME` and falls back to
-`~/ventures`. Re-running it refreshes the machine and never overwrites the charter, loops,
+`~/loops`. Re-running it refreshes the machine and never overwrites the charter, loops,
 orders or fence you have edited.
 
 By hand, the same steps are:

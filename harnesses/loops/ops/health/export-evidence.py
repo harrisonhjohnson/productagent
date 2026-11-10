@@ -22,7 +22,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 HOME = Path.home()
-VENT = Path(os.environ.get("LOOPS_HOME", HOME / "ventures"))
+VENT = Path(os.environ.get("LOOPS_HOME", HOME / "loops"))
 OPS = VENT / "00-ops"
 NIGHTS = VENT / "pm/nights"
 DEFAULT_OUT = Path("evidence.json")

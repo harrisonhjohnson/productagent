@@ -12,7 +12,7 @@
 set -u
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-VENT="${LOOPS_HOME:-$HOME/ventures}"
+VENT="${LOOPS_HOME:-$HOME/loops}"
 CAP="${CAPTURE_DIR:-$VENT/00-ops/capture}"
 NIGHT_WRAPPER="${CAPTURE_NIGHT_WRAPPER:-$VENT/00-ops/night/run-night.sh}"
 NIGHT_STATE="${CAPTURE_NIGHT_STATE:-$VENT/00-ops/night/run-state.json}"

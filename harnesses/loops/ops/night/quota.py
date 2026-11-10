@@ -23,7 +23,7 @@ exist. It ships blank. Nothing here invents a number for you.
 """
 import argparse, datetime as dt, json, os, statistics, sys
 
-LOOPS_HOME = os.environ.get("LOOPS_HOME", os.path.expanduser("~/ventures"))
+LOOPS_HOME = os.environ.get("LOOPS_HOME", os.path.expanduser("~/loops"))
 OPS = os.path.join(LOOPS_HOME, "00-ops", "night")
 QUOTA_LEDGER = os.path.join(OPS, "quota-ledger.jsonl")
 COST_LEDGER = os.path.join(OPS, "cost-ledger.jsonl")

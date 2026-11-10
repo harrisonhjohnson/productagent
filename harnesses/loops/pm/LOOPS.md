@@ -1,91 +1,77 @@
-# Loops — standing orders that renew themselves
+# Loops
 
-The operator edits this file only — the night fence denies it, same as ORDERS.md and
-CHARTER.md. Ratified at a standup per the Loops spec (`pm/loops-spec.md`). A loop here is
-a standing order: the wrapper decides each night which loops are runnable (cadence,
-budgets, no-progress auto-park — all deterministic, wrapper-side) and names them in the
-prompt; the session runs one bounded iteration per runnable loop, after explicit Tonight
-orders, within `night_orders_per_night` total.
+You edit this file. Runs never can; the fence denies it. Each loop is one section: a goal,
+a cadence, a model, a budget, a review date, and the rails around it.
 
-Loop state is machine-owned at `pm/nights/loops/<id>.md` — append-only dated sections,
-never rewritten. Each iteration must re-verify the previous iteration's key claim before
-extending it, and ends its section with `next:` and `progress: yes|no` lines.
-Two consecutive `progress: no` iterations make a loop non-runnable until a standup
-revives it. Every loop dies at its `review_by` unless re-ratified — no immortal loops.
+The runner reads this file each night and decides which loops may run (status, cadence,
+budgets, parking). The agent runs one bounded step per runnable loop, after any orders in
+`pm/ORDERS.md`, within `night_orders_per_night`.
 
-To suspend all loops for a night without editing this file: put `loops: off` in the
-`## Tonight` section of ORDERS.md.
+Each run appends a dated section to `pm/nights/loops/<id>.md`. It re-checks the last
+run's main claim before building on it, and ends with `next:`, `progress: yes|no`, and
+the four lines (Trying to, Did, Decided, Need from you).
 
-Recognized `cadence` values: `nightly`, `every-2nd-night`, `every-3rd-night`, `weekly`. A loop whose
-`budget_per_iteration_usd` exceeds `cost_cap_per_night_usd`, or whose `review_by` is
-missing or past, is skipped with the reason logged.
+- `status`: `draft` · `trial` · `active` · `parked` · `done`. Only `trial` and `active` run.
+- `cadence`: `nightly` · `every-2nd-night` · `every-3rd-night` · `weekly`.
+- Runs allowed = `budget_loop_total_usd` ÷ `budget_per_iteration_usd`.
+- A loop whose per-run budget is above `cost_cap_per_night_usd`, or whose `review_by` is
+  missing or past, is skipped and the reason is logged.
 
-## L-02 — Portfolio night-watch
-- status: active
-- ratified: <date> (the probe loop — cheapest, lowest risk; start here)
-- scope: read-only verification of portfolio state. Check registry rows against reality
-  (status column vs BRIEFs/repos/working tree), whether ORDERS.md hang-dry and blocked
-  items are still true, night-branch hygiene (list unmerged `night/*` branches per nested
-  repo), and any ALERT files present. Writes ONLY: its state file, the night report, and
-  `reports/**`. No registry writes, no BRIEF writes, no fixes — findings are observations.
-- iteration: one full pass of the checks above, evidence-cited (file paths / line refs /
-  git output), sized to a single cheap session.
-- cadence: every-3rd-night
-- budget_per_iteration_usd: 2
-- budget_loop_total_usd: 20
-- stop: review_by, or a standup marks it done
-- review_by: <next charter revisit>
-- definition_of_done_per_iteration: dated section appended to `pm/nights/loops/L-02.md`
-  with a verdict per check and evidence for each; discrepancies surfaced in the night
-  report under Observations; `next:` and `progress:` lines present.
-- out_of_scope: fixing anything found; writing to REGISTRY.md, any BRIEF, or any venture
-  directory; re-litigating finance verdicts; anything outside `~/ventures`.
-- if_blocked: record the denial verbatim in the state section and the report, mark
-  `progress: no` only if the whole pass was impossible, continue remaining checks.
+The three loops below are examples for a product team. Change the repo paths, goals and
+dates before setting any of them to `trial`.
 
-## L-01 — <build loop template: one backlog item per night on a venture site>
-- status: parked — activate after finance prices it; first iteration runs as a supervised
-  probe per the charter
-- ratified: <date>
-- scope: one item per night from `pm/nights/loops/L-01-backlog.md`, top unchecked first,
-  implemented in `<NNN>-venture/site/` on branch `night/<date>`. Verify with whatever the
-  fence allows (`node --check`, a build, a headless browser only if one exists — probe
-  clause). Writes ONLY: `<NNN>-venture/site/**` on the night branch, its state file, the
-  night report. Never push, never deploy, never touch `main`, never add a dependency.
-- iteration: one backlog item, start to finish, or a plainly reported stop.
+## L-01 — Ship one backlog fix a night
+- status: draft
+- goal: Close one small item from the product backlog each run, checked before it is reported.
 - cadence: every-2nd-night
+- model: claude-sonnet-5
 - budget_per_iteration_usd: 6
 - budget_loop_total_usd: 45
-- stop: backlog empty, review_by, or a standup marks it done
-- review_by: <next charter revisit>
-- definition_of_done_per_iteration: dated section in `pm/nights/loops/L-01.md` naming the
-  item, files touched, the verification run, and before/after screenshots if a browser was
-  available; the backlog item ticked; `next:` names the following item; `progress: yes|no`.
-- out_of_scope: anything not in the backlog; copy changes; analytics changes; any push or
-  deploy.
-- if_blocked: record it, leave the branch as-is, `progress: no`; do not try a second item.
-- hang-dry: the operator reviews `night/<date>` in the browser each morning, merges to
-  `main`, pushes; the host deploys.
+- review_by: <a date about four weeks out>
+- scope: one item per run from `pm/backlog.md`, top unchecked first, in `app/` on the
+  `night/<date>` branch. Check it with the project's own build and tests. Writes only the
+  repo, its state file, and the night report.
+- iteration: one backlog item, start to finish, or a plainly reported stop.
+- definition_of_done_per_iteration: the change builds and its tests pass; the state file
+  names the item, the files touched and the command that checked it; the item is ticked
+  in the report (not in `pm/backlog.md`, which you tick when you merge); `next:` names
+  the following item.
+- out_of_scope: anything not on the backlog; copy that ships; new dependencies; analytics.
+- if_blocked: record it, leave the branch as is, `progress: no`, and don't start a second item.
+- morning: review `night/<date>`, merge it yourself, push it yourself.
 
-## L-03 — <weekly source-watch template: read a public source, write candidates only>
-- status: active (first iteration supervised)
-- ratified: <date>
-- scope: once a week, read <the newest issue of a public source your venture depends on>
-  for <the notices that matter>. Write candidates only:
-  `<NNN>-venture/data/candidates-<date>.md` with one proposed row or cell change per
-  finding, each with its source URL and the exact quoted figure. Never edit the ratified
-  data files.
-- iteration: one issue of the source plus anything published since the last iteration.
-- cadence: every-3rd-night   # the wrapper has no weekly cadence; pair with a fire-by in ORDERS if the day matters
-- budget_per_iteration_usd: 5
+## L-02 — Repo health check
+- status: draft
+- goal: Tell me each week what is broken, stale or drifting in the repo, with evidence, and fix nothing.
+- cadence: weekly
+- model: claude-haiku-4-5
+- budget_per_iteration_usd: 2
+- budget_loop_total_usd: 20
+- review_by: <a date about six weeks out>
+- scope: read only. Run the build and tests and record failures. List TODOs older than 90
+  days, unmerged `night/*` branches, and docs that name files that no longer exist.
+  Writes only its state file and the night report.
+- iteration: one full pass of the checks above.
+- definition_of_done_per_iteration: one verdict per check, each with a path, line or
+  command output as evidence.
+- out_of_scope: fixing anything it finds. Findings go under "Need from you" as proposed
+  orders.
+- if_blocked: record the denial word for word, keep going with the other checks, and mark
+  `progress: no` only if no check could run.
+
+## L-03 — Weekly research digest
+- status: draft
+- goal: Read what changed this week in <a competitor, a standard, or a customer forum> and write up what matters to us.
+- cadence: weekly
+- model: claude-sonnet-5
+- budget_per_iteration_usd: 4
 - budget_loop_total_usd: 30
-- stop: review_by
-- review_by: <next charter revisit>
-- definition_of_done_per_iteration: the candidates file exists (even if it says "nothing
-  this week"), every candidate cites a URL, and the night report lists the count;
-  `pm/nights/loops/L-03.md` gets a dated section; `next:` names the next issue date.
-- out_of_scope: writing to the ratified data; estimating any number; outreach.
-- if_blocked (source unreachable, WebSearch denied): write the file with a `## Coverage`
-  note saying so, `progress: no`, stop.
-- hand-off: the operator or the PM reviews candidates at the next standup and accepts rows
-  by hand (attended).
+- review_by: <a date about six weeks out>
+- scope: public pages only. Write `reports/research-<date>.md`: up to five findings, each
+  with its source URL, a quote, and one line on why it matters to the product.
+- iteration: everything published since the last run's date.
+- definition_of_done_per_iteration: the report exists, even if it says "nothing new this
+  week"; every finding cites a URL; `next:` gives the date to read from.
+- out_of_scope: guessing numbers, logging in anywhere, contacting anyone.
+- if_blocked (source unreachable or web access denied): write the report with a
+  `## Coverage` note saying so, `progress: no`, stop.
