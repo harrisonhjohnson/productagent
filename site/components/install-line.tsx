@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { track } from '@vercel/analytics';
 import { INSTALL_COMMAND } from '@/lib/install';
 
 type AgentKey = 'claude' | 'chatgpt';
@@ -31,12 +32,13 @@ const AGENTS: Record<AgentKey, {
   },
 };
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, event }: { text: string; event?: string }) {
   const [copied, setCopied] = useState(false);
   async function copy() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      if (event) track(event);
       setTimeout(() => setCopied(false), 1800);
     } catch {
       setCopied(false);
@@ -49,17 +51,17 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-function Line({ cmd, id }: { cmd: string; id?: string }) {
+function Line({ cmd, id, event }: { cmd: string; id?: string; event?: string }) {
   return (
     <div className="install-row">
       <code className="install-cmd" id={id}>{cmd}</code>
-      <CopyButton text={cmd} />
+      <CopyButton text={cmd} event={event} />
     </div>
   );
 }
 
 export function InstallLine() {
-  const [agent, setAgent] = useState<AgentKey | null>(null);
+  const [agent, setAgent] = useState<AgentKey>('claude');
 
   useEffect(() => {
     try {
@@ -73,7 +75,7 @@ export function InstallLine() {
     try { localStorage.setItem('pa-agent', a); } catch {}
   }
 
-  const a = agent ? AGENTS[agent] : null;
+  const a = AGENTS[agent];
 
   return (
     <div className="install">
@@ -96,35 +98,23 @@ export function InstallLine() {
         ))}
       </div>
 
-      {!a && (
-        <p className="install-note">
-          Pick one and the steps below adapt. Either way it runs on your own Mac and subscription. Nothing phones home.
-        </p>
-      )}
+      <Line cmd={INSTALL_COMMAND} id="install-command" event={`install_copy_${agent}`} />
+      <p className="install-note">
+        Puts the machine in <code>~/loops</code>, notices that {a.cli} is there, asks what to work on, how often, how
+        much brain and what it may spend, then writes your first loop. Nothing runs until tonight, and only if the
+        laptop is plugged in. Stop it any time with <code>--off</code>. Nothing phones home.
+      </p>
 
-      {a && (
-        <ol className="install-steps">
-          <li>
-            <p className="install-step-title">Get {a.cli}, the terminal version of {a.name}.</p>
-            <p className="install-step-note">
-              Loops runs {a.cli} for you overnight. It uses {a.plan}, the one you already have. Open Terminal
-              (press <kbd>⌘</kbd> <kbd>space</kbd>, type <em>Terminal</em>, press return) and paste:
-            </p>
-            <Line cmd={a.cliInstall} />
-            <p className="install-step-note">Then sign in once. Type <code>{a.signin}</code> and press return: {a.signinNote}.</p>
-            <p className="install-step-note install-step-skip">Already have {a.cli}? Skip to step 2.</p>
-          </li>
-          <li>
-            <p className="install-step-title">Install Loops. One line, then four questions.</p>
-            <Line cmd={INSTALL_COMMAND} id="install-command" />
-            <p className="install-step-note">
-              Puts the machine in <code>~/loops</code>, notices that {a.cli} is there, asks what to work on, how often,
-              how much brain and what it may spend, then writes your first loop. Nothing runs until tonight, and only
-              if the laptop is plugged in. Stop it any time with <code>--off</code>.
-            </p>
-          </li>
-        </ol>
-      )}
+      <details className="install-first">
+        <summary>Don&rsquo;t have {a.cli} yet? Do this first.</summary>
+        <p className="install-step-note">
+          {a.cli} is the terminal version of {a.name}. Loops runs it for you overnight on {a.plan}, the one you
+          already have. Open Terminal (press <kbd>⌘</kbd> <kbd>space</kbd>, type <em>Terminal</em>, press return) and
+          paste:
+        </p>
+        <Line cmd={a.cliInstall} />
+        <p className="install-step-note">Then sign in once. Type <code>{a.signin}</code> and press return: {a.signinNote}.</p>
+      </details>
     </div>
   );
 }

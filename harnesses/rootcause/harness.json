@@ -1,0 +1,11 @@
+{
+  "name": "rootcause",
+  "slug": "rootcause",
+  "tier": "global",
+  "summary": "User research synthesis: groups interview notes, support quotes, board screenshots and metrics by root cause, separates symptoms from causes, and drafts the questions to ask next.",
+  "source": "~/.claude/skills/rootcause",
+  "entry": "SKILL.md",
+  "order": 22,
+  "kind": "files",
+  "url": null
+}

@@ -10,6 +10,8 @@ Every folder carries a `harness.json` (name, tier, one-line summary, where it ca
 |---|---|---|
 | [flow-design](flow-design/) | global | A progressive design interview: one question per screen, ending in a clickable HTML prototype of a linear user journey (onboarding, checkout, wizard). |
 | [prototype-swarm](prototype-swarm/) | global | Crawls a multi-screen HTML prototype for undefined click destinations and spawns one generator agent per missing screen, with a handoff packet written by the source screen, until the click graph is covered. |
+| [rootcause](rootcause/) | global | User research synthesis: groups interview notes, support quotes, board screenshots and metrics by root cause, separates symptoms from causes, and drafts the questions to ask next. |
+| [show-dont-tell](show-dont-tell/) | global | Turns text-heavy docs and abstract ideas into accurate, code-drawn visuals: diagrams, charts, timelines, flows and comic strips that trace back to the source. |
 | [pm-strategist](pm-strategist/) | global | A product and strategy advisor agent that blends three lenses (build taste, business structure, PM execution) and pressure-tests ideas instead of cheerleading. |
 | [TODO](todo/) | system | A TODO list for PMs in one markdown file, reachable from Claude Code and from Telegram: capture, see what's due, triage, and hand items to an agent that asks before it acts. |
 | [Loops](loops/) | system | Give an agent a goal, a budget, a cadence and a model. It works one bounded run at a time while you sleep, inside a fence, and hands you four plain sentences in the morning. |
@@ -28,6 +30,14 @@ A progressive design interview: one question per screen, ending in a clickable H
 ### prototype-swarm
 
 Crawls a multi-screen HTML prototype for undefined click destinations and spawns one generator agent per missing screen, with a handoff packet written by the source screen, until the click graph is covered. Source: `~/.claude/skills/prototype-swarm`. Start with [SKILL.md](prototype-swarm/SKILL.md).
+
+### rootcause
+
+User research synthesis: groups interview notes, support quotes, board screenshots and metrics by root cause, separates symptoms from causes, and drafts the questions to ask next. Source: `~/.claude/skills/rootcause`. Start with [SKILL.md](rootcause/SKILL.md).
+
+### show-dont-tell
+
+Turns text-heavy docs and abstract ideas into accurate, code-drawn visuals: diagrams, charts, timelines, flows and comic strips that trace back to the source. Source: `~/.claude/skills/show-dont-tell`. Start with [SKILL.md](show-dont-tell/SKILL.md).
 
 ### pm-strategist
 

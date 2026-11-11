@@ -1,0 +1,11 @@
+{
+  "name": "show-dont-tell",
+  "slug": "show-dont-tell",
+  "tier": "global",
+  "summary": "Turns text-heavy docs and abstract ideas into accurate, code-drawn visuals: diagrams, charts, timelines, flows and comic strips that trace back to the source.",
+  "source": "~/.claude/skills/show-dont-tell",
+  "entry": "SKILL.md",
+  "order": 24,
+  "kind": "files",
+  "url": null
+}

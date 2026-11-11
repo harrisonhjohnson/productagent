@@ -167,6 +167,10 @@ export default function About() {
             {' · '}
             <a href={AUTHOR_GITHUB} target="_blank" rel="noreferrer">GitHub ↗</a>
           </p>
+          <p>
+            He also sets up productagent for product teams and runs the first two weeks with them. Past clients include deepgreen.co.{' '}
+            <a href={AUTHOR_LINKEDIN} target="_blank" rel="noreferrer">Message him on LinkedIn</a>.
+          </p>
 
           <h2 id="who">Who productagent.dev is for</h2>
           <ul>

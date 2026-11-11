@@ -17,11 +17,11 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'productagent · tools for PMs who run their day with Claude Code',
+    default: 'productagent · an open-source product development agent, built on Claude Code',
     template: '%s · productagent',
   },
   description:
-    'Loops: give an agent a goal, a budget, a cadence and a model, and read four plain sentences in the morning. Plus a TODO bot for your phone, a design interview that ends in a prototype, and a strategy agent that argues back. Copy what you need.',
+    'productagent does the product work as well as the code: user research, design, prototypes and fixes. Loops keep it going overnight, on a budget, on the Claude subscription you already pay for. Open source, or set up for you by the agency.',
   icons: { icon: '/favicon.svg' },
   openGraph: {
     siteName: 'productagent',

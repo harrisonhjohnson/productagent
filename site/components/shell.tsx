@@ -16,7 +16,7 @@ export function Shell({ children }: { path: string; children: React.ReactNode })
           <Link className="topbar-link" href="/morning">MORNING</Link>
           <Link className="topbar-link" href="/evidence">RECEIPTS</Link>
           <Link className="topbar-link" href="/about">ABOUT</Link>
-          <Link className="topbar-link topbar-hire" href="/#hire">WORK WITH ME</Link>
+          <Link className="topbar-link" href="/#agency">AGENCY</Link>
         </nav>
         <a className="topbar-path" href={GITHUB} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
           SOURCE ON GITHUB ↗
